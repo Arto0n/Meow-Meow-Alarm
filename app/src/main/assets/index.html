@@ -90,63 +90,238 @@ input[type=text],input[type=number],select,input[type=time]{font:inherit;padding
 .status-text{font-size:.82rem;line-height:1.6;margin:8px 2px;color:#382b3b}
 [hidden]{display:none!important}
 @media(max-width:400px){.masthead h1{font-size:2rem}.clock{font-size:3rem}.alarm-card{gap:6px;padding:7px}.alarm-time{font-size:1.45rem}.alarm-ops button{padding:6px}}
+/* ============================================================
+   MEOWALARM 2.0 / Cozy Room UI (Batch 4)
+   Skin only: existing Android alarm/audio bridges remain intact.
+   Pixel-inspired art direction, RTL-first, offline, no web fonts.
+   ============================================================ */
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  --bg: #272335;
+  --ink: #413146;
+  --card: #fff5df;
+  --fg: #443347;
+  --pink: #ef8e9b;
+  --sun: #ffda90;
+  --sage: #a6c4a4;
+  --cream: #fff9ec;
+  --border: #49394f;
+  --muted: #806a7b;
+  --deep: #272335;
+  --shadow: #171723;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#272335;--ink:#413146;--card:#fff5df;--fg:#443347;--pink:#ef8e9b;--sun:#ffda90;}}
+html { scroll-behavior:smooth; scroll-padding-top:16px; }
+body {
+  display:block;
+  margin:0;
+  padding:calc(14px + env(safe-area-inset-top, 0px)) 14px calc(100px + env(safe-area-inset-bottom, 0px));
+  background:radial-gradient(ellipse 125% 70% at 50% -25%,#776078 0%,transparent 72%),
+             linear-gradient(175deg,#3f344e 0%,#2c273c 58%,#211e32 100%);
+  background-attachment:fixed;
+  color:var(--fg);
+  font-family:Tahoma,"Noto Sans Arabic",Arial,sans-serif;
+  font-size:14px;
+  line-height:1.6;
+  max-width:640px;
+  margin-inline:auto;
+  overflow-x:hidden;
+}
+body::before {content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.45;background-image:
+ linear-gradient(90deg,#fff4d833 2px,transparent 2px),linear-gradient(#fff4d822 2px,transparent 2px);
+ background-size:74px 74px;mask-image:linear-gradient(to bottom,#0005,transparent 85%);}
+button {min-height:42px;border:2px solid #45344b;border-radius:7px;background:#e78998;color:#392736;box-shadow:3px 3px 0 #352c43;font-size:.91rem;font-weight:800;padding:9px 13px;touch-action:manipulation;white-space:normal;line-height:1.25}
+button.secondary{background:#f7e4bd;color:#48364c}
+button.danger,.alarm-ops button.danger{background:#f3d3d2;color:#773b4c}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #352c43}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b65487;outline-offset:3px}
+.card {
+ width:100%;max-width:none;margin:0 0 16px;padding:15px;
+ background:var(--card);color:var(--fg);border:3px solid var(--border);
+ border-radius:12px;box-shadow:5px 5px 0 #181824;
+ position:relative;overflow:hidden;
+}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;pointer-events:none;background:repeating-linear-gradient(90deg,#f0b4a9 0 16px,#f6d9a5 16px 32px,#c5d4b0 32px 48px)}
+.masthead{display:flex;align-items:center;gap:12px;text-align:right;color:#fff0d6;margin:4px 1px 17px;position:relative}
+.brand-avatar{width:57px;height:57px;flex:none;display:grid;place-items:center;border:3px solid #f8d9ae;background:#f0a69f;color:#403047;border-radius:11px;box-shadow:4px 4px 0 #1c1b30;font-size:2rem;transform:rotate(-4deg)}
+.masthead .brand-copy{flex:1;min-width:0}
+.masthead h1{font-family:Tahoma,Arial,sans-serif;font-size:1.57rem;font-weight:900;line-height:1.25;text-shadow:2px 3px 0 #251e34;margin:1px 0 3px;color:#fff6dc;animation:none}
+.masthead p{font-size:.78rem;color:#ecd7dc;margin:0}
+.masthead .smallcaps{font:700 .58rem monospace;letter-spacing:2.5px;color:#f9d399;direction:ltr;text-align:right}
+.level-badge{color:#5a4051;background:#f8d5a3;border:2px solid #312638;font:800 .64rem monospace;white-space:nowrap;border-radius:5px;padding:4px 5px;align-self:flex-start;box-shadow:2px 2px 0 #231d31}
+.now-card{display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:right;padding:16px 18px 14px;background:#f7dfb8}
+.now-card::before{background:repeating-linear-gradient(90deg,#9db99f 0 18px,#e9b58d 18px 36px)}
+.now-title{font-weight:900;font-size:1.02rem;color:#483548;margin:0}
+.now-card .eyebrow{color:#766075;font-size:.7rem;letter-spacing:.5px;margin:2px 0}
+.clock{font:900 clamp(2.8rem,11vw,4rem)/1 monospace;letter-spacing:2px;color:#4a394b;text-align:left;background:none;box-shadow:none;border:0;padding:0;margin:0;font-variant-numeric:tabular-nums;direction:ltr}
+.clockHint{font-size:.68rem;margin:5px 0 0;color:#7a6373;text-align:right;max-width:205px}
+.now-chip{font-size:.76rem;background:#fff6e2;color:#6a5266;border:2px solid #d4b3a2;border-radius:5px;padding:4px 7px;margin-top:8px;display:inline-flex;align-items:center;gap:5px}
+.scene-card{padding:0;background:#fceace;overflow:hidden}
+.scene-head{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#efcfac;padding:14px 14px 9px;border-bottom:3px solid #73536c}
+.scene-head h2{margin:0;color:#563e57;font-size:1.04rem}
+.scene-tag{background:#b9cfb0;color:#314435;border:2px solid #5b755d;border-radius:5px;font-size:.68rem;font-weight:800;padding:3px 7px;white-space:nowrap}
+.scene-tip{font-size:.73rem;color:#786376;margin:0;padding:7px 12px 9px;text-align:center;background:#fceace}
+.scene{padding:0;border-radius:0;border:none;box-shadow:none;margin:0;background:#d9c8ad}
+.scene::before{display:none}
+.scene svg{width:100%;height:auto;border-radius:0;background:#e4cba9;image-rendering:pixelated;shape-rendering:auto;touch-action:none;max-height:none}
+.room-topline{display:none}
+.scene-status{display:flex;align-items:center;gap:8px;margin:0;padding:11px 13px;background:#fff1d7;border-top:3px solid #73536c}
+.scene-status p{margin:0;min-width:0;font-size:.84rem;color:#554358;text-align:right;text-shadow:none;font-weight:700;line-height:1.7;min-height:1.4em;flex:1}
+.scene-face{font-size:1.4rem}
+.scene-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:0 12px 13px;background:#fff1d7}
+.scene-controls button{font-size:.75rem;padding:8px 3px;min-height:45px;line-height:1.35}
+.scene-controls #test{background:#a9c8a5;color:#304032}
+.scene-controls #stopAlarm{background:#f4c4ba;color:#633d49}
+.scene-controls #snd{background:#f9e5c7;color:#514151}
+.meter{max-width:none;width:auto;height:11px;margin:1px 12px 8px;background:#d6c1c0;border:2px solid #6d5267;border-radius:3px;box-shadow:inset 1px 1px 0 #a9919d}
+#bar{background:repeating-linear-gradient(90deg,#86ad8c 0 12px,#b4d0a3 12px 24px);transition:width .1s}
+body.ring{animation:none}
+.ring .scene{animation:none}
+.ring .scene-card{box-shadow:0 0 0 3px #f1a59b,5px 5px 0 #181824}
+.ring .scene-tag{background:#e78998;color:#443342}
+.ring .clock{animation:none}
+.alarms-panel{padding:16px 13px 15px}
+.sectionHead{gap:12px}
+.sectionHead h2{font-size:1.09rem;color:#49364b;font-weight:900;line-height:1.5}
+.sectionHead #addAlarm{background:#a9c7a3;color:#2b3f34;min-width:94px}
+.alarms-count{background:#f1d1bf;color:#604759;font-size:.7rem;font-weight:800;padding:3px 7px;border:1px solid #d6b5ae;border-radius:5px;white-space:nowrap;margin-inline-start:auto}
+.next-alarm{margin-top:13px;background:#ede4cc;border:2px dashed #c6b299;border-radius:8px;padding:10px 11px;display:flex;gap:10px;align-items:center}
+.next-icon{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:8px;background:#fff9e7;border:2px solid #9c8c83;font-size:1.2rem}
+.next-text{flex:1;min-width:0;font-size:.76rem;color:#685769}
+.next-text b{color:#4a3b4c;display:block;font-size:.85rem}
+.next-time{direction:ltr;unicode-bidi:isolate;font:900 1.1rem monospace;color:#473746}
+.alarm-list{display:grid;gap:12px;margin-top:14px}
+.alarm-card{position:relative;display:grid;grid-template-columns:1fr auto;gap:6px 8px;align-items:start;background:#fffaf0;border:2px solid #cdb6aa;border-radius:10px;padding:12px 11px;box-shadow:3px 3px 0 #e3cdb9;min-width:0}
+.alarm-card::before{position:absolute;content:"";inset:0 auto 0 0;width:5px;border-radius:6px 0 0 6px;background:#b1c9a4}
+.alarm-card.off{opacity:.7}.alarm-card.off::before{background:#c8b8be}
+.alarm-info{min-width:0}.alarm-time{font-size:2.1rem;line-height:1.2;color:#45344e;letter-spacing:1px;font-variant-numeric:tabular-nums}
+.alarm-title{font-size:.91rem;color:#513d51;margin-top:6px;word-break:break-word}
+.alarm-sub{font-size:.73rem;color:#826b7a;opacity:1;margin-top:6px;line-height:1.6;word-break:break-word}
+.alarm-ops{display:contents}
+.alarm-toggle{grid-column:2;grid-row:1;appearance:none;-webkit-appearance:none;margin:5px 2px;position:relative;border:2px solid #685368;background:#d9cbd0;border-radius:15px;width:51px!important;height:29px!important;cursor:pointer;transition:background .2s}
+.alarm-toggle::before{content:"";position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:5px;background:#fff8ed;border:2px solid #776274;box-sizing:border-box;transition:transform .2s}
+.alarm-toggle:checked{background:#9cbd9b;border-color:#5c7c66}
+.alarm-toggle:checked::before{transform:translateX(-21px);background:#fffdf2;border-color:#52705b}
+.alarm-ops button{font-size:.73rem;padding:7px 4px;min-height:38px}
+.alarm-ops button.secondary{background:#f4e6cd}
+.alarm-ops button.danger{background:#f8d5d0}
+.alarm-ops .alarm-toggle + button{grid-column:1}
+.alarm-ops button{grid-row:2}
+.alarm-card .alarm-ops button{min-width:0}
+.alarm-card .alarm-ops{justify-content:initial}
+.alarm-card{grid-template-columns:minmax(0,1fr) repeat(3,minmax(58px,auto))}
+.alarm-card .alarm-info{grid-column:1 / 4;grid-row:1}
+.alarm-card .alarm-toggle{grid-column:4;grid-row:1;justify-self:end}
+.alarm-card .alarm-ops button{grid-row:2}
+.alarm-card .alarm-ops button[data-action="edit"]{grid-column:1 / 3}
+.alarm-card .alarm-ops button[data-action="test"]{grid-column:3}
+.alarm-card .alarm-ops button[data-action="delete"]{grid-column:4}
+.editor{background:#fae9d6;border:2px dashed #bb94a5;padding:14px;border-radius:10px;margin-top:17px}
+.editor h3{font-size:1rem;color:#593a57}
+.field{font-weight:800;margin:12px 0;color:#554153}
+.field input[type=text],.field select,.field input[type=time],input[type=number],select{width:100%;min-height:44px;background:#fffdf3;color:#3b3142;border:2px solid #aa889e;max-width:100%;border-radius:7px}
+.field #at{max-width:100%;font-size:1.5rem;font-family:monospace;direction:ltr;text-align:center}
+#pickTime{display:none;background:#f6d6a5;color:#493b4e;width:100%;justify-content:center;font-size:1.04rem;min-height:50px}
+.native #pickTime{display:inline-flex;align-items:center}.native #at{display:none}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:3px}
+.days label{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;background:#fffaf0;border:2px solid #d5b2ae;padding:7px 1px;border-radius:6px;font-size:.79rem;text-align:center;min-width:0}
+.days label:has(input:checked){background:#f0c5b5;border-color:#b7788e}
+.days input{width:17px;height:17px;accent-color:#ac647f;margin:0}
+.inlinefield{font-size:.86rem;font-weight:700;color:#584456}
+.editor .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+.editor .actions button{padding:8px 2px}
+.extras{padding:0}.extras::before{background:repeating-linear-gradient(90deg,#a5c2ac 0 16px,#f0b8aa 16px 32px)}
+.extras>summary{display:flex;align-items:center;gap:10px;padding:18px 15px;cursor:pointer;font-weight:900;color:#49394d;background:#ffefd2;min-height:57px;list-style:none}
+.extras>summary::-webkit-details-marker{display:none}
+.extras>summary:before{content:'⚙';font-size:1.18rem;color:#9a6f8e}
+.extras>summary:after{content:'⌄';margin-inline-start:auto;font-family:monospace;font-size:1.4rem;color:#9b7183;transition:transform .15s}
+.extras[open]>summary:after{transform:rotate(180deg)}
+.extras[open]>summary{border-bottom:2px solid #d7bdab;margin:0}
+.extras .library{padding:14px 15px 9px;margin:0}
+.extras>h3,.extras>.row,.extras>.timing,.extras>#saveTimings,.extras>#timingStatus{margin-inline:15px}
+.extras>h3{margin-top:13px;color:#48384a}
+.extras .hintText{color:#796574;opacity:1;line-height:1.8}
+.sound-options{grid-template-columns:1fr;gap:9px}
+.sound-option{background:#fff9eb;border:2px solid #d1b5ac;border-radius:9px;padding:10px}
+.sound-option strong{color:#4b394c;font-size:.84rem}
+.sound-option button{font-size:.75rem;padding:7px 9px;min-height:38px}
+.sound-option button.selected{background:#b1cba7;color:#2b4534}
+.extras .row{justify-content:start;gap:8px}
+.extras .row button[data-preset]{min-width:80px}
+.timing{grid-template-columns:1fr 1fr;gap:8px;margin-block:10px}
+.timing label{display:flex;flex-direction:column;align-items:stretch;gap:7px;border:1px solid #dfc5b8;background:#fff9ed;border-radius:7px;padding:10px;color:#503e51;font-size:.77rem}
+.timing input{width:100%;font:900 1rem monospace;text-align:center;max-width:100%;min-height:38px}
+#saveTimings{margin-bottom:16px;background:#a9c5a1;color:#364537}
+#timingStatus{color:#365c42;font-size:.78rem}
+.permission{background:#fff0c4;color:#4b3b47}.permission::before{background:#f1ba8e}
+.note{max-width:560px;margin:13px auto 0;padding:0 6px;color:#e5d0d5;font-size:.74rem;text-align:center;line-height:1.7}
+.delete-overlay{background:rgba(26,23,39,.82);padding:18px;z-index:2000;backdrop-filter:blur(3px)}
+.delete-dialog{background:#fff4de;color:#483649;border-radius:12px;border:3px solid #57435e;box-shadow:6px 6px 0 #171623;padding:24px 18px}
+.delete-dialog .row{display:grid;grid-template-columns:1fr 1fr}
+/* Bottom quick nav: movement within page, not competing with Android navigation. */
+.quick-nav{position:fixed;z-index:100;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:calc(100% - 30px);max-width:550px;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px;background:#fff0d6;border:3px solid #3b3045;border-radius:12px;box-shadow:4px 5px 0 #131521}
+.quick-nav button{border:none;box-shadow:none;min-height:52px;background:transparent;color:#665467;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font-size:.68rem;padding:4px 2px;border-radius:8px}
+.quick-nav button .nav-icon{font-size:1.2rem;line-height:1.4}
+.quick-nav button[aria-current="page"]{background:#efc4b9;color:#503649;outline:2px solid #bd8e95;outline-offset:-2px}
+.quick-nav button:active{transform:none;box-shadow:none;background:#e8cfbb}
+/* Soft ambient details; do not move interactive SVG hit targets. */
+.pixel-shine{position:absolute;pointer-events:none;width:8px;height:8px;box-shadow:16px 8px 0 #fff6de,32px -5px 0 #f4dba9;top:26px;left:12px;opacity:.7}
+@media(max-width:390px){
+ body{padding-inline:10px}.card{padding:13px}
+ .scene-card{padding:0}.scene-head{padding:11px}.masthead h1{font-size:1.4rem}.brand-avatar{width:49px;height:49px;font-size:1.75rem}
+ .now-card{padding:14px}.clock{font-size:2.7rem}
+ .alarm-card{grid-template-columns:minmax(0,1fr) repeat(3,minmax(44px,auto));padding:10px 8px}.alarm-time{font-size:1.9rem}
+ .alarm-card .alarm-ops button{font-size:.7rem;padding:7px 2px}.scene-controls button{font-size:.7rem}
+ .sound-option{gap:5px}.sound-option button{padding:6px}
+ .timing{grid-template-columns:1fr 1fr}
+}
+@media(min-width:720px){body{max-width:710px}.clock{font-size:4rem}.scene-card svg{max-height:470px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.masthead h1{animation:none}.ring .scene-card{transition:none}}
+
 </style>
 </head>
 <body>
-<header class="masthead"><div class="pixel-stars" aria-hidden="true">✦　✧　✦</div><h1>🐾 میوآلارم</h1><p>یه بیدارباش کوچولوی نرم و بامزه</p></header>
-<div class="card now-card"><div class="eyebrow">NOW · ساعت الان</div><div class="clock" id="clock">--:--</div><p class="clockHint" id="clockHint">این ساعت فقط زمان فعلی رو نشون می‌ده ☀️</p></div>
-<section class="card alarms-panel" aria-label="آلارم‌ها">
-  <div class="sectionHead"><h2>⏰ آلارم‌های من</h2><button type="button" id="addAlarm">＋ جدید</button></div>
-  <div id="alarmList" class="alarm-list"></div>
-  <div id="editor" class="editor" hidden>
-    <h3 id="editorTitle">آلارم جدید</h3>
-    <label class="field">اسم آلارم<input id="label" type="text" maxlength="50" placeholder="مثلاً صبح بخیر!" value="Wake up"></label>
-    <div class="field"><span>زمان بیدارباش</span><input id="at" type="time" value="07:00"><button id="pickTime" type="button">07:00 · انتخاب ساعت</button></div>
-    <div class="field"><span>تکرار در روزهای هفته (بدون انتخاب = فقط یک‌بار)</span><div id="days" class="days"></div></div>
-    <label class="field">صدای این آلارم
-      <select id="alarmSound"><option value="real">🐈 واقعی</option><option value="cute">💗 بانمک</option><option value="custom">🎵 صدای من</option></select>
-    </label>
-    <label class="inlinefield"><input id="on" type="checkbox" checked> روشن باشد</label>
-    <div class="row actions"><button id="saveAlarm" type="button">💾 ذخیره</button><button id="cancelEdit" class="secondary" type="button">بستن</button><button id="deleteAlarm" class="danger" type="button">حذف</button></div>
-  </div>
-</section>
-<div id="deleteConfirm" class="delete-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="deletePromptTitle" aria-describedby="deletePromptText">
-  <div class="delete-dialog">
-    <h3 id="deletePromptTitle">🗑 حذف آلارم</h3>
-    <p id="deletePromptText"></p>
-    <p id="deleteError" class="delete-error" role="alert"></p>
-    <div class="row"><button id="deleteYes" class="danger" type="button">بله، حذف شود</button><button id="deleteNo" class="secondary" type="button">انصراف</button></div>
-  </div>
-</div>
-<details class="card extras"><summary>🎵 صداهای میو و تنظیمات بازی</summary>
-  <div class="library"><div class="sectionHead"><h3>صدای گربه</h3></div>
-    <p class="hintText">▶ برای گوش‌دادن، ✓ برای انتخاب صدای آلارم. صدای انتخابی همان لحظه ذخیره می‌شود.</p>
-    <div class="sound-options">
-      <div class="sound-option"><strong>🐈 واقعی</strong><button class="secondary" data-preview="real">▶ گوش بده</button><button type="button" data-select="real">✓ انتخاب</button></div>
-      <div class="sound-option"><strong>💗 بانمک</strong><button class="secondary" data-preview="cute">▶ گوش بده</button><button type="button" data-select="cute">✓ انتخاب</button></div>
-      <div class="sound-option"><strong>🎵 صدای من</strong><button class="secondary" data-preview="custom">▶ گوش بده</button><button type="button" data-select="custom">✓ انتخاب</button></div>
-    </div>
-    <p id="soundStatus" class="status-text" role="status"></p>
-    <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus" class="status-text" role="status"></span></div>
-    <p class="hintText">فایل باید روی گوشی قابل پخش باشد (مثل MP3، WAV، M4A). فایلِ معتبر در حافظهٔ برنامه ذخیره می‌شود و آلارم بدون اینترنت کار می‌کند.</p></div>
-  <h3>⏳ زمان‌بندی داستان</h3>
-  <div class="row"><button class="secondary" data-preset="quick">سریع</button><button class="secondary" data-preset="classic">کلاسیک</button><button class="secondary" data-preset="relaxed">آروم</button></div>
-  <div class="timing">
-    <label>مدت نوازش <input id="petSec" type="number" min="1" max="60" step="1"> ثانیه</label>
-    <label>اسنوز <input id="snoozeSec" type="number" min="10" max="1800" step="10"> ثانیه</label>
-    <label>شروع سیگار بعد از <input id="smokeDelaySec" type="number" min="0" max="300"> ثانیه</label>
-    <label>مدت سیگار <input id="smokeDurationSec" type="number" min="1" max="120"> ثانیه</label>
-    <label>رسیدن غذا بعد از <input id="foodDelaySec" type="number" min="1" max="300"> ثانیه</label>
-    <label>مدت ریختن غذا <input id="feedSec" type="number" min="1" max="60"> ثانیه</label>
-  </div>
-  <button id="saveTimings" type="button">ذخیره تنظیمات</button><span id="timingStatus"></span>
-</details>
-<div id="permissionHelp" class="card permission" hidden><b>🔔 مجوز آلارم دقیق لازم است</b><p>برای اجرای آلارم در ساعت مقرر، مجوز «Alarms & reminders» را فعال کن.</p><button id="requestAlarmPermission">باز کردن تنظیمات</button></div>
-<div class="card scene">
-<svg id="s" viewBox="0 0 400 300" role="img" aria-label="مرد روی چهارپایه گربه را نوازش می‌کند">
-  <rect width="400" height="300" fill="#f3e6c8"/>
-  <rect y="262" width="400" height="38" fill="#d9c39a"/>
-  <ellipse cx="300" cy="266" rx="92" ry="12" fill="#c9604f"/>
+<header class="masthead" id="top">
+  <div class="brand-avatar" aria-hidden="true">🐈</div>
+  <div class="brand-copy"><div class="smallcaps">THE COZY CAT CLOCK</div><h1>میو میو آلارم ✦</h1><p>بیدار شدن، ولی با یک کوچولوی پشمالو</p></div>
+  <span class="level-badge">COZY<br>ROOM</span>
+</header>
+<section class="card scene-card" id="roomSection" aria-label="اتاق میو و بازی تعاملی">
+  <div class="scene-head"><h2>🛏️ اتاق کوچولوی میو</h2><span id="roomMood" class="scene-tag">● گربه خوابالو</span></div>
+  <div class="scene">
+<svg id="s" viewBox="0 0 400 300" role="img" aria-label="گربه در اتاق گرم و دنج کنار مرد نشسته و می‌توانی نوازشش کنی">
+  <defs>
+    <pattern id="floorTile" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#b89883"/><rect width="10" height="10" fill="#d7b59a"/><rect x="10" y="10" width="10" height="10" fill="#d7b59a"/></pattern>
+    <pattern id="wallDot" width="24" height="24" patternUnits="userSpaceOnUse"><rect x="4" y="5" width="3" height="3" fill="#fff5d6" opacity=".44"/></pattern>
+  </defs>
+  <rect width="400" height="263" fill="#e9cfae"/>
+  <rect width="400" height="263" fill="url(#wallDot)"/>
+  <rect y="252" width="400" height="10" fill="#9f7c83"/>
+  <rect y="262" width="400" height="38" fill="url(#floorTile)"/>
+  <!-- Pixel-window: evening moon, little stars, and patterned curtains. -->
+  <g shape-rendering="crispEdges">
+    <rect x="211" y="17" width="168" height="132" fill="#684c67"/>
+    <rect x="216" y="22" width="158" height="122" fill="#55496f"/>
+    <rect x="223" y="29" width="144" height="109" fill="#7e7290"/>
+    <rect x="279" y="39" width="21" height="22" fill="#fae2a0"/><rect x="272" y="44" width="7" height="12" fill="#fae2a0"/><rect x="289" y="39" width="15" height="12" fill="#7e7290"/>
+    <rect x="238" y="47" width="5" height="5" fill="#fdf2cd"/><rect x="250" y="68" width="4" height="4" fill="#fdf2cd"/><rect x="344" y="43" width="6" height="6" fill="#fff0c3"/>
+    <rect x="316" y="71" width="4" height="4" fill="#f6d7a3"/><rect x="233" y="112" width="4" height="4" fill="#f6d7a3"/>
+    <rect x="221" y="105" width="145" height="33" fill="#72647c"/>
+    <rect x="226" y="114" width="17" height="24" fill="#566070"/><rect x="243" y="99" width="23" height="39" fill="#5a6275"/><rect x="269" y="110" width="24" height="28" fill="#5a6275"/><rect x="293" y="93" width="33" height="45" fill="#556071"/><rect x="328" y="104" width="35" height="34" fill="#536070"/>
+    <rect x="289" y="24" width="7" height="115" fill="#d8b3a5"/><rect x="220" y="78" width="146" height="7" fill="#d8b3a5"/>
+    <rect x="207" y="20" width="16" height="125" fill="#bc7e88"/><rect x="208" y="43" width="15" height="13" fill="#e5a29e"/><rect x="208" y="80" width="15" height="13" fill="#e5a29e"/>
+    <rect x="367" y="20" width="14" height="125" fill="#bc7e88"/><rect x="367" y="43" width="13" height="13" fill="#e5a29e"/><rect x="367" y="80" width="13" height="13" fill="#e5a29e"/>
+    <!-- A little shelf, books and pixel flower pot. -->
+    <rect x="19" y="42" width="119" height="7" fill="#7a5663"/><rect x="27" y="21" width="12" height="21" fill="#a3bfa6"/><rect x="41" y="28" width="10" height="14" fill="#efb995"/><rect x="54" y="18" width="13" height="24" fill="#bf8e9a"/>
+    <rect x="83" y="34" width="25" height="9" fill="#d6a67f"/><rect x="90" y="29" width="12" height="5" fill="#96b39a"/><rect x="94" y="21" width="5" height="8" fill="#689d79"/>
+    <!-- Tiny framed cat art. -->
+    <rect x="22" y="83" width="42" height="48" fill="#825d70"/><rect x="27" y="88" width="32" height="38" fill="#f9e3b4"/>
+    <rect x="35" y="105" width="6" height="7" fill="#ad8494"/><rect x="44" y="105" width="6" height="7" fill="#ad8494"/><rect x="37" y="113" width="13" height="6" fill="#ad8494"/>
+  </g>
+  <!-- Soft rug and a tiny table by the bowl. -->
+  <ellipse cx="292" cy="264" rx="95" ry="15" fill="#b66f7f"/><ellipse cx="292" cy="261" rx="85" ry="11" fill="#e9a4a0"/>
+  <g shape-rendering="crispEdges"><rect x="368" y="200" width="6" height="59" fill="#64856a"/><rect x="355" y="214" width="28" height="16" fill="#83a489"/><rect x="360" y="243" width="22" height="24" fill="#ae837b"/><rect x="357" y="264" width="29" height="6" fill="#825c67"/></g>
   <!-- stool -->
   <g stroke="#1f2a6b" stroke-width="2" fill="#8a5a33">
     <path d="M96 216 L92 262 M180 216 L184 262" fill="none" stroke-width="5"/>
@@ -209,10 +384,71 @@ input[type=text],input[type=number],select,input[type=time]{font:inherit;padding
   </g>
 <circle id="hint" class="hint" r="24" fill="none" stroke="#e0607e" stroke-width="3" stroke-dasharray="6 5" style="display:none"/></svg>
 </div>
+<p class="scene-tip">✧ وقتی گربه میو کرد، با انگشت نوازشش کن ✧</p>
 <div class="meter" aria-hidden="true"><div id="bar"></div></div>
-<p id="msg" aria-live="polite"></p>
-<div class="row"><button id="test">🐱 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div>
-<p class="note">برای تست واقعی، با صفحهٔ قفل‌شده هم امتحان کن. روی بعضی گوشی‌ها مجوز آلارم و محدودیت باتری باید تنظیم بشه.</p>
+<div class="scene-status"><span class="scene-face" aria-hidden="true">🐱</span><p id="msg" aria-live="polite"></p></div>
+<div class="scene-controls"><button id="test">🐾 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div>
+</section>
+<section class="card now-card" aria-label="ساعت فعلی">
+  <div><div class="eyebrow">✦ GOOD MORNING, HUMAN</div><h2 class="now-title">امروز هم میو میو! 🐾</h2><span class="now-chip">☕ یه روز آروم شروع می‌شه</span><p class="clockHint" id="clockHint">ساعت فعلی · برای تنظیم آلارم از بخش پایین استفاده کن</p></div>
+  <div class="clock" id="clock" aria-label="ساعت فعلی">--:--</div>
+</section>
+
+<section class="card alarms-panel" id="alarmsSection" aria-label="آلارم‌ها">
+  <div class="sectionHead"><h2>⏰ آلارم‌های من</h2><span id="alarmCount" class="alarms-count">۰ فعال</span><button type="button" id="addAlarm">＋ آلارم جدید</button></div>
+  <div class="next-alarm" aria-live="polite"><span id="nextIcon" class="next-icon" aria-hidden="true">🌙</span><span class="next-text"><b id="nextLabel">گربه فعلاً خوابه</b><span id="nextDetail">یه آلارم بساز تا شروع کنیم</span></span><span id="nextTime" class="next-time">--:--</span></div>
+  <div id="alarmList" class="alarm-list"></div>
+  <div id="editor" class="editor" hidden>
+    <h3 id="editorTitle">آلارم جدید</h3>
+    <label class="field">اسم آلارم<input id="label" type="text" maxlength="50" placeholder="مثلاً صبح بخیر!" value="Wake up"></label>
+    <div class="field"><span>زمان بیدارباش</span><input id="at" type="time" value="07:00"><button id="pickTime" type="button">07:00 · انتخاب ساعت</button></div>
+    <div class="field"><span>تکرار در روزهای هفته (بدون انتخاب = فقط یک‌بار)</span><div id="days" class="days"></div></div>
+    <label class="field">صدای این آلارم
+      <select id="alarmSound"><option value="real">🐈 واقعی</option><option value="cute">💗 بانمک</option><option value="custom">🎵 صدای من</option></select>
+    </label>
+    <label class="inlinefield"><input id="on" type="checkbox" checked> روشن باشد</label>
+    <div class="row actions"><button id="saveAlarm" type="button">💾 ذخیره</button><button id="cancelEdit" class="secondary" type="button">بستن</button><button id="deleteAlarm" class="danger" type="button">حذف</button></div>
+  </div>
+</section>
+<div id="deleteConfirm" class="delete-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="deletePromptTitle" aria-describedby="deletePromptText">
+  <div class="delete-dialog">
+    <h3 id="deletePromptTitle">🗑 حذف آلارم</h3>
+    <p id="deletePromptText"></p>
+    <p id="deleteError" class="delete-error" role="alert"></p>
+    <div class="row"><button id="deleteYes" class="danger" type="button">بله، حذف شود</button><button id="deleteNo" class="secondary" type="button">انصراف</button></div>
+  </div>
+</div>
+<details class="card extras" id="settingsSection"><summary>صداهای میو و تنظیمات اتاق کوچولو</summary>
+  <div class="library"><div class="sectionHead"><h3>صدای گربه</h3></div>
+    <p class="hintText">▶ برای گوش‌دادن، ✓ برای انتخاب صدای آلارم. صدای انتخابی همان لحظه ذخیره می‌شود.</p>
+    <div class="sound-options">
+      <div class="sound-option"><strong>🐈 واقعی</strong><button class="secondary" data-preview="real">▶ گوش بده</button><button type="button" data-select="real">✓ انتخاب</button></div>
+      <div class="sound-option"><strong>💗 بانمک</strong><button class="secondary" data-preview="cute">▶ گوش بده</button><button type="button" data-select="cute">✓ انتخاب</button></div>
+      <div class="sound-option"><strong>🎵 صدای من</strong><button class="secondary" data-preview="custom">▶ گوش بده</button><button type="button" data-select="custom">✓ انتخاب</button></div>
+    </div>
+    <p id="soundStatus" class="status-text" role="status"></p>
+    <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus" class="status-text" role="status"></span></div>
+    <p class="hintText">فایل باید روی گوشی قابل پخش باشد (مثل MP3، WAV، M4A). فایلِ معتبر در حافظهٔ برنامه ذخیره می‌شود و آلارم بدون اینترنت کار می‌کند.</p></div>
+  <h3>⏳ زمان‌بندی داستان</h3>
+  <div class="row"><button class="secondary" data-preset="quick">سریع</button><button class="secondary" data-preset="classic">کلاسیک</button><button class="secondary" data-preset="relaxed">آروم</button></div>
+  <div class="timing">
+    <label>مدت نوازش <input id="petSec" type="number" min="1" max="60" step="1"> ثانیه</label>
+    <label>اسنوز <input id="snoozeSec" type="number" min="10" max="1800" step="10"> ثانیه</label>
+    <label>شروع سیگار بعد از <input id="smokeDelaySec" type="number" min="0" max="300"> ثانیه</label>
+    <label>مدت سیگار <input id="smokeDurationSec" type="number" min="1" max="120"> ثانیه</label>
+    <label>رسیدن غذا بعد از <input id="foodDelaySec" type="number" min="1" max="300"> ثانیه</label>
+    <label>مدت ریختن غذا <input id="feedSec" type="number" min="1" max="60"> ثانیه</label>
+  </div>
+  <button id="saveTimings" type="button">ذخیره تنظیمات</button><span id="timingStatus"></span>
+</details>
+<div id="permissionHelp" class="card permission" hidden><b>🔔 مجوز آلارم دقیق لازم است</b><p>برای اجرای آلارم در ساعت مقرر، مجوز «Alarms & reminders» را فعال کن.</p><button id="requestAlarmPermission">باز کردن تنظیمات</button></div>
+
+<p class="note">🔔 آلارم مهمه: یک‌بار با صفحهٔ قفل‌شده هم امتحانش کن. در بعضی گوشی‌ها اجازهٔ آلارم دقیق و تنظیمات باتری لازمه.</p>
+<nav class="quick-nav" aria-label="دسترسی سریع">
+  <button type="button" data-jump="alarmsSection" aria-current="page"><span class="nav-icon" aria-hidden="true">⏰</span>آلارم‌ها</button>
+  <button type="button" data-jump="roomSection"><span class="nav-icon" aria-hidden="true">🐱</span>اتاق میو</button>
+  <button type="button" data-jump="settingsSection"><span class="nav-icon" aria-hidden="true">⚙️</span>تنظیمات</button>
+</nav>
 <script>
 const $=id=>document.getElementById(id),svg=$('s'),SH={x:112,y:140},HEAD={x:238,y:222},REST={x:150,y:190},MOUTH={x:138,y:113},NS='http://www.w3.org/2000/svg';
 const NATIVE=typeof Android!=='undefined';
@@ -344,7 +580,10 @@ function updUI(pt){
   else if(mode==='snooze')m=food===1?'پاکت غذا اومد! 🐟 دستت رو روی کاسه نگه دار تا غذا بریزی. وگرنه '+fmt(rem)+' دیگه گربه دوباره میو می‌کنه':ph?'اسنوز فعاله 💤 مرد داره سیگار می‌کشه…':'گربه خوابیده 💤 اسنوز: '+fmt(rem)+' دیگه دوباره میو می‌کنه';
   else if(mode==='fed')m='ممم! گربه داره غذا می‌خوره 😻 آلارم امروز کامل قطع شد ☀️';
   else m=done?'آلارم امروز کامل قطع شد ☀️ گربه سیر و راضی خوابیده':alarmList.some(a=>a.on)?'آلارم‌ها آماده‌ان! 🐱 گربه خوابه':'هنوز آلارم روشنی نداری 💤';
-  if(m!==lastMsg){$('msg').textContent=m;lastMsg=m}
+  if(m!==lastMsg){
+    $('msg').textContent=m;lastMsg=m;
+    $('roomMood').textContent=mode==='ringing'?'● میومیو!':mode==='snooze'?'● وقت چُرت':mode==='fed'?'● گربه سیر شد':'● گربه خوابالو';
+  }
   $('bar').style.width=(mode==='ringing'?lvl:mode==='snooze'?(food===1?fill:100*rem/(timings.snoozeSec*1000)):mode==='fed'?100:0)+'%';
   const h=$('hint');h.style.display=food===1&&fill<15&&mode==='snooze'?'':'none';h.setAttribute('cx',200);h.setAttribute('cy',262);h.setAttribute('r',34)}
 // The clock above is read-only. The editor below owns the only editable alarm time.
@@ -364,28 +603,52 @@ let defaultSound=NATIVE?Android.getDefaultSound():(browserLoad('meow-default-sou
 if(!['real','cute','custom'].includes(defaultSound))defaultSound='real';
 function clockValue(a){return two(a.h)+':'+two(a.m)}
 function daysText(a){return a.days===0?'فقط یک‌بار':a.days===127?'هر روز':dayFull.filter((_,i)=>a.days&(1<<i)).join(' · ')}
+function updateNextAlarm(){
+  const enabled=alarmList.filter(a=>a.on);
+  $('alarmCount').textContent=enabled.length+' فعال';
+  if(!enabled.length){
+    $('nextIcon').textContent='💤';$('nextLabel').textContent='هنوز آلارم فعالی نیست';
+    $('nextDetail').textContent='یه آلارم روشن کن تا گربه بیدارت کنه';$('nextTime').textContent='--:--';return;
+  }
+  const now=new Date();let best=null;
+  for(const a of enabled){
+    for(let offset=0;offset<=7;offset++){
+      const next=new Date(now.getFullYear(),now.getMonth(),now.getDate()+offset,a.h,a.m,0,0);
+      if(next<=now)continue;
+      if(a.days && !(a.days & (1<<next.getDay())))continue;
+      if(!best||next<best.when)best={alarm:a,when:next};
+      break;
+    }
+  }
+  if(!best)return;
+  $('nextIcon').textContent='⏰';$('nextLabel').textContent='آلارم بعدی: '+(best.alarm.label||'صبح بخیر');
+  const daysAway=Math.round((new Date(best.when.getFullYear(),best.when.getMonth(),best.when.getDate())-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/86400000);
+  $('nextDetail').textContent=daysAway===0?'امروز':daysAway===1?'فردا':dayFull[best.when.getDay()];
+  $('nextTime').textContent=clockValue(best.alarm);
+}
 function updateEditorTime(){$('pickTime').textContent='⏰ '+$('at').value+' · انتخاب ساعت'}
 function refreshAlarms(){if(NATIVE)alarmList=readJSON(Android.getAlarms(),[]);else browserSave('meow-alarms',JSON.stringify(alarmList));renderAlarms()}
 function renderAlarms(){const root=$('alarmList');root.replaceChildren();
-  if(!alarmList.length){const empty=document.createElement('p');empty.className='hintText';empty.textContent='هنوز آلارمی نیست؛ یکی بساز تا گربه بیدارت کنه 🐾';root.appendChild(empty)}
+  if(!alarmList.length){const empty=document.createElement('p');empty.className='hintText';empty.textContent='☁ هنوز آلارمی نداریم! روی «آلارم جدید» بزن تا یه بیدارباش بسازیم 🐈';root.appendChild(empty)}
   for(const a of alarmList){
     const item=document.createElement('div');item.className='alarm-card'+(a.on?'':' off');
-    const info=document.createElement('div');
+    const info=document.createElement('div');info.className='alarm-info';
     const time=document.createElement('div');time.className='alarm-time';time.textContent=clockValue(a);
     const title=document.createElement('div');title.className='alarm-title';title.textContent=a.label||'Wake up';
     const sub=document.createElement('div');sub.className='alarm-sub';sub.textContent=daysText(a)+' · '+({real:'میوی واقعی',cute:'میوی بانمک',custom:'میوی من'}[a.sound]||'میو');
     info.append(time,title,sub);
     const ops=document.createElement('div');ops.className='alarm-ops';
-    const toggle=document.createElement('input');toggle.type='checkbox';toggle.checked=!!a.on;toggle.setAttribute('aria-label','فعال کردن '+(a.label||'alarm'));
+    const toggle=document.createElement('input');toggle.type='checkbox';toggle.className='alarm-toggle';toggle.checked=!!a.on;toggle.setAttribute('aria-label','فعال کردن '+(a.label||'alarm'));
     toggle.onchange=()=>{a.on=toggle.checked;persistAlarm(a);checkPermission()};
-    const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='ویرایش';edit.onclick=()=>openEditor(a.id);
-    const remove=document.createElement('button');remove.type='button';remove.className='danger';remove.textContent='🗑 حذف';remove.setAttribute('aria-label','حذف آلارم '+(a.label||clockValue(a)));remove.onclick=()=>askDelete(a.id);
-    const test=document.createElement('button');test.type='button';test.className='secondary';test.textContent='۵ث تست';
+    const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='✎ ویرایش';edit.dataset.action='edit';edit.onclick=()=>openEditor(a.id);
+    const remove=document.createElement('button');remove.type='button';remove.className='danger';remove.textContent='🗑 حذف';remove.dataset.action='delete';remove.setAttribute('aria-label','حذف آلارم '+(a.label||clockValue(a)));remove.onclick=()=>askDelete(a.id);
+    const test=document.createElement('button');test.type='button';test.className='secondary';test.textContent='▶ تست';test.dataset.action='test';
     test.onclick=()=>{focusId=a.id;renderSoundSelection();if(NATIVE){
       if(!Android.canSetExactAlarms()){checkPermission();return}Android.testAlarm(a.id)
     }else{testAt=Date.now()+5000}};
     ops.append(toggle,edit,remove,test);item.append(info,ops);root.appendChild(item)
   }
+  updateNextAlarm();
 }
 function persistAlarm(a){if(NATIVE){const result=readJSON(Android.saveAlarm(JSON.stringify(a)),{});if(!result.id){alert('ذخیره نشد');return}focusId=result.id}
   else{if(!a.id||a.id<100)a.id=Math.max(99,...alarmList.map(x=>x.id))+1;const i=alarmList.findIndex(x=>x.id===a.id);if(i<0)alarmList.push(a);else alarmList[i]=a;focusId=a.id}
@@ -500,6 +763,15 @@ setInterval(()=>{const n=new Date(),hm=two(n.getHours())+':'+two(n.getMinutes())
   else if(!NATIVE&&alarmList.some(a=>a.on&&clockValue(a)===hm)&&fired!==hm+n.getDate()){fired=hm+n.getDate();fire()}},500);
 window.nativeRing=()=>{if(mode==='ringing')return;mode='idle';fire()};
 window.nativeStopped=()=>{if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
+document.querySelectorAll('[data-jump]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const id=button.dataset.jump;
+    if(id==='settingsSection')$('settingsSection').open=true;
+    const target=$(id);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelectorAll('[data-jump]').forEach(b=>b.removeAttribute('aria-current'));
+    button.setAttribute('aria-current','page');
+  });
+});
 renderTimings();renderAlarms();renderSoundSelection();checkPermission();
 if(NATIVE&&Android.isRinging())window.nativeRing();
 
