@@ -279,115 +279,9 @@ body.ring{animation:none}
 @media(min-width:720px){body{max-width:710px}.clock{font-size:4rem}.scene-card svg{max-height:470px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.masthead h1{animation:none}.ring .scene-card{transition:none}}
 
-
-:root[data-room-mode='pixel'] body.ring{animation:none}
-/* Batch 6: interactive illustrated dollhouse. No change to Classic Mode styles. */
-:root[data-room-mode="pixel"] .quick-nav{display:none!important}
-.mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#3d3452;padding:5px;border-radius:9px;margin:10px 11px;color:#fff}
-.mode-switch button{min-height:45px;background:#433850;color:#fcead4;border-color:#79617b;box-shadow:none;font-size:.83rem}
-.mode-switch button[aria-pressed="true"]{background:#ffda91;color:#433348;border-color:#fff0cc}
-:root[data-room-mode="pixel"] #classicRoom,:root[data-room-mode="pixel"] .scene-tip,:root[data-room-mode="pixel"] .meter,:root[data-room-mode="pixel"] .scene-controls{display:none}
-:root[data-room-mode="classic"] #pixelHouse{display:none!important}
-.story-house{overflow:hidden;background:#101d35;border-top:3px solid #57445d;padding:0;color:#ffeac9}
-.story-house[hidden],.story-house [hidden]{display:none!important}
-.story-art{position:relative;aspect-ratio:2/3;width:100%;overflow:hidden;background:#14253c url('pixel/house.webp') center / 100% 100% no-repeat;isolation:isolate;touch-action:pan-y}
-.story-art::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#120f2633,transparent 20%,transparent 65%,#18182b22);pointer-events:none;z-index:12}
-.story-sky{position:absolute;z-index:1;left:18.6%;top:25.4%;width:25.2%;height:10.6%;overflow:hidden;background:linear-gradient(#142449,#46588b);box-shadow:inset 0 0 0 3px #2e2935;opacity:.94;transition:background 1.5s ease}
-.story-sky[data-dayphase="morning"]{background:linear-gradient(#8fd1ea,#ffca92 80%,#ffd9b1)}
-.story-sky[data-dayphase="afternoon"]{background:linear-gradient(#65bce4,#aedfee)}
-.story-sky[data-dayphase="sunset"]{background:linear-gradient(#66599c,#e8879d 55%,#f8b276)}
-.story-sky[data-dayphase="night"]{background:linear-gradient(#15274f,#4a4771)}
-.story-sun-moon{position:absolute;width:17%;aspect-ratio:1;top:9%;left:23%;border-radius:50%;background:#ffedb2;box-shadow:0 0 12px 5px #ffd59466}
-.story-sky[data-dayphase="night"] .story-sun-moon{background:#fff1ba;box-shadow:4px 0 0 #36456f,0 0 12px #fff4a477}
-.story-horizon{position:absolute;bottom:0;width:100%;height:40%;background:repeating-linear-gradient(90deg,#32445c 0 14%,#4b526a 14% 23%,#38465d 23% 29%);clip-path:polygon(0 25%,13% 25%,13% 0,28% 0,28% 28%,44% 28%,44% 5%,67% 5%,67% 35%,84% 35%,84% 12%,100% 12%,100% 100%,0 100%)}
-.story-sky[data-dayphase="afternoon"] .story-horizon,.story-sky[data-dayphase="morning"] .story-horizon{background:#6c9eb0}
-.story-sky[data-dayphase="sunset"] .story-horizon{background:#554c75}
-.story-sprite{position:absolute;image-rendering:pixelated;user-select:none;-webkit-user-drag:none;pointer-events:none;filter:drop-shadow(0 4px 2px #302332aa);z-index:6;object-fit:contain;transform:translate(-50%,-100%)}
-.story-human{width:16%;height:20%;left:28%;top:49.8%}
-.story-human.walking{animation:storyWalkBob .32s steps(2,end) infinite alternate}
-@keyframes storyWalkBob{to{transform:translate(-50%,calc(-100% - 3px))}}
-.story-cat{width:27%;height:16.5%;left:42%;top:75%;z-index:7}
-.story-cat.meowing{animation:storyWiggle .36s ease-in-out infinite alternate}
-.story-cat.asleep{animation:storyBreathe 2.9s ease-in-out infinite alternate}
-.story-smoke{position:absolute;left:33%;top:38%;z-index:8;opacity:.8;font-size:1.1rem;color:#fff4e1;text-shadow:0 0 5px #fff2e3;animation:smokePuff 2.4s linear infinite;pointer-events:none}
-@keyframes smokePuff{0%{transform:translateY(8px);opacity:0}45%{opacity:.8}100%{transform:translateY(-26px);opacity:0}}
-@keyframes storyBreathe{to{margin-top:2px}}
-@keyframes storyWiggle{to{margin-left:3px}}
-.story-pet-target{position:absolute;left:24%;top:63%;width:40%;height:14%;z-index:9;border:3px dashed transparent;border-radius:45%;touch-action:none;pointer-events:none}
-.story-house[data-stage="PET_READY"] .story-pet-target,.story-house[data-stage="PETTING"] .story-pet-target{pointer-events:auto;border-color:#ffe09e88;background:#ffdfa019}
-.story-touch-hint{display:none;position:absolute;top:-25px;left:50%;transform:translateX(-50%);background:#fff3d4;color:#493448;border:2px solid #533c4e;border-radius:7px;padding:2px 8px;font-size:11px;white-space:nowrap;box-shadow:2px 3px 0 #47374a}
-.story-house[data-stage="PET_READY"] .story-touch-hint,.story-house[data-stage="PETTING"] .story-touch-hint{display:block}
-.story-carry-bag{position:absolute;width:6%;height:9%;z-index:8;object-fit:contain;image-rendering:pixelated;transform:translate(-50%,-100%);pointer-events:none}
-.story-food-bag{position:absolute;width:11%;height:13%;object-fit:contain;image-rendering:pixelated;left:76%;top:74%;transform:translate(-50%,-90%);z-index:10;touch-action:none;user-select:none;-webkit-user-drag:none;filter:drop-shadow(2px 3px 0 #352538);cursor:grab}
-.story-food-bag:active{cursor:grabbing}
-.story-pour-target{position:absolute;left:55%;top:70.8%;width:19%;height:8%;z-index:5;border:3px dashed transparent;border-radius:50%;pointer-events:none}
-.story-house[data-stage="FEED_READY"] .story-pour-target,.story-house[data-stage="POURING"] .story-pour-target{border-color:#ffe082aa;background:#ffeb9760;animation:storyWiggle .8s ease infinite alternate}
-.story-particles{position:absolute;inset:0;pointer-events:none;z-index:11;overflow:hidden}
-.story-particles i{position:absolute;width:5px;height:6px;background:#bd7a39;border:1px solid #694527;animation:storyFall .55s ease-in forwards}
-@keyframes storyFall{to{transform:translateY(55px);opacity:0}}
-.story-stage-pill{position:absolute;top:3%;right:3%;background:#fff0d3e6;color:#49344b;border:2px solid #614859;box-shadow:2px 2px 0 #301e36;padding:4px 8px;font-size:.69rem;font-weight:bold;z-index:14}
-.story-status{display:flex;gap:8px;align-items:center;background:#253251;color:#f9e4cb;padding:10px 12px;border-top:4px solid #a3767c;font-size:.82rem;line-height:1.6;min-height:72px}
-.story-status strong{display:block;font-size:.93rem;color:#ffe4a1}
-.story-status .p-cat{font-size:1.7rem}
-.story-progress{display:flex;gap:8px;align-items:center;padding:9px 12px;background:#354563;font-size:.78rem;color:#fff0d4}
-.story-track{flex:1;height:14px;border:2px solid #d8bd9f;border-radius:7px;background:#20293f;overflow:hidden;min-width:70px}
-#storyProgressFill{height:100%;width:0;background:linear-gradient(90deg,#f7c58e,#9fceb2);transition:width .08s}
-.story-controls{display:flex;gap:7px;flex-wrap:wrap;background:#253251;padding:10px 12px}
-.story-controls button{flex:1;min-width:110px;min-height:46px;background:#f7d79d;color:#3c3045;font-size:.79rem}
-.story-controls button.danger{background:#e98a91;color:#381e35}
-.pixel-help{color:#fff0d3;background:#364462;padding:8px 11px;font-size:.72rem;text-align:center;line-height:1.7}
-@media(max-width:360px){.story-stage-pill{font-size:.58rem}.story-touch-hint{font-size:9px}.story-controls button{min-width:96px}}
-@media(prefers-reduced-motion:reduce){.story-sprite,.story-smoke,.story-particles i{animation:none!important;transition:none!important}}
-.profile-settings{border:2px solid #d5b3a5;border-radius:9px;background:#fff9e9;padding:12px;margin:13px 14px 8px;color:#514052}
-.profile-settings .row{justify-content:start}.profile-settings button{font-size:.8rem}.profile-settings h3{margin:0 0 6px}
-.profile-settings p{margin:4px 0 12px;color:#776476;font-size:.78rem}
-.diagnostic-panel{border:2px dashed #cbb4a9;border-radius:8px;padding:10px 12px;margin:12px 14px;background:#fff6e5;color:#534255;font-size:.79rem}
-.diagnostic-panel button{font-size:.78rem;margin-top:7px}
-.onboarding-overlay{position:fixed;inset:0;z-index:2500;overflow-y:auto;background:#1c2549;background-image:radial-gradient(circle at 12% 15%,#ffe59a55 0 2px,transparent 3px),radial-gradient(circle at 81% 23%,#ffe59a55 0 2px,transparent 3px),linear-gradient(#1e2b50,#493655);padding:calc(28px + env(safe-area-inset-top,0px)) 13px calc(30px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center}
-.onboarding-card{width:min(100%,470px);background:#fff0d4;border:4px solid #51405a;box-shadow:7px 7px 0 #161c36;border-radius:15px;padding:17px 14px 21px;color:#473748}
-.onboarding-card h2{text-align:center;color:#483347;font-size:1.28rem;margin:10px 0 6px}
-.onboarding-card p{text-align:center;font-size:.85rem;color:#705b6c;margin:5px 0 12px}
-.ob-progress{text-align:center;font:900 .78rem monospace;color:#9c617e}
-.ob-topscene{display:flex;align-items:end;justify-content:space-around;min-height:130px;background:linear-gradient(#433c65,#9b7891 75%,#a77368 75%);border:3px solid #55405d;border-radius:8px;padding:9px;margin-bottom:12px}
-.ob-topscene img{max-height:115px;width:84px;object-fit:contain;image-rendering:pixelated}
-.ob-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:14px 0}
-.ob-grid.cats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.ob-option{display:flex;flex-direction:column;align-items:center;justify-content:end;min-height:154px;background:#fff9e9;border:3px solid #c9afa5;border-radius:10px;box-shadow:3px 4px #dcc4aa;padding:7px 4px;color:#4f3a55}
-.ob-grid.cats .ob-option{min-height:120px}
-.ob-option[aria-pressed="true"]{background:#ffe2b7;border-color:#bb7285;box-shadow:0 0 0 3px #f9c98f,3px 4px #a77584}
-.ob-option img{width:90px;height:103px;object-fit:contain;image-rendering:pixelated}
-.ob-grid.cats .ob-option img{width:72px;height:77px}
-.ob-option strong{font-size:.85rem}
-.ob-next{width:100%;margin-top:10px;font-size:1rem;min-height:52px;background:#a7c99e;color:#304237}
-.ob-controls{display:flex;gap:10px;margin-top:11px}.ob-controls button{flex:1}
-.ob-cancel{background:#ffeacb;color:#54425a}
-@media(max-width:360px){.pixel-floor{height:205px}.pixel-catroom{height:220px}#pixelManTop{width:105px;height:132px}#pixelCat{width:112px;height:102px}.pixel-chair{right:12%;width:66px}.pixel-cat-bed{right:15%;width:95px}.ob-option{min-height:137px}.ob-grid.cats .ob-option{min-height:108px}.ob-grid.cats .ob-option img{width:60px;height:65px}}
-@media(prefers-reduced-motion:reduce){.pixel-sprite{animation:none!important;transition:none}}
-
 </style>
 </head>
 <body>
-<div id="onboarding" class="onboarding-overlay" role="dialog" aria-modal="true" aria-label="انتخاب شخصیت و گربه" hidden>
- <div class="onboarding-card">
-  <div class="ob-progress" id="obProgress">۱ از ۲</div>
-  <div class="ob-topscene"><img id="obPreviewAvatar" alt="شخصیت انتخاب‌شده" src="pixel/human_male_relax.png"><span style="font-size:2.3rem">🏠</span><img id="obPreviewCat" alt="گربه انتخاب‌شده" src="pixel/cat_tabby_awake.png"></div>
-  <section id="chooseCharacter"><h2>✨ شخصیتت رو انتخاب کن</h2><p>قهرمان داستان میو کی باشه؟ بعداً می‌تونی عوضش کنی.</p>
-   <div class="ob-grid"><button type="button" class="ob-option" data-avatar="male" aria-pressed="true"><img src="pixel/human_male_relax.png" alt="شخصیت مرد"><strong>👨 مرد</strong></button><button type="button" class="ob-option" data-avatar="female" aria-pressed="false"><img src="pixel/human_female_relax.png" alt="شخصیت زن"><strong>👩 زن</strong></button></div>
-  </section>
-  <section id="chooseCat" hidden><h2>🐾 گربه‌ات رو انتخاب کن</h2><p>کدوم میو قراره هر روز بیدارت کنه؟</p>
-   <div class="ob-grid cats">
-    <button type="button" class="ob-option" data-cat="tabby" aria-pressed="true"><img src="pixel/cat_tabby_awake.png" alt="گربه راه‌راه"><strong>راه‌راه</strong></button>
-    <button type="button" class="ob-option" data-cat="orange" aria-pressed="false"><img src="pixel/cat_orange_awake.png" alt="گربه نارنجی"><strong>نارنجی</strong></button>
-    <button type="button" class="ob-option" data-cat="black" aria-pressed="false"><img src="pixel/cat_black_awake.png" alt="گربه مشکی"><strong>مشکی</strong></button>
-    <button type="button" class="ob-option" data-cat="white" aria-pressed="false"><img src="pixel/cat_white_awake.png" alt="گربه سفید"><strong>سفید</strong></button>
-    <button type="button" class="ob-option" data-cat="calico" aria-pressed="false"><img src="pixel/cat_calico_awake.png" alt="گربه سه‌رنگ"><strong>سه‌رنگ</strong></button>
-   </div>
-  </section>
-  <div class="ob-controls"><button type="button" class="ob-cancel" id="obBack" hidden>↩ قبلی</button><button type="button" id="obCancel" class="ob-cancel" hidden>انصراف</button></div>
-  <button class="ob-next" type="button" id="obNext">بعدی ←</button>
- </div>
-</div>
-
 <header class="masthead" id="top">
   <div class="brand-avatar" aria-hidden="true">🐈</div>
   <div class="brand-copy"><div class="smallcaps">THE COZY CAT CLOCK</div><h1>میو میو آلارم ✦</h1><p>بیدار شدن، ولی با یک کوچولوی پشمالو</p></div>
@@ -395,36 +289,7 @@ body.ring{animation:none}
 </header>
 <section class="card scene-card" id="roomSection" aria-label="اتاق میو و بازی تعاملی">
   <div class="scene-head"><h2>🛏️ اتاق کوچولوی میو</h2><span id="roomMood" class="scene-tag">● گربه خوابالو</span></div>
-  <div class="mode-switch" role="group" aria-label="انتخاب نمای اتاق"><button type="button" id="classicMode" aria-pressed="true">☕ اتاق کلاسیک</button><button type="button" id="pixelMode" aria-pressed="false">🏠 داستان پیکسلی</button></div>
-  <div class="pixel-house story-house" id="pixelHouse" data-stage="IDLE" hidden>
-    <div class="story-art" id="storyArt" aria-label="خانه دو طبقه، اتاق آدم‌ها، راه‌پله و اتاق گربه">
-      <div class="story-sky" id="storySky" data-dayphase="night" aria-label="پنجره بر اساس ساعت گوشی">
-        <span class="story-sun-moon" id="storySunMoon"></span><span class="story-horizon"></span>
-      </div>
-      <img class="story-sprite story-human" id="storyHuman" src="pixel/human_male_idle.png" alt="شخصیت انتخابی" draggable="false">
-      <img class="story-sprite story-cat" id="storyCat" src="pixel/cat_tabby_sleep.png" alt="گربه انتخابی" draggable="false">
-      <div class="story-smoke" id="storySmoke" aria-hidden="true">〰</div>
-      <div class="story-pet-target" id="storyPetZone" role="button" tabindex="0" aria-label="گربه را با انگشت نوازش کن" aria-disabled="true">
-        <span class="story-touch-hint" id="storyTouchHint">↔ نوازش کن 💗</span>
-      </div>
-      <img class="story-carry-bag" id="storyCarryBag" src="pixel/food_bag.png" alt="شخصیت پاکت غذا را حمل می‌کند" draggable="false" hidden>
-      <img class="story-food-bag" id="storyBag" src="pixel/food_bag.png" alt="پاکت غذای گربه را تا کاسه بکش" draggable="false" hidden>
-      <div class="story-pour-target" id="storyBowlTarget" aria-hidden="true"></div>
-      <div class="story-particles" id="storyParticles" aria-hidden="true"></div>
-      <div class="story-stage-pill" id="storyStagePill">☾ همه‌چی آرومه</div>
-    </div>
-    <div class="pixel-status story-status" aria-live="polite"><span class="p-cat">🐈</span><div><strong id="pixelStageTitle">گربه خوابه و آدم‌ها در حال استراحتن</strong><span id="pixelStageDetail">وقتی آلارم شروع بشه، داستان زنده می‌شه.</span></div></div>
-    <div class="story-progress" id="storyProgressWrap" hidden><span id="storyProgressLabel">پیشرفت</span><div class="story-track"><div id="storyProgressFill"></div></div><span id="storyProgressNumber">۰٪</span></div>
-    <div id="pixelControls" class="pixel-controls story-controls">
-      <button type="button" id="storyTest">🐾 تست ۵ ثانیه‌ای</button>
-      <button type="button" id="storySnooze" hidden>💤 اسنوز معمولی</button>
-      <button type="button" id="storyHoldPet" hidden>💗 نگه‌دار برای نوازش</button>
-      <button type="button" id="storyHoldPour" hidden>🥣 نگه‌دار برای ریختن غذا</button>
-      <button type="button" class="danger" id="storyStop" hidden>⏹ قطع کامل آلارم</button>
-    </div>
-    <div class="pixel-help" id="storyHelp">☁ آدم‌ها روی مبل چرت می‌زنن؛ میو هم پایین خوابیده.</div>
-  </div>
-  <div class="scene" id="classicRoom">
+  <div class="scene">
 <svg id="s" viewBox="0 0 400 300" role="img" aria-label="گربه در اتاق گرم و دنج کنار مرد نشسته و می‌توانی نوازشش کنی">
   <defs>
     <pattern id="floorTile" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#b89883"/><rect width="10" height="10" fill="#d7b59a"/><rect x="10" y="10" width="10" height="10" fill="#d7b59a"/></pattern>
@@ -467,7 +332,7 @@ body.ring{animation:none}
     <path d="M100 200 H178 L180 254" fill="none" stroke-width="25"/>
     <path d="M100 200 H178 L180 254" fill="none" stroke="#cf9532" stroke-width="21"/>
     <path d="M170 256 Q172 246 188 248 Q208 250 208 260 Q208 266 196 266 H172Z" fill="#e8e4da"/>
-    <path d="M86 128 Q86 124 98 124 H122 Q134 124 134 130 V206 H86Z" id="femaleShirt" fill="#0e8c8c"/>
+    <path d="M86 128 Q86 124 98 124 H122 Q134 124 134 130 V206 H86Z" fill="#0e8c8c"/>
     <g stroke="#fff" stroke-width="2.2"><path d="M87 140H133M87 152H133M87 164H133M87 176H133M87 188H133M87 200H133"/></g>
     <rect x="99" y="112" width="16" height="16" fill="#ffd99a" stroke="none"/>
     <circle cx="80" cy="92" r="7" fill="#ffd99a"/>
@@ -476,7 +341,7 @@ body.ring{animation:none}
     <path d="M98 57l-3-5M104 54l-1-6M110 53l1-6M117 55l4-5M123 59l5-3" fill="none" stroke="#b8b2a0" stroke-width="2"/><path d="M96 60Q106 54 116 58" fill="none" stroke="#fff" stroke-width="2.4" opacity=".55"/>
     <g id="mEyesOpen"><circle cx="97" cy="87" r="11" fill="#fff"/><circle cx="123" cy="87" r="11" fill="#fff"/><circle id="pl" cx="97" cy="87" r="3.6" fill="#1f2a6b" stroke="none"/><circle id="pr" cx="123" cy="87" r="3.6" fill="#1f2a6b" stroke="none"/><path id="ll" fill="#ffd99a"/><path id="lr" fill="#ffd99a"/></g><path d="M86 101Q97 107 108 101M112 101Q123 107 134 101" fill="none" stroke-width="1.6" opacity=".55"/>
     <g id="mEyesHappy" style="display:none" fill="none" stroke-width="3"><path d="M87 89Q97 79 107 89"/><path d="M113 89Q123 79 133 89"/></g>
-    <path d="M85 68Q97 65 108 72M113 72Q125 65 137 68" fill="none" stroke-width="5"/><g id="femaleHair" style="display:none" fill="#714352" stroke="#56324a" stroke-width="2"><path d="M78 76Q73 56 94 47Q116 39 134 54Q145 68 140 105L132 120L129 89Q136 74 129 65Q108 52 89 66L89 112L79 119Z"/><path d="M119 50Q142 46 143 64L152 75L145 81L139 68Z" fill="#a96480"/></g>
+    <path d="M85 68Q97 65 108 72M113 72Q125 65 137 68" fill="none" stroke-width="5"/>
     <path id="mouthN" d="M104 110q8-3 16 0" fill="none"/><ellipse id="mouthO" cx="118" cy="109" rx="4" ry="3.2" fill="#7a2a2a" style="display:none"/>
     <path id="mouthH" d="M102 106q10 9 20 0" fill="none" style="display:none"/>
     <path d="M92 114v2M99 117v2M106 118v2M113 118v2M120 117v2M127 114v2" stroke-width="1.6"/>
@@ -522,9 +387,7 @@ body.ring{animation:none}
 <p class="scene-tip">✧ وقتی گربه میو کرد، با انگشت نوازشش کن ✧</p>
 <div class="meter" aria-hidden="true"><div id="bar"></div></div>
 <div class="scene-status"><span class="scene-face" aria-hidden="true">🐱</span><p id="msg" aria-live="polite"></p></div>
-<div class="scene-controls"><button id="test">🐾 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div><div id="pixelControls" class="pixel-controls">
-<button type="button" id="pixelPet" hidden>💗 برو نازش کن</button><button type="button" id="pixelFeed" hidden>🥣 به میو غذا بده</button><button type="button" id="pixelSnooze" hidden>💤 اسنوز</button><button type="button" id="pixelDismiss" class="danger" hidden>⏹ خاموش کامل</button><button type="button" id="pixelTest">🐾 تست ۵ ثانیه‌ای</button>
-</div>
+<div class="scene-controls"><button id="test">🐾 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div>
 </section>
 <section class="card now-card" aria-label="ساعت فعلی">
   <div><div class="eyebrow">✦ GOOD MORNING, HUMAN</div><h2 class="now-title">امروز هم میو میو! 🐾</h2><span class="now-chip">☕ یه روز آروم شروع می‌شه</span><p class="clockHint" id="clockHint">ساعت فعلی · برای تنظیم آلارم از بخش پایین استفاده کن</p></div>
@@ -566,8 +429,6 @@ body.ring{animation:none}
     <p id="soundStatus" class="status-text" role="status"></p>
     <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus" class="status-text" role="status"></span></div>
     <p class="hintText">فایل باید روی گوشی قابل پخش باشد (مثل MP3، WAV، M4A). فایلِ معتبر در حافظهٔ برنامه ذخیره می‌شود و آلارم بدون اینترنت کار می‌کند.</p></div>
-  <div class="profile-settings"><h3>🏠 شخصیت و گربهٔ من</h3><p id="profileDescription">شخصیت و گربه‌ات رو انتخاب کن.</p><div class="row"><button id="editAvatar" class="secondary" type="button">🧑 تغییر شخصیت</button><button id="editCat" class="secondary" type="button">🐈 تغییر گربه</button></div></div>
-<div class="diagnostic-panel"><strong>📱 راهنمای گوشی‌های شیائومی / مجوز آلارم</strong><p>برای اندروید ۱۲: مجوز آلارم دقیق، اعلان‌ها، Autostart و باتری «بدون محدودیت» را بررسی کن. این‌ها جای گزارش کرش را نمی‌گیرند.</p><div>آخرین مرحلهٔ آلارم: <code id="alarmDiagnostic">—</code></div><button class="secondary" type="button" id="refreshDiagnostic">🔎 بررسی وضعیت</button><button class="secondary" type="button" id="openPhoneSettings">⚙ تنظیمات برنامه</button></div>
   <h3>⏳ زمان‌بندی داستان</h3>
   <div class="row"><button class="secondary" data-preset="quick">سریع</button><button class="secondary" data-preset="classic">کلاسیک</button><button class="secondary" data-preset="relaxed">آروم</button></div>
   <div class="timing">
@@ -652,17 +513,17 @@ function puff(x,y,dx){mk('circle','sm',{cx:x,cy:y,r:5},0,2800).style.setProperty
 function lid(id,x,y){const w=Math.sqrt(121-(y-87)**2);$(id).setAttribute('d',`M${x-w} ${y}A11 11 0 ${y>87?1:0} 1 ${x+w} ${y}Z`)}
 function frame(ts){const t=ts/1000,dt=Math.min(.05,t-(last??t));last=t;
   const petting=t-lastPet<.35;
-  if(mode==='ringing'&&!(profile.roomMode==='pixel'&&story.active)){lvl=petting?Math.min(100,lvl+dt*100/timings.petSec):Math.max(0,lvl-6*dt)}
-  if(mode==='ringing'&&!(profile.roomMode==='pixel'&&story.active)&&lvl>=100){mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;sleepAt=t;smoked=false;food=0;fill=0;if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}}
+  if(mode==='ringing'){lvl=petting?Math.min(100,lvl+dt*100/timings.petSec):Math.max(0,lvl-6*dt)}
+  if(mode==='ringing'&&lvl>=100){mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;sleepAt=t;smoked=false;food=0;fill=0;if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}}
   if(mode==='snooze'&&!smoked&&food!==1&&t-sleepAt>=timings.smokeDelaySec){smoked=true;ph={t0:t}}
   if(mode==='snooze'&&food===0&&t-sleepAt>=timings.foodDelaySec){food=1;fill=0;ph=null}
-  if(!NATIVE&&mode==='snooze'&&Date.now()>=snoozeEnd&&!(profile.roomMode==='pixel'&&story.active)){mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;ringStart=t;nextMeow=t+.4}
-  if(mode==='fed'&&t-fedAt>4&&!(profile.roomMode==='pixel'&&story.active)){mode='idle';sleep=true;lvl=100}
+  if(!NATIVE&&mode==='snooze'&&Date.now()>=snoozeEnd){mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;ringStart=t;nextMeow=t+.4}
+  if(mode==='fed'&&t-fedAt>4){mode='idle';sleep=true;lvl=100}
   let pt=ph?(t-ph.t0)*8/timings.smokeDurationSec:-1;
   if(ph){
     if(pt>=8){ph=null;state=-1;pt=-1}
   }
-  curPt=pt;const s=sleep?2:lvl>=22?1:0;if(s!==state)setState(s);updUI(pt);updatePixelScene();
+  curPt=pt;const s=sleep?2:lvl>=22?1:0;if(s!==state)setState(s);updUI(pt);
   
   // hand
   let tg=ph?(pt>.6&&pt<6.6?MOUTH:REST):(P||REST);tg={x:tg.x,y:tg.y};
@@ -681,7 +542,7 @@ function frame(ts){const t=ts/1000,dt=Math.min(.05,t-(last??t));last=t;
     e.style.setProperty('--fy',(276-ky)+'px');e.style.setProperty('--fx',(192+Math.random()*16-kx)+'px');fill=Math.min(100,fill+dt*100/timings.feedSec)}
   const kb=$('kib');kb.style.display=fill>0?'':'none';kb.setAttribute('rx',4+17*fill/100);kb.setAttribute('ry',1+8*fill/100);
   $('bowl').style.display=food===1||mode==='fed'||(done&&mode==='idle')?'':'none';
-  if(fill>=100&&mode==='snooze'&&!(profile.roomMode==='pixel'&&story.active)){mode='fed';food=0;fedAt=t;done=true;sleep=false;lvl=45;ph=null;feedSound();if(NATIVE)Android.dismiss()}
+  if(fill>=100&&mode==='snooze'){mode='fed';food=0;fedAt=t;done=true;sleep=false;lvl=45;ph=null;feedSound();if(NATIVE)Android.dismiss()}
   // cigarette
   mb+=((ph&&pt>.6&&pt<6.6?1:0)-mb)*Math.min(1,dt*5);
   const ang=-35*(1-mb);
@@ -740,285 +601,6 @@ let editingId=null;
 let focusId=alarmList[0]?.id||100;
 let defaultSound=NATIVE?Android.getDefaultSound():(browserLoad('meow-default-sound')||'real');
 if(!['real','cute','custom'].includes(defaultSound))defaultSound='real';
-
-// Profile is global and kept separate from alarms; no alarm is rescheduled here.
-const PROFILE_DEFAULT={avatar:'male',cat:'tabby',roomMode:'classic',onboardingComplete:false};
-const cats={tabby:'راه‌راه',orange:'نارنجی',black:'مشکی',white:'سفید',calico:'سه‌رنگ'};
-const profileCanUseNative=NATIVE&&typeof Android.getProfile==='function'&&typeof Android.setProfile==='function';
-function readProfile(){const p=readJSON(profileCanUseNative?Android.getProfile():browserLoad('meow-profile')||'{}',{});
-  return {avatar:['male','female'].includes(p.avatar)?p.avatar:'male',cat:Object.prototype.hasOwnProperty.call(cats,p.cat)?p.cat:'tabby',roomMode:['pixel','classic'].includes(p.roomMode)?p.roomMode:'classic',onboardingComplete:!!p.onboardingComplete};}
-let profile=readProfile(),obDraft={...profile},obStep=1,obEditing=false;
-function profileSave(){const raw=JSON.stringify(profile);let ok=true;
-  if(profileCanUseNative)ok=Android.setProfile(raw);
-  else browserSave('meow-profile',raw);
-  return ok;
-}
-function updateProfileUI(){
-  const room=profile.roomMode;
-  document.documentElement.dataset.roomMode=room;
-  $('pixelHouse').hidden=room!=='pixel';
-  $('classicMode').setAttribute('aria-pressed',String(room==='classic'));
-  $('pixelMode').setAttribute('aria-pressed',String(room==='pixel'));
-  const avatar='pixel/human_'+profile.avatar+'_relax.png',cat='pixel/cat_'+profile.cat+'_awake.png';
-  if(window.story)window.story.setProfile(profile);
-  $('storyCat').alt='گربه '+cats[profile.cat];
-  $('profileDescription').textContent='شخصیت '+(profile.avatar==='female'?'زن':'مرد')+' · گربه '+cats[profile.cat]+' · '+(room==='pixel'?'خانهٔ پیکسلی':'اتاق کلاسیک');
-  // Classic SVG palette follows cat choice; female gains distinctive longer hair.
-  document.documentElement.dataset.avatar=profile.avatar;
-  document.documentElement.dataset.cat=profile.cat;
-  const colors={tabby:['#8f939b','#4b4e57'],orange:['#dca05d','#a46738'],black:['#53515f','#34323e'],white:['#f8f2e9','#c1aeb7'],calico:['#e6c5a3','#9f654c']};
-  const [fur,stripes]=colors[profile.cat];
-  document.querySelectorAll('#catBody > ellipse:first-child,#catHead > ellipse:first-of-type').forEach(el=>el.setAttribute('fill',fur));
-  document.querySelectorAll('#catBody > g path,#catHead > path[stroke-width="3"]').forEach(el=>el.setAttribute('stroke',stripes));
-  if($('catVariantTail'))$('catVariantTail').setAttribute('stroke',fur);
-  if($('femaleHair'))$('femaleHair').style.display=profile.avatar==='female'?'':'none';
-  if($('femaleShirt'))$('femaleShirt').setAttribute('fill',profile.avatar==='female'?'#ce8eaa':'#0e8c8c');
-}
-function setRoom(room){if(!['classic','pixel'].includes(room))return;profile.roomMode=room;profileSave();updateProfileUI();if(room==='pixel'&&mode==='ringing'&&!story.active)story.start()}
-$('classicMode').onclick=()=>setRoom('classic');$('pixelMode').onclick=()=>setRoom('pixel');
-function updateOnboardingPreview(){
-  $('obPreviewAvatar').src='pixel/human_'+obDraft.avatar+'_relax.png';$('obPreviewCat').src='pixel/cat_'+obDraft.cat+'_awake.png';
-  document.querySelectorAll('[data-avatar]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.avatar===obDraft.avatar)));
-  document.querySelectorAll('[data-cat]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.cat===obDraft.cat)));
-  $('chooseCharacter').hidden=obStep!==1;$('chooseCat').hidden=obStep!==2;
-  $('obProgress').textContent=obStep+' از ۲';$('obBack').hidden=obStep===1;$('obCancel').hidden=!obEditing;
-  $('obNext').textContent=obStep===1?'بعدی ←':'بریم توی خونه! 🐾';
-}
-function showOnboarding(step=1,editing=true){
-  if(mode==='ringing'||(NATIVE&&typeof Android.isRinging==='function'&&Android.isRinging()))return;
-  obDraft={...profile};obStep=step;obEditing=editing;
-  updateOnboardingPreview();$('onboarding').hidden=false;
-}
-function finishOnboarding(){
-  profile={...obDraft,onboardingComplete:true};
-  if(!profileSave()){$('obProgress').textContent='ذخیره نشد؛ دوباره امتحان کن';return;}
-  $('onboarding').hidden=true;updateProfileUI();
-}
-$('obNext').onclick=()=>{if(obStep===1){obStep=2;updateOnboardingPreview()}else finishOnboarding()};
-$('obBack').onclick=()=>{obStep=1;updateOnboardingPreview()};
-$('obCancel').onclick=()=>{$('onboarding').hidden=true};
-document.querySelectorAll('[data-avatar]').forEach(b=>b.onclick=()=>{obDraft.avatar=b.dataset.avatar;updateOnboardingPreview()});
-document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{obDraft.cat=b.dataset.cat;updateOnboardingPreview()});
-$('editAvatar').onclick=()=>showOnboarding(1,true);$('editCat').onclick=()=>showOnboarding(2,true);
-function refreshAlarmDiagnostics(){
- $('alarmDiagnostic').textContent=NATIVE&&typeof Android.getLastAlarmStage==='function'?Android.getLastAlarmStage():'Browser preview / no Android alarm';
-}
-$('refreshDiagnostic').onclick=refreshAlarmDiagnostics;
-$('openPhoneSettings').onclick=()=>{if(NATIVE&&typeof Android.openAppSettings==='function')Android.openAppSettings();else $('alarmDiagnostic').textContent='این گزینه در APK کار می‌کند'};
-
-/* Batch 6 — real gesture-driven Pixel Story. Classic SVG and native Android alarm stay independent. */
-class PixelStory {
-  constructor(){
-    this.stage='IDLE';this.active=false;this.nativeRinging=false;this.snoozeScheduled=false;this.dismissed=false;
-    this.human={x:28,y:49.8};this.path=[];this.pathArrival=null;this.pose='idle';this.catPose='sleep';
-    this.petProgress=0;this.pourProgress=0;this.petPointer=null;this.bagPointer=null;this.holdPet=false;this.holdPour=false;
-    this.bag={x:76,y:74};this.lastTick=performance.now();this.stageSince=Date.now();this.snoozedAt=0;this.clockMinute=null;
-    this.humanEl=$('storyHuman');this.catEl=$('storyCat');this.bagEl=$('storyBag');this.carryEl=$('storyCarryBag');this.art=$('storyArt');
-    this.bind();this.setProfile(profile);this.updateWindow(true);this.render();
-  }
-  setProfile(p){
-    this.avatar=p.avatar==='female'?'female':'male';this.cat=['tabby','orange','black','white','calico'].includes(p.cat)?p.cat:'tabby';
-    this.setHumanPose(this.pose);this.setCatPose(this.catPose);
-  }
-  setHumanPose(pose){
-    this.pose=pose;
-    this.humanEl.src='pixel/human_'+this.avatar+'_'+pose+'.png';
-    this.humanEl.alt=(this.avatar==='female'?'زن':'مرد')+' در خانه';this.humanEl.classList.toggle('walking',pose==='walk');
-  }
-  setCatPose(pose){
-    this.catPose=pose;this.catEl.src='pixel/cat_'+this.cat+'_'+pose+'.png';
-    this.catEl.classList.toggle('asleep',pose==='sleep');this.catEl.classList.toggle('meowing',pose==='meow');
-  }
-  static phase(hour){return hour>=5&&hour<11?'morning':hour>=11&&hour<17?'afternoon':hour>=17&&hour<20?'sunset':'night'}
-  updateWindow(force=false){
-    const d=new Date(),minute=d.getHours()*60+d.getMinutes();if(!force&&minute===this.clockMinute)return;
-    this.clockMinute=minute;const phase=PixelStory.phase(d.getHours());$('storySky').dataset.dayphase=phase;
-    $('storySky').setAttribute('aria-label','هوای '+({morning:'صبح',afternoon:'روز',sunset:'غروب',night:'شب'}[phase])+' مطابق ساعت گوشی');
-  }
-  transition(stage){this.stage=stage;this.stageSince=Date.now();this.render()}
-  start(){
-    if(this.active&&this.stage!=='COMPLETED'&&this.stage!=='IDLE'){
-      this.nativeRinging=true;
-      // Snooze may ring again while the character is searching for food. Keep the quest intact.
-      if(['SNOOZED','WALK_TO_CLOSET','SEARCH_FOOD','CARRY_FOOD','FEED_READY','POURING'].includes(this.stage)){
-        this.setCatPose('meow');this.render();return;
-      }
-      return;
-    }
-    this.active=true;this.nativeRinging=true;this.snoozeScheduled=false;this.dismissed=false;
-    this.petProgress=0;this.pourProgress=0;this.petPointer=null;this.bagPointer=null;this.holdPet=this.holdPour=false;
-    this.human={x:28,y:49.8};this.path=[];this.bag={x:76,y:74};this.placeBag();this.bagEl.hidden=true;
-    lastPet=-999;mode='ringing';sleep=false;lvl=0;
-    this.setHumanPose('idle');this.setCatPose('meow');this.transition('ALARM_REACT');
-  }
-  reset(){
-    this.active=false;this.nativeRinging=false;this.petPointer=null;this.bagPointer=null;this.holdPet=this.holdPour=false;
-    this.human={x:28,y:49.8};this.path=[];this.bag={x:76,y:74};this.placeBag();this.bagEl.hidden=true;
-    this.setHumanPose('idle');this.setCatPose('sleep');this.transition('IDLE');
-  }
-  route(points,arrival){
-    this.path=points.map(p=>({x:p[0],y:p[1]}));this.pathArrival=arrival;
-    this.setHumanPose('walk');
-  }
-  reach(){
-    const arrival=this.pathArrival;this.pathArrival=null;
-    if(arrival==='cat'){this.setHumanPose('pet');this.transition('PET_READY')}
-    else if(arrival==='closet'){this.transition('SEARCH_FOOD')}
-    else if(arrival==='bowl'){this.setHumanPose('carry');this.bag={x:76,y:74};this.placeBag();this.bagEl.hidden=false;this.transition('FEED_READY')}
-    else if(arrival==='sofa'){this.setHumanPose('relax');this.transition('COMPLETED')}
-  }
-  tick(){
-    const now=performance.now(),dt=Math.min((now-this.lastTick)/1000,.10);this.lastTick=now;
-    this.updateWindow();
-    if(!this.active){this.placeHuman();return}
-    if(this.stage==='ALARM_REACT'&&Date.now()-this.stageSince>700){
-      this.transition('WALK_TO_CAT');this.route([[62,49.8],[76,50.2],[80,55],[84,60],[86,65],[84,69],[79,76],[49,75.5]],'cat');
-    }
-    if(this.path.length){
-      let travel=dt*34;
-      while(travel>0&&this.path.length){
-        const p=this.path[0],dx=p.x-this.human.x,dy=p.y-this.human.y,dist=Math.hypot(dx,dy);
-        if(dist<=travel){this.human={...p};this.path.shift();travel-=dist}
-        else{this.human.x+=dx/dist*travel;this.human.y+=dy/dist*travel;travel=0}
-      }
-      if(!this.path.length)this.reach();
-    }
-    if(this.stage==='SNOOZED'&&Date.now()-this.stageSince>700){
-      this.transition('WALK_TO_CLOSET');this.route(this.human.y<60?[[68,49.8]]:[[79,76],[84,69],[86,64],[84,60],[80,55],[76,50.2],[68,49.8]],'closet');
-    }
-    if(this.stage==='SEARCH_FOOD'){
-      const searchElapsed=Date.now()-this.snoozedAt;
-      if(searchElapsed>=Math.max(1,timings.foodDelaySec)*1000&&Date.now()-this.stageSince>=800){
-        this.transition('CARRY_FOOD');this.route([[76,50.2],[80,55],[84,60],[86,65],[84,69],[79,76],[68,75.5]],'bowl');
-        this.setHumanPose('carry');
-      }
-    }
-    if(this.petPointer!==null&&this.holdPet&&['PET_READY','PETTING'].includes(this.stage))this.gainPet(dt*timings.petSec*0+dt*72);
-    if((this.bagPointer!==null&&this.isBagOverBowl())||this.holdPour){
-      if(['FEED_READY','POURING'].includes(this.stage)){
-        if(this.stage!=='POURING')this.transition('POURING');
-        this.pourProgress+=dt*1000;
-        if(Math.random()<dt*22)this.kibble();
-        if(this.pourProgress>=Math.max(1,timings.feedSec)*1000)this.completeFeeding();
-        else this.renderProgress();
-      }
-    }else if(this.stage==='POURING')this.transition('FEED_READY');
-    if(this.stage==='EATING'&&Date.now()-this.stageSince>=1700){
-      this.transition('RETURN_TO_SOFA');this.route([[79,76],[84,69],[86,64],[84,60],[80,55],[76,50.2],[28,49.8]],'sofa');
-    }
-    this.placeHuman();
-  }
-  placeHuman(){this.humanEl.style.left=this.human.x+'%';this.humanEl.style.top=this.human.y+'%';this.carryEl.style.left=(this.human.x+5)+'%';this.carryEl.style.top=(this.human.y-3)+'%'}
-  placeBag(){this.bagEl.style.left=this.bag.x+'%';this.bagEl.style.top=this.bag.y+'%'}
-  gainPet(px){
-    if(!['PET_READY','PETTING'].includes(this.stage))return;
-    if(px<1)return;
-    if(this.stage==='PET_READY')this.transition('PETTING');
-    this.petProgress+=Math.min(px,40);
-    if(this.petProgress>=Math.max(1,timings.petSec)*65){this.startSnooze()}
-    else this.renderProgress();
-  }
-  startSnooze(){
-    if(this.snoozeScheduled)return;
-    this.snoozeScheduled=true;this.nativeRinging=false;
-    mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;
-    sleepAt=performance.now()/1000;smoked=false;food=0;fill=0;
-    this.snoozedAt=Date.now();this.petPointer=null;this.holdPet=false;this.path=[];this.pathArrival=null;
-    if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}
-    this.setCatPose('sleep');this.transition('SNOOZED');
-  }
-  completeFeeding(){
-    if(this.dismissed)return;
-    this.dismissed=true;this.nativeRinging=false;this.bagPointer=null;this.holdPour=false;
-    this.bagEl.hidden=true;mode='fed';fedAt=performance.now()/1000;done=true;sleep=false;lvl=45;ph=null;
-    if(NATIVE)Android.dismiss();feedSound();this.setCatPose('eat');this.transition('EATING');
-  }
-  emergencyStop(){
-    if(NATIVE)Android.dismiss();
-    mode='idle';sleep=true;lvl=100;ph=null;food=0;fill=0;this.reset();
-  }
-  snoozeDirect(){if(this.active&&!this.snoozeScheduled&&['ALARM_REACT','WALK_TO_CAT','PET_READY','PETTING'].includes(this.stage))this.startSnooze()}
-  position(e){const b=this.art.getBoundingClientRect();return {x:(e.clientX-b.left)/b.width*100,y:(e.clientY-b.top)/b.height*100}}
-  isBagOverBowl(){return Math.hypot((this.bag.x-64)*1.0,(this.bag.y-73.4)*1.7)<10}
-  kibble(){const el=document.createElement('i');el.style.left=(61+Math.random()*6)+'%';el.style.top=(70+Math.random()*4)+'%';$('storyParticles').append(el);setTimeout(()=>el.remove(),650)}
-  bind(){
-    const zone=$('storyPetZone');
-    zone.addEventListener('pointerdown',e=>{
-      if(!['PET_READY','PETTING'].includes(this.stage)||this.petPointer!==null)return;
-      this.petPointer=e.pointerId;this.petPrev={x:e.clientX,y:e.clientY};this.holdPet=false;
-      try{zone.setPointerCapture(e.pointerId)}catch(_){} e.preventDefault();
-    });
-    zone.addEventListener('pointermove',e=>{
-      if(e.pointerId!==this.petPointer)return;
-      const within=e.clientX>=zone.getBoundingClientRect().left&&e.clientX<=zone.getBoundingClientRect().right&&e.clientY>=zone.getBoundingClientRect().top&&e.clientY<=zone.getBoundingClientRect().bottom;
-      const d=Math.hypot(e.clientX-this.petPrev.x,e.clientY-this.petPrev.y);
-      this.petPrev={x:e.clientX,y:e.clientY};if(within&&d>=3)this.gainPet(Math.min(d,35));
-    });
-    const endPet=e=>{if(e.pointerId===this.petPointer){this.petPointer=null;this.holdPet=false}};
-    zone.addEventListener('pointerup',endPet);zone.addEventListener('pointercancel',endPet);zone.addEventListener('lostpointercapture',endPet);
-    zone.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&['PET_READY','PETTING'].includes(this.stage)){e.preventDefault();this.gainPet(18)}});
-    const bag=this.bagEl;
-    bag.addEventListener('pointerdown',e=>{
-      if(this.stage!=='FEED_READY'&&this.stage!=='POURING')return;
-      this.bagPointer=e.pointerId;try{bag.setPointerCapture(e.pointerId)}catch(_){};e.preventDefault();
-    });
-    bag.addEventListener('pointermove',e=>{
-      if(e.pointerId!==this.bagPointer)return;
-      const pos=this.position(e);this.bag={x:Math.max(6,Math.min(94,pos.x)),y:Math.max(7,Math.min(92,pos.y))};this.placeBag();
-    });
-    const endBag=e=>{if(e.pointerId===this.bagPointer){this.bagPointer=null;this.bag={x:76,y:74};this.placeBag();if(this.stage==='POURING')this.transition('FEED_READY')}};
-    bag.addEventListener('pointerup',endBag);bag.addEventListener('pointercancel',endBag);bag.addEventListener('lostpointercapture',endBag);
-    $('storyTest').onclick=()=>$('test').click();
-    $('storySnooze').onclick=()=>this.snoozeDirect();
-    $('storyStop').onclick=()=>this.emergencyStop();
-    const pet=$('storyHoldPet');pet.addEventListener('pointerdown',e=>{if(['PET_READY','PETTING'].includes(this.stage)){this.petPointer=e.pointerId;this.holdPet=true;pet.setPointerCapture(e.pointerId)}});
-    ['pointerup','pointercancel','lostpointercapture'].forEach(name=>pet.addEventListener(name,()=>{if(this.holdPet){this.holdPet=false;this.petPointer=null}}));
-    const pour=$('storyHoldPour');pour.addEventListener('pointerdown',e=>{if(['FEED_READY','POURING'].includes(this.stage)){this.holdPour=true;pour.setPointerCapture(e.pointerId)}});
-    ['pointerup','pointercancel','lostpointercapture'].forEach(name=>pour.addEventListener(name,()=>{this.holdPour=false;if(this.stage==='POURING')this.transition('FEED_READY')}));
-    document.addEventListener('visibilitychange',()=>{if(!document.hidden)this.updateWindow(true)});
-    window.addEventListener('focus',()=>this.updateWindow(true));
-  }
-  renderProgress(){
-    const pet=['PET_READY','PETTING'].includes(this.stage),pour=['FEED_READY','POURING'].includes(this.stage);
-    const p=pet?Math.min(100,Math.round(this.petProgress/(Math.max(1,timings.petSec)*65)*100)):pour?Math.min(100,Math.round(this.pourProgress/(Math.max(1,timings.feedSec)*1000)*100)):0;
-    $('storyProgressWrap').hidden=!(pet||pour);$('storyProgressLabel').textContent=pet?'💗 نوازش':'🥣 غذا';$('storyProgressFill').style.width=p+'%';$('storyProgressNumber').textContent=p+'٪';
-  }
-  render(){
-    $('pixelHouse').dataset.stage=this.stage;
-    const notes={
-      IDLE:['آدم اخمو کنار پنجره نشسته ☕','میو پایین خوابیده؛ منتظر زنگ بعدی هستیم.','☾ خانه آرومه'],
-      ALARM_REACT:['میــــو! گربه بیدار شد 😾','شخصیتت سیگار رو کنار می‌ذاره و از مبل بلند می‌شه.','! وقت بیداری'],
-      WALK_TO_CAT:['داره از پله‌ها میاد پایین 🚶','یکم صبر کن تا به میو برسه…','↓ به سوی میو'],
-      PET_READY:['حالا خودت میو رو نوازش کن! 🐾','انگشتت رو چند بار روی بدن گربه بکش؛ فقط لمس ساده کافی نیست.','♡ نوازش کن'],
-      PETTING:['آخی! میو داره آروم می‌شه 💗','ادامه بده؛ هر حرکت واقعی انگشت حساب می‌شه.','♡ نوازش کن'],
-      SNOOZED:['میو خوابش برده 💤','آلارم اسنوز شد؛ شخصیت می‌ره دنبال غذا.','💤 اسنوز شد'],
-      WALK_TO_CLOSET:['وقت پیدا کردن غذاست 🧺','شخصیت از پله‌ها بالا می‌ره طرف کمد غذا.','↑ به کمد'],
-      SEARCH_FOOD:['توی کمد دنبال غذا می‌گرده 🧺','تا پیدا شدن غذا کمی صبر کن…','🔎 دنبال غذا'],
-      CARRY_FOOD:['غذا پیدا شد! 🥫','شخصیت پاکت غذا رو از پله‌ها میاره پایین.','↓ پاکت غذا'],
-      FEED_READY:['حالا نوبت توئه! 🥣','پاکت غذا رو بکش بالای ظرف و نگه دار تا غذا بریزه.','🍽️ غذا بریز'],
-      POURING:['خوشمزه‌ست! داره کاسه پر می‌شه 🐟','تا پر شدن ظرف، پاکت رو روی کاسه نگه دار.','🍽️ غذا بریز'],
-      EATING:['آفرین! میو داره می‌خوره 😻','آلارم کامل خاموش شد؛ میو خیلی خوشحاله.','✓ میو سیر شد'],
-      RETURN_TO_SOFA:['وقت برگشتن به مبل 🛋️','شخصیت از پله‌ها برمی‌گرده و استراحت می‌کنه.','↗ به مبل'],
-      COMPLETED:['تموم شد؛ روز خوبی داشته باشی! ✨','میو غذا خورده و شخصیت برگشته به مبل.','✓ پایان داستان']};
-    const [title,detail,pill]=notes[this.stage]||notes.IDLE;
-    $('pixelStageTitle').textContent=title;$('pixelStageDetail').textContent=detail;$('storyStagePill').textContent=pill;
-    $('storyHelp').textContent=detail;
-    $('storySmoke').hidden=this.stage!=='IDLE';this.carryEl.hidden=this.stage!=='CARRY_FOOD';
-    $('storyTest').hidden=this.active&&this.stage!=='COMPLETED';
-    $('storySnooze').hidden=!(this.active&&!this.snoozeScheduled&&['ALARM_REACT','WALK_TO_CAT','PET_READY','PETTING'].includes(this.stage));
-    $('storyStop').hidden=!this.active||['COMPLETED','IDLE'].includes(this.stage);
-    $('storyHoldPet').hidden=!['PET_READY','PETTING'].includes(this.stage);
-    $('storyHoldPour').hidden=!['FEED_READY','POURING'].includes(this.stage);
-    $('storyPetZone').setAttribute('aria-disabled',String(!['PET_READY','PETTING'].includes(this.stage)));
-    this.renderProgress();
-  }
-}
-const story=new PixelStory();window.story=story;
-function updatePixelScene(){story.tick()}
-updateProfileUI();refreshAlarmDiagnostics();
-// A fresh Android install gets onboarding; a migrated install is never blocked.
-if(profileCanUseNative&&!profile.onboardingComplete&&!(typeof Android.isRinging==='function'&&Android.isRinging()))showOnboarding(1,false);
-
 function clockValue(a){return two(a.h)+':'+two(a.m)}
 function daysText(a){return a.days===0?'فقط یک‌بار':a.days===127?'هر روز':dayFull.filter((_,i)=>a.days&(1<<i)).join(' · ')}
 function updateNextAlarm(){
@@ -1171,16 +753,16 @@ window.onMeowPreviewError=message=>{$('customStatus').textContent='⚠ '+message
 $('customStatus').textContent=NATIVE&&Android.hasCustomMeow()?'✓ فایل شخصی قبلی آماده است':'';
 function checkPermission(){if(NATIVE)$('permissionHelp').hidden=Android.canSetExactAlarms();else $('permissionHelp').hidden=true}
 $('requestAlarmPermission').onclick=()=>{if(NATIVE)Android.requestExactAlarmPermission()};
-$('stopAlarm').onclick=()=>{if(story.active){story.emergencyStop();return}if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;food=0;ph=null};
+$('stopAlarm').onclick=()=>{if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;food=0;ph=null};
 async function lock(){try{if(NATIVE&&navigator.wakeLock&&Android.isRinging())await navigator.wakeLock.request('screen')}catch(e){}}
 $('test').onclick=()=>{initAudio();done=false;if(NATIVE){if(!Android.canSetExactAlarms()){checkPermission();return}if(!alarmList.some(a=>a.id===focusId)&&alarmList.length)focusId=alarmList[0].id;Android.testAlarm(focusId);return}testAt=Date.now()+5000};
 document.addEventListener('pointerdown',initAudio);
-function fire(){if(mode==='ringing')return;mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;done=false;ringStart=performance.now()/1000;nextMeow=0;if(profile.roomMode==='pixel')story.start()}
+function fire(){if(mode==='ringing')return;mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;done=false;ringStart=performance.now()/1000;nextMeow=0}
 setInterval(()=>{const n=new Date(),hm=two(n.getHours())+':'+two(n.getMinutes());$('clock').textContent=hm;
   if(testAt&&Date.now()>=testAt){testAt=0;fire()}
   else if(!NATIVE&&alarmList.some(a=>a.on&&clockValue(a)===hm)&&fired!==hm+n.getDate()){fired=hm+n.getDate();fire()}},500);
-window.nativeRing=()=>{$('onboarding').hidden=true;if(profile.roomMode==='pixel'&&story.active&&story.stage!=='COMPLETED'){story.start();return}if(mode==='ringing')return;mode='idle';fire()};
-window.nativeStopped=()=>{if(profile.roomMode==='pixel'&&story.active){story.nativeRinging=false;return}if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
+window.nativeRing=()=>{if(mode==='ringing')return;mode='idle';fire()};
+window.nativeStopped=()=>{if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
 document.querySelectorAll('[data-jump]').forEach(button=>{
   button.addEventListener('click',()=>{
     const id=button.dataset.jump;

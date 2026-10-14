@@ -24,28 +24,20 @@ class AlarmService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) {
-            AlarmDiagnostics.mark(this, "stop_requested")
             stopRing()
             stopSelf()
             return START_NOT_STICKY
         }
         if (Ring.active) return START_NOT_STICKY
-        AlarmDiagnostics.mark(this, "trigger_received")
         val id = intent?.getIntExtra("id", 2) ?: 2
         Alarms.onTriggered(this, id)
         try {
-            AlarmDiagnostics.mark(this, "before_foreground")
             goForeground()
-            AlarmDiagnostics.mark(this, "foreground_started")
             Ring.active = true
-            AlarmDiagnostics.mark(this, "before_meow")
             startSound()
-            AlarmDiagnostics.mark(this, "before_ui_callback")
             runCatching { Ring.listener?.invoke() }
                 .onFailure { Log.e("MeowAlarm", "Alarm UI listener failed", it) }
-            AlarmDiagnostics.mark(this, "ui_callback_returned")
         } catch (ex: Exception) {
-            AlarmDiagnostics.mark(this, "startup_exception_${ex.javaClass.simpleName}")
             Log.e("MeowAlarm", "Alarm service startup failed", ex)
             stopSelf()
         }
@@ -97,8 +89,6 @@ class AlarmService : Service() {
             Log.w("MeowAlarm", "Selected sound $selected failed; using bundled cute meow")
             playSelected("cute")
         }
-        AlarmDiagnostics.mark(this, "meow_started_or_fallback")
-        AlarmDiagnostics.mark(this, "before_vibration")
         // A vibration exception must never stop the audio.
         try {
             val vibrator = getSystemService(Vibrator::class.java)
@@ -114,7 +104,6 @@ class AlarmService : Service() {
         } catch (ex: Exception) {
             Log.e("MeowAlarm", "Vibration failed; audio continues", ex)
         }
-        AlarmDiagnostics.mark(this, "vibration_started_or_skipped")
     }
 
     private fun playSelected(sound: String): Boolean {
@@ -160,7 +149,6 @@ class AlarmService : Service() {
     }
 
     override fun onDestroy() {
-        AlarmDiagnostics.mark(this, "service_destroyed")
         stopRing()
         super.onDestroy()
     }

@@ -191,58 +191,6 @@ object Alarms {
     }
 }
 
-/** Personalization is never stored inside alarms_v2 and does not reschedule alarms. */
-object ProfileStore {
-    private const val KEY = "profile_v1"
-
-    fun init(c: Context) {
-        val p = Alarms.prefs(c)
-        if (p.contains(KEY)) return
-        // The check runs in Activity.onCreate BEFORE the WebView requests getAlarms().
-        // Existing installations skip mandatory onboarding to avoid blocking their alarms.
-        val upgrading = p.contains("alarms_v2") || p.contains("h") || p.contains("m")
-        val value = JSONObject().put("avatar", "male").put("cat", "tabby")
-            .put("roomMode", "classic").put("onboardingComplete", upgrading)
-        p.edit().putString(KEY, value.toString()).commit()
-    }
-
-    fun get(c: Context): String {
-        init(c)
-        return Alarms.prefs(c).getString(KEY, "{}") ?: "{}"
-    }
-
-    fun set(c: Context, raw: String): Boolean {
-        return try {
-        if (raw.length > 1024) return false
-        val input = JSONObject(raw)
-        val previous = JSONObject(get(c))
-        val avatar = input.optString("avatar", previous.optString("avatar", "male"))
-        val cat = input.optString("cat", previous.optString("cat", "tabby"))
-        val room = input.optString("roomMode", previous.optString("roomMode", "classic"))
-        if (avatar !in setOf("male", "female") ||
-            cat !in setOf("tabby", "orange", "black", "white", "calico") ||
-            room !in setOf("classic", "pixel")) return false
-        val complete = input.optBoolean("onboardingComplete", previous.optBoolean("onboardingComplete", false))
-        val clean = JSONObject().put("avatar", avatar).put("cat", cat)
-            .put("roomMode", room).put("onboardingComplete", complete)
-        Alarms.prefs(c).edit().putString(KEY, clean.toString()).commit()
-    } catch (e: Exception) {
-        Log.w("MeowAlarm", "Invalid avatar/cat settings", e)
-        false
-        }
-    }
-}
-
-/** Lightweight breadcrumbs for vendor-specific crashes; no personal information is logged. */
-object AlarmDiagnostics {
-    fun mark(c: Context, stage: String) {
-        Log.i("MeowAlarm", "alarm_stage=$stage")
-        Alarms.prefs(c).edit().putString("alarm_last_stage", stage).commit()
-    }
-    fun last(c: Context): String =
-        Alarms.prefs(c).getString("alarm_last_stage", "No alarm triggered yet") ?: "Unknown"
-}
-
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(c: Context, i: Intent) {
         when (i.action) {
@@ -254,18 +202,6 @@ class BootReceiver : BroadcastReceiver() {
 }
 
 class Bridge(private val c: Context) {
-    @JavascriptInterface fun getProfile(): String = ProfileStore.get(c)
-    @JavascriptInterface fun setProfile(json: String): Boolean = ProfileStore.set(c, json)
-    @JavascriptInterface fun getLastAlarmStage(): String = AlarmDiagnostics.last(c)
-    @JavascriptInterface fun openAppSettings() {
-        val a = c as? Activity ?: return
-        a.runOnUiThread {
-            runCatching { a.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.parse("package:${c.packageName}"))) }
-                .onFailure { Log.e("MeowAlarm", "Could not open application settings", it) }
-        }
-    }
-
     @JavascriptInterface fun getAlarms(): String {
         val result = JSONArray()
         Alarms.read(c).forEach { result.put(it.toJson()) }
