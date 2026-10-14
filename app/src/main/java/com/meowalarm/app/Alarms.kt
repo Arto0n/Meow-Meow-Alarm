@@ -254,7 +254,16 @@ class Bridge(private val c: Context) {
     @JavascriptInterface fun silence() { c.stopService(Intent(c, AlarmService::class.java)) }
     @JavascriptInterface fun dismiss() { silence(); Alarms.cancelSnooze(c) }
     @JavascriptInterface fun isRinging(): Boolean = Ring.active
-    @JavascriptInterface fun hasCustomMeow(): Boolean = c.getFileStreamPath("custom_meow_audio").exists()
+    @JavascriptInterface fun getDefaultSound(): String =
+        Alarms.prefs(c).getString("default_meow_sound", "real") ?: "real"
+
+    @JavascriptInterface fun setDefaultSound(sound: String) {
+        if (sound in setOf("real", "cute", "custom")) {
+            Alarms.prefs(c).edit().putString("default_meow_sound", sound).apply()
+        }
+    }
+
+    @JavascriptInterface fun hasCustomMeow(): Boolean = MeowAudio.customFile(c).isFile && MeowAudio.customFile(c).length() > 0
     @JavascriptInterface fun chooseCustomMeow() {
         (c as? MainActivity)?.let { a -> a.runOnUiThread { a.selectCustomMeow() } }
     }

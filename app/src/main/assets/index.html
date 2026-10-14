@@ -59,18 +59,28 @@ body.ring{animation:flash .5s infinite alternate}
 :root{--bg:#342d46;--ink:#49364a;--card:#fff1d9;--pink:#d66c8a;--sun:#f9d58e;--fg:#382b3b;--sage:#a9bf9a;--shadow:#201d31}
 body{background:#342d46;background-image:linear-gradient(180deg,#39314f 0%,#765773 48%,#d8a887 100%);background-attachment:fixed;gap:1px;padding:18px 14px 32px;color:var(--fg);font-size:1rem}
 .masthead{text-align:center;color:#fff4de;margin:0 0 16px}.masthead h1{font-weight:900;color:#fff4de;text-shadow:3px 4px #36273f;margin:0;font-size:2.5rem}.masthead p{margin:4px 0;font-size:.88rem}.pixel-stars{color:#f5dcb1;letter-spacing:10px}
-.card{border:3px solid #57435e;border-radius:12px;box-shadow:5px 5px 0 #281f39;background:#fff1d9;padding:16px;margin-bottom:16px;max-width:580px}
+.card{border:3px solid #57435e;border-radius:12px;box-shadow:5px 5px 0 #281f39;background:#fff1d9;color:#382b3b;padding:16px;margin-bottom:16px;max-width:580px}
 .now-card{padding:12px 16px;text-align:center;background:#fce8c2}.clock{border:none;background:transparent;box-shadow:none;font-weight:900;letter-spacing:3px;color:#57405b;font-family:monospace;font-size:3.6rem;margin:0;padding:0}.clockHint{margin:0;color:#665563;font-size:.78rem}.eyebrow{font-size:.72rem;letter-spacing:1px;color:#836c71}
 h2,h3{margin:0 0 12px;font-size:1.12rem}.sectionHead{display:flex;align-items:center;justify-content:space-between;gap:8px}.sectionHead h2{margin:0}
 button{border:2px solid #5e465e;border-radius:8px;box-shadow:3px 3px 0 #4b3a56;background:#d66c8a;color:white;font-size:.9rem;font-weight:bold;padding:9px 14px}
 button.secondary{background:#f8dbad;color:#4e3854}button.danger{background:#ac5770}.sectionHead button{background:#95aa87;color:#242e25}
 button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #4b3a56}
-.alarms-panel{padding:14px}.alarm-list{display:grid;gap:10px;margin-top:14px}.alarm-card{display:flex;gap:12px;align-items:center;justify-content:space-between;background:#fffaf0;border:2px solid #d5bca7;border-radius:8px;padding:10px 11px}.alarm-card.off{opacity:.6}.alarm-title{font-weight:bold;font-size:.9rem}.alarm-time{direction:ltr;unicode-bidi:isolate;font-family:monospace;font-size:1.7rem;font-weight:900;color:#54435b}.alarm-sub{font-size:.73rem;opacity:.8;margin-top:3px}.alarm-ops{display:flex;gap:8px;align-items:center}.alarm-ops button{font-size:.78rem;padding:7px}.alarm-ops input{width:20px;height:20px;accent-color:#b85d79}
+.alarms-panel{padding:14px}.alarm-list{display:grid;gap:10px;margin-top:14px}.alarm-card{display:flex;gap:12px;align-items:center;justify-content:space-between;background:#fffaf0;border:2px solid #d5bca7;border-radius:8px;padding:10px 11px}.alarm-card.off{opacity:.6}.alarm-title{font-weight:bold;font-size:.9rem}.alarm-time{direction:ltr;unicode-bidi:isolate;font-family:monospace;font-size:1.7rem;font-weight:900;color:#54435b}.alarm-sub{font-size:.73rem;opacity:.8;margin-top:3px}.alarm-ops{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:end}.alarm-ops button{font-size:.78rem;padding:7px}.alarm-ops input{width:20px;height:20px;accent-color:#b85d79}
 .editor{padding-top:12px;border-top:2px dashed #caab9c;margin-top:14px}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0;font-weight:bold;font-size:.86rem}.inlinefield{display:flex;gap:9px;align-items:center;margin:12px 0}
 input[type=text],input[type=number],select,input[type=time]{font:inherit;padding:10px;border:2px solid #795b71;border-radius:7px;background:#fffdf7;color:#47334c;max-width:100%;font-size:1rem}
 #pickTime{display:inline-block;font-size:1.25rem;background:#f8dba2;color:#4b364c}#at{display:block}.native #at{display:none}.native #pickTime{display:inline-block}.days{display:flex;flex-wrap:wrap;gap:5px}.days label{background:#fff9ed;border:2px solid #d4b4a6;border-radius:6px;padding:5px 7px;font-size:.75rem}.days label:has(input:checked){background:#e3b4ac;border-color:#ad7080}
 .extras summary{font-weight:bold;cursor:pointer;list-style:none}.extras summary:before{content:'▸ ';color:#ca6884}.extras[open] summary{margin-bottom:12px}.library{margin-bottom:16px}.library .row{justify-content:start}.hintText{font-size:.78rem;opacity:.8}.timing{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin:12px 0}.timing label{display:flex;align-items:center;gap:7px;font-size:.82rem}.timing input{width:65px;padding:5px;font-size:1rem}
 .permission{background:#fff0bc}.permission p{font-size:.85rem}.scene{padding:6px;background:#d7c29c}.scene svg{border-radius:4px;image-rendering:pixelated}.meter{border-color:#6b5267;background:#fff1da}#bar{background:#a6c09c}#msg{color:#fff5e5;text-shadow:1px 1px #543957;font-weight:bold}#snd{margin-inline-start:0}.note{color:#fce6d0}
+
+/* Settings cards stay readable even when Android uses dark mode. */
+.card{color:#382b3b}
+.extras summary,.extras h3,.extras label,.extras .hintText,.extras .status-text{color:#382b3b}
+.sound-options{display:grid;gap:8px;margin:10px 0}
+.sound-option{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:#fffaf0;border:2px solid #d8bdad;border-radius:8px;padding:9px}
+.sound-option strong{flex:1;min-width:76px;color:#382b3b}
+.sound-option button{padding:6px 10px}
+.sound-option button.selected{background:#a9bf9a;color:#24382b;border-color:#4b6b4c}
+.status-text{font-size:.82rem;line-height:1.6;margin:8px 2px;color:#382b3b}
 [hidden]{display:none!important}
 @media(max-width:400px){.masthead h1{font-size:2rem}.clock{font-size:3rem}.alarm-card{gap:6px;padding:7px}.alarm-time{font-size:1.45rem}.alarm-ops button{padding:6px}}
 </style>
@@ -94,9 +104,16 @@ input[type=text],input[type=number],select,input[type=time]{font:inherit;padding
   </div>
 </section>
 <details class="card extras"><summary>🎵 صداهای میو و تنظیمات بازی</summary>
-  <div class="library"><div class="sectionHead"><h3>صدای گربه</h3></div><div class="row"><button class="secondary" data-preview="real">▶ واقعی</button><button class="secondary" data-preview="cute">▶ بانمک</button><button class="secondary" data-preview="custom">▶ صدای من</button></div>
-    <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus"></span></div>
-    <p class="hintText">صدای واقعی داخل فایل برنامه ذخیره می‌شود و برای آلارم نیازی به اینترنت نیست.</p></div>
+  <div class="library"><div class="sectionHead"><h3>صدای گربه</h3></div>
+    <p class="hintText">▶ برای گوش‌دادن، ✓ برای انتخاب صدای آلارم. صدای انتخابی همان لحظه ذخیره می‌شود.</p>
+    <div class="sound-options">
+      <div class="sound-option"><strong>🐈 واقعی</strong><button class="secondary" data-preview="real">▶ گوش بده</button><button type="button" data-select="real">✓ انتخاب</button></div>
+      <div class="sound-option"><strong>💗 بانمک</strong><button class="secondary" data-preview="cute">▶ گوش بده</button><button type="button" data-select="cute">✓ انتخاب</button></div>
+      <div class="sound-option"><strong>🎵 صدای من</strong><button class="secondary" data-preview="custom">▶ گوش بده</button><button type="button" data-select="custom">✓ انتخاب</button></div>
+    </div>
+    <p id="soundStatus" class="status-text" role="status"></p>
+    <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus" class="status-text" role="status"></span></div>
+    <p class="hintText">فایل باید روی گوشی قابل پخش باشد (مثل MP3، WAV، M4A). فایلِ معتبر در حافظهٔ برنامه ذخیره می‌شود و آلارم بدون اینترنت کار می‌کند.</p></div>
   <h3>⏳ زمان‌بندی داستان</h3>
   <div class="row"><button class="secondary" data-preset="quick">سریع</button><button class="secondary" data-preset="classic">کلاسیک</button><button class="secondary" data-preset="relaxed">آروم</button></div>
   <div class="timing">
@@ -328,6 +345,8 @@ let timings={...defaults,...readJSON(NATIVE?Android.getSettings():browserLoad('m
 let alarmList=readJSON(NATIVE?Android.getAlarms():browserLoad('meow-alarms')||'[]',[]);
 let editingId=null;
 let focusId=alarmList[0]?.id||100;
+let defaultSound=NATIVE?Android.getDefaultSound():(browserLoad('meow-default-sound')||'real');
+if(!['real','cute','custom'].includes(defaultSound))defaultSound='real';
 function clockValue(a){return two(a.h)+':'+two(a.m)}
 function daysText(a){return a.days===0?'فقط یک‌بار':a.days===127?'هر روز':dayFull.filter((_,i)=>a.days&(1<<i)).join(' · ')}
 function updateEditorTime(){$('pickTime').textContent='⏰ '+$('at').value+' · انتخاب ساعت'}
@@ -345,29 +364,36 @@ function renderAlarms(){const root=$('alarmList');root.replaceChildren();
     const toggle=document.createElement('input');toggle.type='checkbox';toggle.checked=!!a.on;toggle.setAttribute('aria-label','فعال کردن '+(a.label||'alarm'));
     toggle.onchange=()=>{a.on=toggle.checked;persistAlarm(a);checkPermission()};
     const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='ویرایش';edit.onclick=()=>openEditor(a.id);
-    ops.append(toggle,edit);item.append(info,ops);root.appendChild(item)
+    const test=document.createElement('button');test.type='button';test.className='secondary';test.textContent='۵ث تست';
+    test.onclick=()=>{focusId=a.id;renderSoundSelection();if(NATIVE){
+      if(!Android.canSetExactAlarms()){checkPermission();return}Android.testAlarm(a.id)
+    }else{testAt=Date.now()+5000}};
+    ops.append(toggle,edit,test);item.append(info,ops);root.appendChild(item)
   }
 }
 function persistAlarm(a){if(NATIVE){const result=readJSON(Android.saveAlarm(JSON.stringify(a)),{});if(!result.id){alert('ذخیره نشد');return}focusId=result.id}
   else{if(!a.id||a.id<100)a.id=Math.max(99,...alarmList.map(x=>x.id))+1;const i=alarmList.findIndex(x=>x.id===a.id);if(i<0)alarmList.push(a);else alarmList[i]=a;focusId=a.id}
-  refreshAlarms()}
+  refreshAlarms();renderSoundSelection()}
 function openEditor(id=null){
   editingId=id;
-  const a=alarmList.find(x=>x.id===id)||{h:7,m:0,on:true,days:127,label:'Wake up',sound:'real'};
+  if(id!==null)focusId=id;
+  const a=alarmList.find(x=>x.id===id)||{h:7,m:0,on:true,days:127,label:'Wake up',sound:defaultSound};
   $('editorTitle').textContent=id?'ویرایش آلارم':'آلارم جدید';$('label').value=a.label||'';$('at').value=clockValue(a);
   $('on').checked=!!a.on;$('alarmSound').value=a.sound||'real';
   $('days').replaceChildren();for(let i=0;i<7;i++){const label=document.createElement('label'),ck=document.createElement('input');ck.type='checkbox';ck.value=String(i);ck.checked=!!(a.days&(1<<i));label.title=dayFull[i];label.append(ck,document.createTextNode(' '+dayNames[i]));$('days').appendChild(label)}
-  $('deleteAlarm').hidden=!id;$('editor').hidden=false;updateEditorTime();$('editor').scrollIntoView({behavior:'smooth',block:'nearest'});
+  $('deleteAlarm').hidden=!id;$('editor').hidden=false;updateEditorTime();renderSoundSelection();$('editor').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 $('addAlarm').onclick=()=>openEditor();$('cancelEdit').onclick=()=>{$('editor').hidden=true};
 $('saveAlarm').onclick=()=>{
   const fields=$('at').value.split(':');const days=[...$('days').querySelectorAll('input:checked')].reduce((mask,box)=>mask|(1<<Number(box.value)),0);
-  const a={id:editingId||0,h:Number(fields[0]),m:Number(fields[1]),on:$('on').checked,days,label:$('label').value.trim()||'Wake up',sound:$('alarmSound').value};
-  persistAlarm(a);$('editor').hidden=true;checkPermission()
+  const sound=$('alarmSound').value;
+  if(sound==='custom'&&NATIVE&&!Android.hasCustomMeow()){alert('اول یک فایل صوتی معتبر وارد کن.');return}
+  const a={id:editingId||0,h:Number(fields[0]),m:Number(fields[1]),on:$('on').checked,days,label:$('label').value.trim()||'Wake up',sound};
+  persistAlarm(a);$('editor').hidden=true;renderSoundSelection();checkPermission()
 };
 $('deleteAlarm').onclick=()=>{if(editingId===null)return;if(!confirm('این آلارم حذف بشه؟'))return;
   if(NATIVE)Android.deleteAlarm(editingId);else alarmList=alarmList.filter(a=>a.id!==editingId);
-  $('editor').hidden=true;refreshAlarms()
+  $('editor').hidden=true;refreshAlarms();renderSoundSelection()
 };
 function openAlarmTime(){if(NATIVE){const [h,m]=$('at').value.split(':').map(Number);Android.pickTime(h,m)}else $('at').showPicker?$('at').showPicker():$('at').focus()}
 $('pickTime').onclick=openAlarmTime;
@@ -380,15 +406,52 @@ function saveTimings(){const result={};for(const [key,[min,max]] of Object.entri
 }
 $('saveTimings').onclick=saveTimings;
 document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{timings={...presetConfigs[b.dataset.preset]};renderTimings();saveTimings()});
-document.querySelectorAll('[data-preview]').forEach(b=>b.onclick=()=>{if(NATIVE)Android.previewMeow(b.dataset.preview);else{initAudio();meow()}});
-$('importSound').onclick=()=>{if(NATIVE)Android.chooseCustomMeow();else alert('وارد کردن صدا در نسخهٔ اندروید فعاله')};
-window.onCustomMeowImported=ok=>{$('customStatus').textContent=ok?'✓ فایل صوتی ذخیره شد':'⚠ فایل صوتی وارد نشد';if(ok)$('alarmSound').value='custom'};
-$('customStatus').textContent=NATIVE&&Android.hasCustomMeow()?'✓ صدای شخصی آماده‌ست':'';
+function renderSoundSelection(){
+  const active=alarmList.find(a=>a.id===focusId);
+  const selected=active?.sound||defaultSound;
+  const names={real:'واقعی',cute:'بانمک',custom:'صدای من'};
+  document.querySelectorAll('[data-select]').forEach(b=>{
+    const chosen=b.dataset.select===selected;
+    b.classList.toggle('selected',chosen);
+    b.textContent=chosen?'✓ انتخاب‌شده':'✓ انتخاب';
+  });
+  $('soundStatus').textContent=active?
+    'صدای آلارم «'+(active.label||clockValue(active))+'»: '+names[selected]:
+    'صدای پیش‌فرض آلارم جدید: '+names[selected];
+}
+function selectSound(sound){
+  if(sound==='custom'&&NATIVE&&!Android.hasCustomMeow()){
+    $('customStatus').textContent='⚠ اول یک فایل صوتی معتبر وارد کن';return;
+  }
+  defaultSound=sound;
+  if(NATIVE)Android.setDefaultSound(sound);else browserSave('meow-default-sound',sound);
+  const active=alarmList.find(a=>a.id===focusId);
+  if(active)persistAlarm({...active,sound});
+  if(!$('editor').hidden)$('alarmSound').value=sound;
+  renderSoundSelection();
+}
+document.querySelectorAll('[data-select]').forEach(b=>b.onclick=()=>selectSound(b.dataset.select));
+document.querySelectorAll('[data-preview]').forEach(b=>b.onclick=()=>{
+  if(b.dataset.preview==='custom'&&NATIVE&&!Android.hasCustomMeow()){
+    $('customStatus').textContent='⚠ اول یک فایل صوتی معتبر وارد کن';return;
+  }
+  if(NATIVE)Android.previewMeow(b.dataset.preview);else{initAudio();meow()}
+});
+$('importSound').onclick=()=>{
+  if(NATIVE){$('customStatus').textContent='در حال انتخاب و بررسی فایل…';Android.chooseCustomMeow()}
+  else alert('وارد کردن صدا در نسخهٔ اندروید فعاله')
+};
+window.onCustomMeowImported=(ok,message='')=>{
+  $('customStatus').textContent=(ok?'✓ ':'⚠ ')+(message||(ok?'فایل صوتی آماده است':'فایل صوتی وارد نشد'));
+  if(ok)selectSound('custom');
+};
+window.onMeowPreviewError=message=>{$('customStatus').textContent='⚠ '+message};
+$('customStatus').textContent=NATIVE&&Android.hasCustomMeow()?'✓ فایل شخصی قبلی آماده است':'';
 function checkPermission(){if(NATIVE)$('permissionHelp').hidden=Android.canSetExactAlarms();else $('permissionHelp').hidden=true}
 $('requestAlarmPermission').onclick=()=>{if(NATIVE)Android.requestExactAlarmPermission()};
 $('stopAlarm').onclick=()=>{if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;food=0;ph=null};
 async function lock(){try{if(NATIVE&&navigator.wakeLock&&Android.isRinging())await navigator.wakeLock.request('screen')}catch(e){}}
-$('test').onclick=()=>{initAudio();done=false;if(NATIVE){if(!Android.canSetExactAlarms()){checkPermission();return}Android.testAlarm(focusId);return}testAt=Date.now()+5000};
+$('test').onclick=()=>{initAudio();done=false;if(NATIVE){if(!Android.canSetExactAlarms()){checkPermission();return}if(!alarmList.some(a=>a.id===focusId)&&alarmList.length)focusId=alarmList[0].id;Android.testAlarm(focusId);return}testAt=Date.now()+5000};
 document.addEventListener('pointerdown',initAudio);
 function fire(){if(mode==='ringing')return;mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;done=false;ringStart=performance.now()/1000;nextMeow=0}
 setInterval(()=>{const n=new Date(),hm=two(n.getHours())+':'+two(n.getMinutes());$('clock').textContent=hm;
@@ -396,7 +459,7 @@ setInterval(()=>{const n=new Date(),hm=two(n.getHours())+':'+two(n.getMinutes())
   else if(!NATIVE&&alarmList.some(a=>a.on&&clockValue(a)===hm)&&fired!==hm+n.getDate()){fired=hm+n.getDate();fire()}},500);
 window.nativeRing=()=>{if(mode==='ringing')return;mode='idle';fire()};
 window.nativeStopped=()=>{if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
-renderTimings();renderAlarms();checkPermission();
+renderTimings();renderAlarms();renderSoundSelection();checkPermission();
 if(NATIVE&&Android.isRinging())window.nativeRing();
 
 requestAnimationFrame(frame);

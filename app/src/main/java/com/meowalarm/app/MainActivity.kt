@@ -6,9 +6,11 @@ import android.app.TimePickerDialog
 import android.app.NotificationManager
 import android.content.Intent
 import android.media.AudioAttributes
-import android.media.AudioFormat
-import android.media.AudioTrack
 import android.media.MediaPlayer
+import org.json.JSONObject
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,7 +25,6 @@ import android.webkit.WebViewClient
 class MainActivity : Activity() {
     private lateinit var web: WebView
     private var previewPlayer: MediaPlayer? = null
-    private var previewTrack: AudioTrack? = null
     private val handler = Handler(Looper.getMainLooper())
     private val customSoundRequest = 4701
 
@@ -62,33 +63,46 @@ class MainActivity : Activity() {
         startActivityForResult(intent, customSoundRequest)
     }
 
+    private fun importResult(ok: Boolean, message: String) {
+        if (!::web.isInitialized) return
+        web.evaluateJavascript(
+            "window.onCustomMeowImported&&window.onCustomMeowImported($ok,${JSONObject.quote(message)})", null
+        )
+    }
+
     @Deprecated("Activity result API retained to avoid additional dependencies")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode != customSoundRequest || resultCode != RESULT_OK) return
         val uri = data?.data ?: return
+        val pending = File(filesDir, "custom_meow_audio.pending")
         try {
-            // Copy to private storage: sound must still work after device reboot and offline.
-            val file = getFileStreamPath("custom_meow_audio")
+            // Store a private copy for offline ringing. Never delete the last good import
+            // if the newly selected file is unreadable or unsupported on this phone.
             contentResolver.openInputStream(uri)?.use { source ->
-                file.outputStream().use { dest ->
+                pending.outputStream().use { dest ->
                     val buffer = ByteArray(8192)
                     var total = 0L
                     while (true) {
-                        val n = source.read(buffer)
-                        if (n < 0) break
-                        total += n
-                        require(total <= 10L * 1024 * 1024) { "Audio file exceeds 10 MB" }
-                        dest.write(buffer, 0, n)
+                        val size = source.read(buffer)
+                        if (size < 0) break
+                        if (size == 0) continue
+                        total += size
+                        require(total <= 25L * 1024 * 1024) { "فایل صوتی نباید بیشتر از ۲۵ مگابایت باشد" }
+                        dest.write(buffer, 0, size)
                     }
-                    require(total > 0) { "Empty audio file" }
+                    require(total > 0) { "فایل صوتی خالی است" }
                 }
-            } ?: error("Cannot read selected audio")
-            web.evaluateJavascript("window.onCustomMeowImported&&window.onCustomMeowImported(true)", null)
+            } ?: error("نمی‌توان فایل انتخاب‌شده را خواند")
+            MeowAudio.validateImportedFile(pending)
+            Files.move(pending.toPath(), MeowAudio.customFile(this).toPath(),
+                StandardCopyOption.REPLACE_EXISTING)
+            importResult(true, "فایل قابل پخش است و آمادهٔ آلارم شد")
         } catch (ex: Exception) {
-            getFileStreamPath("custom_meow_audio").delete()
-            Log.e("MeowAlarm", "Unable to import sound", ex)
-            web.evaluateJavascript("window.onCustomMeowImported&&window.onCustomMeowImported(false)", null)
+            Log.e("MeowAlarm", "Unable to import or decode sound", ex)
+            importResult(false, ex.message ?: "فرمت صوتی این فایل روی گوشی پشتیبانی نمی‌شود")
+        } finally {
+            pending.delete()
         }
     }
 
@@ -96,48 +110,28 @@ class MainActivity : Activity() {
         handler.removeCallbacksAndMessages(null)
         previewPlayer?.let { runCatching { it.stop() }; runCatching { it.release() } }
         previewPlayer = null
-        previewTrack?.let { runCatching { it.stop() }; runCatching { it.release() } }
-        previewTrack = null
     }
 
     fun previewMeow(type: String) {
         stopPreview()
         try {
-            val file = getFileStreamPath("custom_meow_audio")
-            val resource = resources.getIdentifier("real_cat_meow", "raw", packageName)
-            if (type == "cute" || (type == "real" && resource == 0) || (type == "custom" && !file.exists())) {
-                val samples = Meow.make(22050)
-                val track = AudioTrack.Builder()
-                    .setAudioAttributes(AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build())
-                    .setAudioFormat(AudioFormat.Builder()
-                        .setSampleRate(22050).setEncoding(AudioFormat.ENCODING_PCM_16BIT)
-                        .setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
-                    .setBufferSizeInBytes(samples.size * 2)
-                    .setTransferMode(AudioTrack.MODE_STATIC).build()
-                check(track.state == AudioTrack.STATE_INITIALIZED)
-                track.write(samples, 0, samples.size)
-                track.play()
-                previewTrack = track
-            } else {
-                val player = MediaPlayer()
-                player.setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).build())
-                if (type == "custom") player.setDataSource(file.absolutePath)
-                else {
-                    resources.openRawResourceFd(resource)?.use {
-                        player.setDataSource(it.fileDescriptor, it.startOffset, it.length)
-                    } ?: error("No real meow recording available")
-                }
-                player.setOnCompletionListener { stopPreview() }
-                player.prepare()
-                player.start()
-                previewPlayer = player
+            val player = MeowAudio.open(this, type, AudioAttributes.USAGE_MEDIA, loop = false)
+            player.setVolume(1f, 1f)
+            player.setOnCompletionListener { stopPreview() }
+            player.setOnErrorListener { _, what, extra ->
+                Log.e("MeowAlarm", "Preview error $what/$extra for $type")
+                stopPreview()
+                true
             }
-            handler.postDelayed({ stopPreview() }, 4500)
+            previewPlayer = player
+            player.start()
+            handler.postDelayed({ stopPreview() }, 9000)
         } catch (ex: Exception) {
-            Log.e("MeowAlarm", "Meow preview failed", ex)
+            Log.e("MeowAlarm", "Meow preview failed for $type", ex)
             stopPreview()
+            if (::web.isInitialized) web.evaluateJavascript(
+                "window.onMeowPreviewError&&window.onMeowPreviewError(${JSONObject.quote(ex.message ?: "پخش آزمایشی صدا ناموفق بود")})", null
+            )
         }
     }
 

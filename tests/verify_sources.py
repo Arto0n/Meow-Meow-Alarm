@@ -50,10 +50,11 @@ class ProjectChecks(unittest.TestCase):
     def test_timing_and_sound_controls(self):
         html = (ROOT / 'app/src/main/assets/index.html').read_text()
         native = (ROOT / 'app/src/main/java/com/meowalarm/app/AlarmService.kt').read_text()
+        audio = (ROOT / 'app/src/main/java/com/meowalarm/app/MeowAudio.kt').read_text()
         for name in ('petSec', 'snoozeSec', 'smokeDelaySec', 'smokeDurationSec', 'foodDelaySec', 'feedSec'):
             self.assertIn(name, html)
         self.assertIn('Android.chooseCustomMeow()', html)
-        self.assertIn('resources.getIdentifier("real_cat_meow"', native)
+        self.assertIn('resources.getIdentifier("real_cat_meow"', audio)
         self.assertNotIn('R.raw.real_cat_meow', native)
         self.assertNotIn('navigator.vibrate&&navigator.vibrate', html)
 

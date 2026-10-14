@@ -4,12 +4,11 @@ import android.app.*
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.media.AudioAttributes
-import android.media.AudioFormat
-import android.media.AudioTrack
 import android.media.MediaPlayer
 import android.os.*
-import kotlin.math.*
+import android.util.Log
 
+/** Native alarm audio runs independently of the WebView and of phone lock state. */
 class AlarmService : Service() {
     companion object {
         const val ACTION_RING = "com.meowalarm.app.action.RING"
@@ -18,18 +17,8 @@ class AlarmService : Service() {
         private const val NOTIFICATION_ID = 1001
     }
 
-    private var track: AudioTrack? = null
     private var meowPlayer: MediaPlayer? = null
-    private var vol = 0.8f
     private val handler = Handler(Looper.getMainLooper())
-    private val ramp = object : Runnable {
-        override fun run() {
-            if (track == null) return
-            vol = min(1f, vol + 0.05f)
-            runCatching { track?.setVolume(vol) }
-            handler.postDelayed(this, 2500)
-        }
-    }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -42,15 +31,14 @@ class AlarmService : Service() {
         if (Ring.active) return START_NOT_STICKY
         val id = intent?.getIntExtra("id", 2) ?: 2
         Alarms.onTriggered(this, id)
-        // Start foreground before media playback to survive screen-off / background mode.
         try {
             goForeground()
-            startSound()
             Ring.active = true
+            startSound()
             runCatching { Ring.listener?.invoke() }
-                .onFailure { android.util.Log.e("MeowAlarm", "Alarm UI listener failed", it) }
+                .onFailure { Log.e("MeowAlarm", "Alarm UI listener failed", it) }
         } catch (ex: Exception) {
-            android.util.Log.e("MeowAlarm", "Alarm service startup failed", ex)
+            Log.e("MeowAlarm", "Alarm service startup failed", ex)
             stopSelf()
         }
         return START_NOT_STICKY
@@ -88,7 +76,6 @@ class AlarmService : Service() {
             .build()
 
         if (Build.VERSION.SDK_INT >= 34) {
-            // This type exists on Android 14+ and applies to qualifying alarm apps.
             startForeground(NOTIFICATION_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED)
         } else {
             startForeground(NOTIFICATION_ID, n)
@@ -96,48 +83,13 @@ class AlarmService : Service() {
     }
 
     private fun startSound() {
-        if (meowPlayer != null || track != null) return
-        val sound = Alarms.active(this)?.sound ?: "real"
-        if (sound == "cute") startSynthesizedMeow()
-        else {
-            var candidate: MediaPlayer? = null
-            try {
-                val attributes = AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
-                val resource = resources.getIdentifier("real_cat_meow", "raw", packageName)
-                val custom = getFileStreamPath("custom_meow_audio")
-                candidate = if (sound == "custom" && custom.exists()) {
-                    MediaPlayer().apply {
-                        setAudioAttributes(attributes)
-                        setDataSource(custom.absolutePath)
-                        prepare()
-                    }
-                } else if (resource != 0) {
-                    MediaPlayer.create(this, resource, attributes, 0)
-                } else null
-                if (candidate == null) error("No bundled cat audio; run install-real-meow.ps1")
-                candidate.isLooping = true
-                candidate.setVolume(1f, 1f)
-                candidate.setOnErrorListener { failed, what, extra ->
-                    android.util.Log.e("MeowAlarm", "Recorded meow failed ($what, $extra)")
-                    if (meowPlayer === failed) meowPlayer = null
-                    runCatching { failed.release() }
-                    startSynthesizedMeow()
-                    true
-                }
-                candidate.start()
-                meowPlayer = candidate
-                candidate = null
-            } catch (ex: Exception) {
-                android.util.Log.e("MeowAlarm", "Recorded meow failed; using cute fallback", ex)
-                startSynthesizedMeow()
-            } finally {
-                runCatching { candidate?.release() }
-            }
+        if (meowPlayer != null) return
+        val selected = Alarms.active(this)?.sound ?: "real"
+        if (!playSelected(selected) && selected != "cute") {
+            Log.w("MeowAlarm", "Selected sound $selected failed; using bundled cute meow")
+            playSelected("cute")
         }
-        // Xiaomi / Android 12 can reject vibration; never allow it to crash playback.
+        // A vibration exception must never stop the audio.
         try {
             val vibrator = getSystemService(Vibrator::class.java)
             if (vibrator?.hasVibrator() == true) {
@@ -150,117 +102,54 @@ class AlarmService : Service() {
                 }
             }
         } catch (ex: Exception) {
-            android.util.Log.e("MeowAlarm", "Vibration failed; audio continues", ex)
+            Log.e("MeowAlarm", "Vibration failed; audio continues", ex)
         }
     }
 
-    /** Emergency audio fallback: a synthetic meow, never the phone's default ringtone. */
-    private fun startSynthesizedMeow() {
-        if (track != null || meowPlayer != null) return
-        val sampleRate = 22050
-        val samples = Meow.make(sampleRate)
-        var candidate: AudioTrack? = null
-        try {
-            candidate = AudioTrack.Builder()
-                .setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_ALARM)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .build()
-                )
-                .setAudioFormat(
-                    AudioFormat.Builder()
-                        .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
-                        .setSampleRate(sampleRate)
-                        .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
-                        .build()
-                )
-                .setBufferSizeInBytes(samples.size * Short.SIZE_BYTES)
-                .setTransferMode(AudioTrack.MODE_STATIC)
-                .build()
-
-            check(candidate.state == AudioTrack.STATE_INITIALIZED) { "AudioTrack not initialized" }
-            check(candidate.write(samples, 0, samples.size, AudioTrack.WRITE_BLOCKING) == samples.size) {
-                "Could not write full alarm audio buffer"
+    private fun playSelected(sound: String): Boolean {
+        var candidate: MediaPlayer? = null
+        return try {
+            val player = MeowAudio.open(this, sound, AudioAttributes.USAGE_ALARM, loop = true)
+            candidate = player
+            player.setVolume(1f, 1f)
+            player.setOnErrorListener { failed, what, extra ->
+                Log.e("MeowAlarm", "$sound meow playback error ($what, $extra)")
+                if (meowPlayer === failed) meowPlayer = null
+                runCatching { failed.release() }
+                if (Ring.active && sound != "cute") handler.post {
+                    if (Ring.active && meowPlayer == null) playSelected("cute")
+                }
+                true
             }
-            candidate.setLoopPoints(0, samples.size, -1)
-            vol = 0.8f
-            candidate.setVolume(vol)
-            candidate.play()
-            track = candidate
-            candidate = null // ownership moves to the service
-            handler.removeCallbacks(ramp)
-            handler.postDelayed(ramp, 1500)
+            player.start()
+            meowPlayer = player
+            candidate = null
+            true
         } catch (ex: Exception) {
-            android.util.Log.e("MeowAlarm", "Unable to start synthesized meow alarm audio", ex)
-            android.util.Log.e("MeowAlarm", "Synthesized meow also failed; alarm will still vibrate")
+            Log.e("MeowAlarm", "Unable to play $sound meow", ex)
+            false
         } finally {
-            // A failed AudioTrack must not leak its underlying native audio resources.
             runCatching { candidate?.release() }
         }
-
     }
 
     private fun stopRing() {
-        handler.removeCallbacks(ramp)
-        track?.let { runCatching { it.pause() }; runCatching { it.flush() }; runCatching { it.release() } }
-        track = null
+        handler.removeCallbacksAndMessages(null)
         meowPlayer?.let { runCatching { it.stop() }; runCatching { it.release() } }
         meowPlayer = null
         try {
             getSystemService(Vibrator::class.java)?.cancel()
         } catch (ex: Exception) {
-            android.util.Log.w("MeowAlarm", "Unable to cancel vibration", ex)
+            Log.w("MeowAlarm", "Unable to cancel vibration", ex)
         }
         stopForeground(STOP_FOREGROUND_REMOVE)
         Ring.active = false
         runCatching { Ring.listener?.invoke() }
-            .onFailure { android.util.Log.e("MeowAlarm", "UI callback failed", it) }
+            .onFailure { Log.e("MeowAlarm", "UI callback failed", it) }
     }
 
     override fun onDestroy() {
         stopRing()
         super.onDestroy()
-    }
-}
-
-object Meow {
-    fun make(sr: Int): ShortArray {
-        val out = ShortArray((sr * 1.9).toInt())
-        val dur = 0.7
-        var ph = 0.0
-        for (i in 0 until (sr * dur).toInt()) {
-            val t = i / sr.toDouble()
-            val u = t / dur
-            val f0 = when {
-                u < .25 -> 420 + 300 * (u / .25)
-                u < .57 -> 720 - 120 * ((u - .25) / .32)
-                else -> 600 - 260 * ((u - .57) / .43)
-            }
-            val sw = sin(PI * min(1.0, u * 1.2))
-            val f1 = 600 + 400 * sw
-            val f2 = 1800 + 700 * sw
-            ph += 2 * PI * (f0 + 10 * sin(2 * PI * 7 * t)) / sr
-            var s = 0.0
-            for (k in 1..24) {
-                val fk = k * f0
-                if (fk > 6000) break
-                val a = exp(-((fk - f1) / 260).pow(2)) + .6 * exp(-((fk - f2) / 520).pow(2))
-                s += a * sin(k * ph) / k.toDouble().pow(.2)
-            }
-            val env = min(1.0, t / .08) * min(1.0, (dur - t) / .12)
-            out[i] = (s * env * 2600).coerceIn(-32767.0, 32767.0).toInt().toShort()
-        }
-        // Original synthesis can be too quiet on phone speakers. Normalize
-        // the waveform without clipping; Android's alarm stream sets final loudness.
-        val peak = out.maxOfOrNull { kotlin.math.abs(it.toInt()) } ?: 0
-        if (peak > 0) {
-            val gain = 28000.0 / peak
-            for (i in out.indices) {
-                out[i] = (out[i].toDouble() * gain)
-                    .coerceIn(-30000.0, 30000.0).toInt().toShort()
-            }
-        }
-        return out
     }
 }
