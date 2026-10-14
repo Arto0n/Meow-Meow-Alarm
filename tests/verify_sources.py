@@ -35,8 +35,27 @@ class ProjectChecks(unittest.TestCase):
 
     def test_webview_does_not_overwrite_native_settings_on_load(self):
         html = (ROOT / 'app/src/main/assets/index.html').read_text()
-        self.assertIn('Android.getAlarmState()', html)
+        self.assertIn('Android.getAlarms()', html)
         self.assertNotIn("document.querySelector('.note').style.display='none';save();", html)
+
+    def test_multiple_alarm_api_and_ui(self):
+        source = (ROOT / 'app/src/main/java/com/meowalarm/app/Alarms.kt').read_text()
+        html = (ROOT / 'app/src/main/assets/index.html').read_text()
+        for name in ('getAlarms()', 'saveAlarm(json: String)', 'deleteAlarm(id: Int)', 'rescheduleAll(c: Context)'):
+            self.assertIn(name, source)
+        for name in ('id="alarmList"', 'id="addAlarm"', 'id="editor"', 'id="pickTime"'):
+            self.assertIn(name, html)
+        self.assertNotIn("$('clock').onclick=openAlarmTime", html)
+
+    def test_timing_and_sound_controls(self):
+        html = (ROOT / 'app/src/main/assets/index.html').read_text()
+        native = (ROOT / 'app/src/main/java/com/meowalarm/app/AlarmService.kt').read_text()
+        for name in ('petSec', 'snoozeSec', 'smokeDelaySec', 'smokeDurationSec', 'foodDelaySec', 'feedSec'):
+            self.assertIn(name, html)
+        self.assertIn('Android.chooseCustomMeow()', html)
+        self.assertIn('resources.getIdentifier("real_cat_meow"', native)
+        self.assertNotIn('R.raw.real_cat_meow', native)
+        self.assertNotIn('navigator.vibrate&&navigator.vibrate', html)
 
     def test_native_alarm_permissions(self):
         manifest = (ROOT / 'app/src/main/AndroidManifest.xml').read_text()

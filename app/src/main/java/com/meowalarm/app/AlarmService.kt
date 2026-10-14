@@ -39,16 +39,20 @@ class AlarmService : Service() {
             stopSelf()
             return START_NOT_STICKY
         }
-
-        // id=1 is the normal daily alarm. Arm tomorrow before starting playback.
-        if (intent?.getIntExtra("id", 0) == 1) Alarms.scheduleDaily(this)
-
-        // The service is started directly from AlarmManager's exact alarm PendingIntent,
-        // which is the reliable background entry point for an alarm clock.
-        goForeground()
-        startSound()
-        Ring.active = true
-        Ring.listener?.invoke()
+        if (Ring.active) return START_NOT_STICKY
+        val id = intent?.getIntExtra("id", 2) ?: 2
+        Alarms.onTriggered(this, id)
+        // Start foreground before media playback to survive screen-off / background mode.
+        try {
+            goForeground()
+            startSound()
+            Ring.active = true
+            runCatching { Ring.listener?.invoke() }
+                .onFailure { android.util.Log.e("MeowAlarm", "Alarm UI listener failed", it) }
+        } catch (ex: Exception) {
+            android.util.Log.e("MeowAlarm", "Alarm service startup failed", ex)
+            stopSelf()
+        }
         return START_NOT_STICKY
     }
 
@@ -93,54 +97,60 @@ class AlarmService : Service() {
 
     private fun startSound() {
         if (meowPlayer != null || track != null) return
-
-        // Play an offline recording of a real cat through Android's ALARM audio stream.
-        // The recording is bundled in res/raw by install-real-meow.ps1.
-        var candidate: MediaPlayer? = null
-        try {
-            val alarmAudio = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build()
-            candidate = MediaPlayer.create(this, R.raw.real_cat_meow, alarmAudio, 0)
-                ?: error("Could not decode bundled cat-meowing audio")
-            candidate.isLooping = true
-            candidate.setVolume(1f, 1f)
-            candidate.setOnErrorListener { failedPlayer, what, extra ->
-                android.util.Log.e("MeowAlarm", "Real cat audio error ($what, $extra); trying synthesized meow")
-                if (meowPlayer === failedPlayer) meowPlayer = null
-                runCatching { failedPlayer.release() }
+        val sound = Alarms.active(this)?.sound ?: "real"
+        if (sound == "cute") startSynthesizedMeow()
+        else {
+            var candidate: MediaPlayer? = null
+            try {
+                val attributes = AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+                val resource = resources.getIdentifier("real_cat_meow", "raw", packageName)
+                val custom = getFileStreamPath("custom_meow_audio")
+                candidate = if (sound == "custom" && custom.exists()) {
+                    MediaPlayer().apply {
+                        setAudioAttributes(attributes)
+                        setDataSource(custom.absolutePath)
+                        prepare()
+                    }
+                } else if (resource != 0) {
+                    MediaPlayer.create(this, resource, attributes, 0)
+                } else null
+                if (candidate == null) error("No bundled cat audio; run install-real-meow.ps1")
+                candidate.isLooping = true
+                candidate.setVolume(1f, 1f)
+                candidate.setOnErrorListener { failed, what, extra ->
+                    android.util.Log.e("MeowAlarm", "Recorded meow failed ($what, $extra)")
+                    if (meowPlayer === failed) meowPlayer = null
+                    runCatching { failed.release() }
+                    startSynthesizedMeow()
+                    true
+                }
+                candidate.start()
+                meowPlayer = candidate
+                candidate = null
+            } catch (ex: Exception) {
+                android.util.Log.e("MeowAlarm", "Recorded meow failed; using cute fallback", ex)
                 startSynthesizedMeow()
-                true
+            } finally {
+                runCatching { candidate?.release() }
             }
-            candidate.start()
-            meowPlayer = candidate
-            candidate = null  // service now owns the MediaPlayer
-        } catch (ex: Exception) {
-            android.util.Log.e("MeowAlarm", "Unable to play recorded cat audio", ex)
-            startSynthesizedMeow()
-        } finally {
-            runCatching { candidate?.release() }
         }
-
-        // Keep the audible alarm running even if MIUI/Android rejects vibration.
-        // Some devices throw SecurityException or runtime errors during vibrate().
+        // Xiaomi / Android 12 can reject vibration; never allow it to crash playback.
         try {
             val vibrator = getSystemService(Vibrator::class.java)
             if (vibrator?.hasVibrator() == true) {
                 val effect = VibrationEffect.createWaveform(longArrayOf(0, 400, 300), 0)
-                if (Build.VERSION.SDK_INT >= 31) {
-                    vibrator.vibrate(
-                        effect,
-                        VibrationAttributes.createForUsage(VibrationAttributes.USAGE_ALARM)
-                    )
-                } else {
+                if (Build.VERSION.SDK_INT >= 31) vibrator.vibrate(
+                    effect, VibrationAttributes.createForUsage(VibrationAttributes.USAGE_ALARM))
+                else {
                     @Suppress("DEPRECATION")
                     vibrator.vibrate(effect)
                 }
             }
         } catch (ex: Exception) {
-            android.util.Log.e("MeowAlarm", "Vibration failed; continuing audible alarm", ex)
+            android.util.Log.e("MeowAlarm", "Vibration failed; audio continues", ex)
         }
     }
 
@@ -204,7 +214,8 @@ class AlarmService : Service() {
         }
         stopForeground(STOP_FOREGROUND_REMOVE)
         Ring.active = false
-        Ring.listener?.invoke()
+        runCatching { Ring.listener?.invoke() }
+            .onFailure { android.util.Log.e("MeowAlarm", "UI callback failed", it) }
     }
 
     override fun onDestroy() {
