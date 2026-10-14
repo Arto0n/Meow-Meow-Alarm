@@ -156,11 +156,14 @@ object Alarms {
     }
 
     @Synchronized
-    fun remove(c: Context, id: Int) {
+    fun remove(c: Context, id: Int): Boolean {
         val entries = read(c)
-        entries.removeAll { it.id == id }
+        if (!entries.removeAll { it.id == id }) return false
         write(c, entries)
         cancel(c, id)
+        // If this alarm is waiting for a snooze, do not let it ring after deletion.
+        if (prefs(c).getInt("active_alarm_id", -1) == id) cancelSnooze(c)
+        return true
     }
 
     fun onTriggered(c: Context, alarmId: Int) {
@@ -212,7 +215,7 @@ class Bridge(private val c: Context) {
         "{}"
     }
 
-    @JavascriptInterface fun deleteAlarm(id: Int) = Alarms.remove(c, id)
+    @JavascriptInterface fun deleteAlarm(id: Int): Boolean = Alarms.remove(c, id)
     @JavascriptInterface fun getSettings(): String = Alarms.prefs(c).getString("scene_settings", "{}") ?: "{}"
     @JavascriptInterface fun setSettings(json: String) {
         val input = JSONObject(json)
