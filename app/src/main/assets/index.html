@@ -279,9 +279,117 @@ body.ring{animation:none}
 @media(min-width:720px){body{max-width:710px}.clock{font-size:4rem}.scene-card svg{max-height:470px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.masthead h1{animation:none}.ring .scene-card{transition:none}}
 
+
+/* Batch 5 — compact playable pixel-house, avatar/cat personalization. */
+:root[data-room-mode="pixel"] .scene-status,:root[data-room-mode="pixel"] .scene-controls{display:none}
+.pixel-floor{background-image:radial-gradient(#ffe3b022 2px,transparent 2px),linear-gradient(#e9bc92,#c59575);background-size:22px 22px,100% 100%}
+.pixel-catroom{background-image:radial-gradient(#fff2d72c 2px,transparent 2px),linear-gradient(#efcba3,#d9ab85);background-size:23px 22px,100% 100%}
+.pixel-catroom:before{content:"🎁  📚  🌿";position:absolute;top:22px;left:6%;font-size:1.1rem;padding:4px 8px;border-bottom:6px solid #a26f69;opacity:.9}
+.pixel-floor:first-of-type:before{content:"📕 📙 🌿";position:absolute;top:21px;left:5%;padding:3px 8px;border-bottom:6px solid #9f6b65;font-size:1.1rem}
+
+.mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#3d3452;padding:5px;border-radius:9px;margin:10px 11px;color:#fff}
+.mode-switch button{min-height:45px;background:#433850;color:#fcead4;border-color:#79617b;box-shadow:none;font-size:.83rem}
+.mode-switch button[aria-pressed="true"]{background:#ffda91;color:#433348;border-color:#fff0cc}
+:root[data-room-mode="pixel"] #classicRoom,:root[data-room-mode="pixel"] .scene-tip,:root[data-room-mode="pixel"] .meter,:root[data-room-mode="pixel"] .scene-controls #snd{display:none}
+:root[data-room-mode="classic"] #pixelHouse,:root[data-room-mode="classic"] #pixelControls{display:none}
+.pixel-house{position:relative;overflow:hidden;border-top:3px solid #57445d;background:#232a4b;padding:13px 10px 8px}
+.pixel-house:before{content:"✧ · ✦ · ⋆ ✧ ⋆ · ✦";position:absolute;inset:3px 0 auto;color:#ffe3a2;letter-spacing:7px;opacity:.7;text-align:center;pointer-events:none}
+.pixel-roof{height:22px;margin:0 5px -4px;background:repeating-linear-gradient(90deg,#684558 0 26px,#7b5362 26px 50px);clip-path:polygon(0 100%,10% 10%,90% 10%,100% 100%);border-bottom:5px solid #332939}
+.pixel-floor{position:relative;height:235px;overflow:hidden;border:5px solid #423247;box-shadow:inset 0 0 0 5px #855968;background-color:#ddab85;background-image:repeating-linear-gradient(90deg,transparent 0 23px,#f4c19e22 23px 27px),linear-gradient(#e6bb93,#bf906e);isolation:isolate}
+.pixel-floor+.pixel-floor{border-top:8px solid #58374b}
+.pixel-floor:after{position:absolute;inset:auto 0 0;content:"";height:27px;background:repeating-linear-gradient(90deg,#946b69 0 18px,#a98272 18px 36px);border-top:5px solid #6a4a57;z-index:-1}
+.pixel-room-name{position:absolute;top:9px;right:9px;background:#fff0c9;border:2px solid #5a4257;box-shadow:2px 3px #503648;padding:3px 7px;color:#4f394d;font-size:.74rem;font-weight:bold;z-index:5}
+.pixel-window{position:absolute;left:39%;top:20px;width:38%;height:95px;border:9px solid #784a60;box-shadow:4px 4px #563d59;background:linear-gradient(#524976,#a17b97 65%,#384b65 65%);overflow:hidden}
+.pixel-window:after{content:"";position:absolute;left:46%;top:0;bottom:0;width:7px;background:#e8baa4;box-shadow:-55px 45px 0 -1px #ffe1a0}
+.pixel-moon{position:absolute;left:17px;top:10px;width:24px;height:24px;background:#fce4a4;box-shadow:6px 0 0 #665577;image-rendering:pixelated}
+.pixel-wall{position:absolute;left:9%;top:26px;width:16%;height:62px;background:repeating-linear-gradient(90deg,#8e6477 0 13px,#dfb08c 13px 18px);border-bottom:7px solid #624557}
+.pixel-lamp{position:absolute;bottom:28px;left:6%;width:22px;height:36px;background:linear-gradient(#fce3a9 0 40%,#f2b865 40% 70%,#80556b 70%);box-shadow:0 0 19px 9px #fceab35c;border:3px solid #755467}
+.pixel-chair{position:absolute;bottom:25px;right:16%;width:80px;height:72px;border:7px solid #4b5565;background:#568276;box-shadow:7px 6px #74526b;border-radius:12px 12px 4px 4px}
+.pixel-decor{position:absolute;bottom:29px;left:5%;font-size:2rem;filter:drop-shadow(2px 3px #765d6d)}
+.pixel-catroom{height:250px;background-image:radial-gradient(circle at 90% 5%,#f6c989 0 25px,transparent 26px),linear-gradient(#f0c89c,#d4a57d)}
+.pixel-catroom .pixel-window{left:12%;width:26%;height:81px;top:30px}
+.pixel-cat-bed{position:absolute;bottom:23px;right:20%;width:115px;height:50px;background:#e4b5b7;border:7px solid #aa778e;box-shadow:4px 4px #775371;border-radius:40% 40% 45% 45%}
+.pixel-bowl{position:absolute;bottom:22px;left:22%;width:70px;height:27px;background:#ed8da1;border:5px solid #795168;border-radius:5px 5px 18px 18px;text-align:center;color:#ffdbaf;font-size:1rem;line-height:20px}
+.pixel-food{position:absolute;bottom:22px;left:16%;font-size:1.3rem;display:none;z-index:5}
+.pixel-house[data-stage="food-ready"] .pixel-food,.pixel-house[data-stage="feeding"] .pixel-food,.pixel-house[data-stage="fed"] .pixel-food{display:block}
+
+.pixel-steam{position:absolute;z-index:4;bottom:135px;right:25%;font-size:1.1rem;color:#fff1df;opacity:.65;animation:smokePuff 2.3s ease-out infinite}
+.pixel-house[data-stage="petting"] .pixel-steam,.pixel-house[data-stage="feeding"] .pixel-steam,.pixel-house[data-stage="fed"] .pixel-steam{display:none}
+.pixel-house[data-stage="searching"] .pixel-steam{opacity:0}
+.pixel-house[data-smoking="true"] .pixel-steam{opacity:.9;animation-duration:1.3s}
+@keyframes smokePuff{0%{transform:translateY(6px);opacity:.05}50%{opacity:.6}100%{transform:translateY(-28px);opacity:0}}
+.pixel-sprite{position:absolute;image-rendering:pixelated;object-fit:contain;filter:drop-shadow(4px 4px 0 #4b394a6f);transition:transform .6s ease,opacity .3s;user-select:none;-webkit-user-drag:none}
+#pixelManTop{width:119px;height:145px;right:14%;bottom:23px;z-index:3;animation:pixelBreath 2.7s ease-in-out infinite}
+#pixelManBottom{width:102px;height:132px;right:44%;bottom:20px;z-index:4;opacity:0;transform:translateY(-10px)}
+#pixelCat{width:136px;height:119px;right:15%;bottom:21px;z-index:5;animation:pixelBreath 2.6s ease-in-out infinite}
+.pixel-house[data-stage="ringing"] #pixelCat{animation:pixelBounce .5s ease-in-out infinite}
+.pixel-house[data-stage="petting"] #pixelManTop,.pixel-house[data-stage="feeding"] #pixelManTop,.pixel-house[data-stage="fed"] #pixelManTop{opacity:0;transform:translateY(20px)}
+.pixel-house[data-stage="petting"] #pixelManBottom,.pixel-house[data-stage="feeding"] #pixelManBottom,.pixel-house[data-stage="fed"] #pixelManBottom{opacity:1;transform:translateY(0)}
+.pixel-house[data-stage="searching"] #pixelManTop{transform:translateX(-30px);animation:pixelWalk 1.3s infinite alternate}
+.pixel-house[data-stage="fed"] #pixelCat{animation:pixelBounce 1.8s ease-in-out 2}
+.pixel-speech{position:absolute;bottom:133px;right:14%;background:#fff4d9;color:#6b4154;border:3px solid #765066;padding:5px 8px;font-weight:900;font-size:.9rem;z-index:6;display:none;box-shadow:3px 3px #473044}
+.pixel-house[data-stage="ringing"] .pixel-speech{display:block}
+@keyframes pixelBreath{50%{transform:translateY(3px)}}
+@keyframes pixelBounce{50%{transform:translateY(-10px)}}
+@keyframes pixelWalk{100%{transform:translateX(-65px)}}
+.pixel-status{display:flex;gap:9px;align-items:center;background:#283453;color:#ffebcc;padding:10px 12px;border-top:4px solid #a3767c;font-size:.83rem;line-height:1.7;min-height:70px}
+.pixel-status .p-cat{font-size:1.6rem}
+.pixel-status strong{display:block;font-size:.93rem;color:#ffe7ad}
+.pixel-controls{display:flex;gap:7px;flex-wrap:wrap;background:#283453;padding:4px 12px 14px}
+.pixel-controls button{flex:1;min-width:95px;min-height:50px;background:#ffd996;color:#3c3045;font-size:.82rem}
+.pixel-controls button.danger{background:#ffb2af;color:#5b2d43}
+.pixel-controls button:disabled{opacity:.5;cursor:not-allowed}
+.pixel-help{color:#fff0d3;background:#354260;padding:8px 11px;font-size:.72rem;text-align:center}
+.profile-settings{border:2px solid #d5b3a5;border-radius:9px;background:#fff9e9;padding:12px;margin:13px 14px 8px;color:#514052}
+.profile-settings .row{justify-content:start}.profile-settings button{font-size:.8rem}.profile-settings h3{margin:0 0 6px}
+.profile-settings p{margin:4px 0 12px;color:#776476;font-size:.78rem}
+.diagnostic-panel{border:2px dashed #cbb4a9;border-radius:8px;padding:10px 12px;margin:12px 14px;background:#fff6e5;color:#534255;font-size:.79rem}
+.diagnostic-panel button{font-size:.78rem;margin-top:7px}
+.onboarding-overlay{position:fixed;inset:0;z-index:2500;overflow-y:auto;background:#1c2549;background-image:radial-gradient(circle at 12% 15%,#ffe59a55 0 2px,transparent 3px),radial-gradient(circle at 81% 23%,#ffe59a55 0 2px,transparent 3px),linear-gradient(#1e2b50,#493655);padding:calc(28px + env(safe-area-inset-top,0px)) 13px calc(30px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center}
+.onboarding-card{width:min(100%,470px);background:#fff0d4;border:4px solid #51405a;box-shadow:7px 7px 0 #161c36;border-radius:15px;padding:17px 14px 21px;color:#473748}
+.onboarding-card h2{text-align:center;color:#483347;font-size:1.28rem;margin:10px 0 6px}
+.onboarding-card p{text-align:center;font-size:.85rem;color:#705b6c;margin:5px 0 12px}
+.ob-progress{text-align:center;font:900 .78rem monospace;color:#9c617e}
+.ob-topscene{display:flex;align-items:end;justify-content:space-around;min-height:130px;background:linear-gradient(#433c65,#9b7891 75%,#a77368 75%);border:3px solid #55405d;border-radius:8px;padding:9px;margin-bottom:12px}
+.ob-topscene img{max-height:115px;width:84px;object-fit:contain;image-rendering:pixelated}
+.ob-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:14px 0}
+.ob-grid.cats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ob-option{display:flex;flex-direction:column;align-items:center;justify-content:end;min-height:154px;background:#fff9e9;border:3px solid #c9afa5;border-radius:10px;box-shadow:3px 4px #dcc4aa;padding:7px 4px;color:#4f3a55}
+.ob-grid.cats .ob-option{min-height:120px}
+.ob-option[aria-pressed="true"]{background:#ffe2b7;border-color:#bb7285;box-shadow:0 0 0 3px #f9c98f,3px 4px #a77584}
+.ob-option img{width:90px;height:103px;object-fit:contain;image-rendering:pixelated}
+.ob-grid.cats .ob-option img{width:72px;height:77px}
+.ob-option strong{font-size:.85rem}
+.ob-next{width:100%;margin-top:10px;font-size:1rem;min-height:52px;background:#a7c99e;color:#304237}
+.ob-controls{display:flex;gap:10px;margin-top:11px}.ob-controls button{flex:1}
+.ob-cancel{background:#ffeacb;color:#54425a}
+@media(max-width:360px){.pixel-floor{height:205px}.pixel-catroom{height:220px}#pixelManTop{width:105px;height:132px}#pixelCat{width:112px;height:102px}.pixel-chair{right:12%;width:66px}.pixel-cat-bed{right:15%;width:95px}.ob-option{min-height:137px}.ob-grid.cats .ob-option{min-height:108px}.ob-grid.cats .ob-option img{width:60px;height:65px}}
+@media(prefers-reduced-motion:reduce){.pixel-sprite{animation:none!important;transition:none}}
+
 </style>
 </head>
 <body>
+<div id="onboarding" class="onboarding-overlay" role="dialog" aria-modal="true" aria-label="انتخاب شخصیت و گربه" hidden>
+ <div class="onboarding-card">
+  <div class="ob-progress" id="obProgress">۱ از ۲</div>
+  <div class="ob-topscene"><img id="obPreviewAvatar" alt="شخصیت انتخاب‌شده" src="sprites/avatar_male.png"><span style="font-size:2.3rem">🏠</span><img id="obPreviewCat" alt="گربه انتخاب‌شده" src="sprites/cat_tabby.png"></div>
+  <section id="chooseCharacter"><h2>✨ شخصیتت رو انتخاب کن</h2><p>قهرمان داستان میو کی باشه؟ بعداً می‌تونی عوضش کنی.</p>
+   <div class="ob-grid"><button type="button" class="ob-option" data-avatar="male" aria-pressed="true"><img src="sprites/avatar_male.png" alt="شخصیت مرد"><strong>👨 مرد</strong></button><button type="button" class="ob-option" data-avatar="female" aria-pressed="false"><img src="sprites/avatar_female.png" alt="شخصیت زن"><strong>👩 زن</strong></button></div>
+  </section>
+  <section id="chooseCat" hidden><h2>🐾 گربه‌ات رو انتخاب کن</h2><p>کدوم میو قراره هر روز بیدارت کنه؟</p>
+   <div class="ob-grid cats">
+    <button type="button" class="ob-option" data-cat="tabby" aria-pressed="true"><img src="sprites/cat_tabby.png" alt="گربه راه‌راه"><strong>راه‌راه</strong></button>
+    <button type="button" class="ob-option" data-cat="orange" aria-pressed="false"><img src="sprites/cat_orange.png" alt="گربه نارنجی"><strong>نارنجی</strong></button>
+    <button type="button" class="ob-option" data-cat="black" aria-pressed="false"><img src="sprites/cat_black.png" alt="گربه مشکی"><strong>مشکی</strong></button>
+    <button type="button" class="ob-option" data-cat="white" aria-pressed="false"><img src="sprites/cat_white.png" alt="گربه سفید"><strong>سفید</strong></button>
+    <button type="button" class="ob-option" data-cat="calico" aria-pressed="false"><img src="sprites/cat_calico.png" alt="گربه سه‌رنگ"><strong>سه‌رنگ</strong></button>
+   </div>
+  </section>
+  <div class="ob-controls"><button type="button" class="ob-cancel" id="obBack" hidden>↩ قبلی</button><button type="button" id="obCancel" class="ob-cancel" hidden>انصراف</button></div>
+  <button class="ob-next" type="button" id="obNext">بعدی ←</button>
+ </div>
+</div>
+
 <header class="masthead" id="top">
   <div class="brand-avatar" aria-hidden="true">🐈</div>
   <div class="brand-copy"><div class="smallcaps">THE COZY CAT CLOCK</div><h1>میو میو آلارم ✦</h1><p>بیدار شدن، ولی با یک کوچولوی پشمالو</p></div>
@@ -289,7 +397,20 @@ body.ring{animation:none}
 </header>
 <section class="card scene-card" id="roomSection" aria-label="اتاق میو و بازی تعاملی">
   <div class="scene-head"><h2>🛏️ اتاق کوچولوی میو</h2><span id="roomMood" class="scene-tag">● گربه خوابالو</span></div>
-  <div class="scene">
+  <div class="mode-switch" role="group" aria-label="انتخاب نمای اتاق"><button type="button" id="classicMode" aria-pressed="true">☕ اتاق کلاسیک</button><button type="button" id="pixelMode" aria-pressed="false">🏠 داستان پیکسلی</button></div>
+  <div class="pixel-house" id="pixelHouse" data-stage="idle" hidden>
+    <div class="pixel-roof"></div>
+    <div class="pixel-floor" aria-label="اتاق شخصیت کنار پنجره">
+      <span class="pixel-room-name">🪟 اتاق آدم‌ها</span><div class="pixel-window"><i class="pixel-moon"></i></div><div class="pixel-wall"></div><div class="pixel-chair"></div><span class="pixel-decor">🌿</span>
+      <span class="pixel-steam" aria-hidden="true">〰 〰</span><img class="pixel-sprite" id="pixelManTop" alt="شخصیت در کنار پنجره" src="sprites/avatar_male.png">
+    </div>
+    <div class="pixel-floor pixel-catroom" aria-label="اتاق گربه و ظرف غذا">
+      <span class="pixel-room-name">🐾 اتاق میو</span><div class="pixel-window"><i class="pixel-moon"></i></div><div class="pixel-cat-bed"></div><div class="pixel-bowl">♥</div>
+      <span class="pixel-food">🥣</span><img class="pixel-sprite" id="pixelManBottom" alt="شخصیت کنار گربه" src="sprites/avatar_male.png"><img class="pixel-sprite" id="pixelCat" alt="گربهٔ شما" src="sprites/cat_tabby.png"><span class="pixel-speech">میــــو!</span>
+    </div>
+    <div class="pixel-status" aria-live="polite"><span class="p-cat">🐱</span><div><strong id="pixelStageTitle">همه خوابن، چه آرامشی!</strong><span id="pixelStageDetail">آلارم که بزنه، میو شروع می‌کنه.</span></div></div>
+  </div>
+  <div class="scene" id="classicRoom">
 <svg id="s" viewBox="0 0 400 300" role="img" aria-label="گربه در اتاق گرم و دنج کنار مرد نشسته و می‌توانی نوازشش کنی">
   <defs>
     <pattern id="floorTile" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#b89883"/><rect width="10" height="10" fill="#d7b59a"/><rect x="10" y="10" width="10" height="10" fill="#d7b59a"/></pattern>
@@ -332,7 +453,7 @@ body.ring{animation:none}
     <path d="M100 200 H178 L180 254" fill="none" stroke-width="25"/>
     <path d="M100 200 H178 L180 254" fill="none" stroke="#cf9532" stroke-width="21"/>
     <path d="M170 256 Q172 246 188 248 Q208 250 208 260 Q208 266 196 266 H172Z" fill="#e8e4da"/>
-    <path d="M86 128 Q86 124 98 124 H122 Q134 124 134 130 V206 H86Z" fill="#0e8c8c"/>
+    <path d="M86 128 Q86 124 98 124 H122 Q134 124 134 130 V206 H86Z" id="femaleShirt" fill="#0e8c8c"/>
     <g stroke="#fff" stroke-width="2.2"><path d="M87 140H133M87 152H133M87 164H133M87 176H133M87 188H133M87 200H133"/></g>
     <rect x="99" y="112" width="16" height="16" fill="#ffd99a" stroke="none"/>
     <circle cx="80" cy="92" r="7" fill="#ffd99a"/>
@@ -341,7 +462,7 @@ body.ring{animation:none}
     <path d="M98 57l-3-5M104 54l-1-6M110 53l1-6M117 55l4-5M123 59l5-3" fill="none" stroke="#b8b2a0" stroke-width="2"/><path d="M96 60Q106 54 116 58" fill="none" stroke="#fff" stroke-width="2.4" opacity=".55"/>
     <g id="mEyesOpen"><circle cx="97" cy="87" r="11" fill="#fff"/><circle cx="123" cy="87" r="11" fill="#fff"/><circle id="pl" cx="97" cy="87" r="3.6" fill="#1f2a6b" stroke="none"/><circle id="pr" cx="123" cy="87" r="3.6" fill="#1f2a6b" stroke="none"/><path id="ll" fill="#ffd99a"/><path id="lr" fill="#ffd99a"/></g><path d="M86 101Q97 107 108 101M112 101Q123 107 134 101" fill="none" stroke-width="1.6" opacity=".55"/>
     <g id="mEyesHappy" style="display:none" fill="none" stroke-width="3"><path d="M87 89Q97 79 107 89"/><path d="M113 89Q123 79 133 89"/></g>
-    <path d="M85 68Q97 65 108 72M113 72Q125 65 137 68" fill="none" stroke-width="5"/>
+    <path d="M85 68Q97 65 108 72M113 72Q125 65 137 68" fill="none" stroke-width="5"/><g id="femaleHair" style="display:none" fill="#714352" stroke="#56324a" stroke-width="2"><path d="M78 76Q73 56 94 47Q116 39 134 54Q145 68 140 105L132 120L129 89Q136 74 129 65Q108 52 89 66L89 112L79 119Z"/><path d="M119 50Q142 46 143 64L152 75L145 81L139 68Z" fill="#a96480"/></g>
     <path id="mouthN" d="M104 110q8-3 16 0" fill="none"/><ellipse id="mouthO" cx="118" cy="109" rx="4" ry="3.2" fill="#7a2a2a" style="display:none"/>
     <path id="mouthH" d="M102 106q10 9 20 0" fill="none" style="display:none"/>
     <path d="M92 114v2M99 117v2M106 118v2M113 118v2M120 117v2M127 114v2" stroke-width="1.6"/>
@@ -387,7 +508,9 @@ body.ring{animation:none}
 <p class="scene-tip">✧ وقتی گربه میو کرد، با انگشت نوازشش کن ✧</p>
 <div class="meter" aria-hidden="true"><div id="bar"></div></div>
 <div class="scene-status"><span class="scene-face" aria-hidden="true">🐱</span><p id="msg" aria-live="polite"></p></div>
-<div class="scene-controls"><button id="test">🐾 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div>
+<div class="scene-controls"><button id="test">🐾 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div><div id="pixelControls" class="pixel-controls">
+<button type="button" id="pixelPet" hidden>💗 برو نازش کن</button><button type="button" id="pixelFeed" hidden>🥣 به میو غذا بده</button><button type="button" id="pixelSnooze" hidden>💤 اسنوز</button><button type="button" id="pixelDismiss" class="danger" hidden>⏹ خاموش کامل</button><button type="button" id="pixelTest">🐾 تست ۵ ثانیه‌ای</button>
+</div>
 </section>
 <section class="card now-card" aria-label="ساعت فعلی">
   <div><div class="eyebrow">✦ GOOD MORNING, HUMAN</div><h2 class="now-title">امروز هم میو میو! 🐾</h2><span class="now-chip">☕ یه روز آروم شروع می‌شه</span><p class="clockHint" id="clockHint">ساعت فعلی · برای تنظیم آلارم از بخش پایین استفاده کن</p></div>
@@ -429,6 +552,8 @@ body.ring{animation:none}
     <p id="soundStatus" class="status-text" role="status"></p>
     <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus" class="status-text" role="status"></span></div>
     <p class="hintText">فایل باید روی گوشی قابل پخش باشد (مثل MP3، WAV، M4A). فایلِ معتبر در حافظهٔ برنامه ذخیره می‌شود و آلارم بدون اینترنت کار می‌کند.</p></div>
+  <div class="profile-settings"><h3>🏠 شخصیت و گربهٔ من</h3><p id="profileDescription">شخصیت و گربه‌ات رو انتخاب کن.</p><div class="row"><button id="editAvatar" class="secondary" type="button">🧑 تغییر شخصیت</button><button id="editCat" class="secondary" type="button">🐈 تغییر گربه</button></div></div>
+<div class="diagnostic-panel"><strong>📱 راهنمای گوشی‌های شیائومی / مجوز آلارم</strong><p>برای اندروید ۱۲: مجوز آلارم دقیق، اعلان‌ها، Autostart و باتری «بدون محدودیت» را بررسی کن. این‌ها جای گزارش کرش را نمی‌گیرند.</p><div>آخرین مرحلهٔ آلارم: <code id="alarmDiagnostic">—</code></div><button class="secondary" type="button" id="refreshDiagnostic">🔎 بررسی وضعیت</button><button class="secondary" type="button" id="openPhoneSettings">⚙ تنظیمات برنامه</button></div>
   <h3>⏳ زمان‌بندی داستان</h3>
   <div class="row"><button class="secondary" data-preset="quick">سریع</button><button class="secondary" data-preset="classic">کلاسیک</button><button class="secondary" data-preset="relaxed">آروم</button></div>
   <div class="timing">
@@ -523,7 +648,7 @@ function frame(ts){const t=ts/1000,dt=Math.min(.05,t-(last??t));last=t;
   if(ph){
     if(pt>=8){ph=null;state=-1;pt=-1}
   }
-  curPt=pt;const s=sleep?2:lvl>=22?1:0;if(s!==state)setState(s);updUI(pt);
+  curPt=pt;const s=sleep?2:lvl>=22?1:0;if(s!==state)setState(s);updUI(pt);updatePixelScene();
   
   // hand
   let tg=ph?(pt>.6&&pt<6.6?MOUTH:REST):(P||REST);tg={x:tg.x,y:tg.y};
@@ -601,6 +726,112 @@ let editingId=null;
 let focusId=alarmList[0]?.id||100;
 let defaultSound=NATIVE?Android.getDefaultSound():(browserLoad('meow-default-sound')||'real');
 if(!['real','cute','custom'].includes(defaultSound))defaultSound='real';
+
+// Profile is global and kept separate from alarms; no alarm is rescheduled here.
+const PROFILE_DEFAULT={avatar:'male',cat:'tabby',roomMode:'classic',onboardingComplete:false};
+const cats={tabby:'راه‌راه',orange:'نارنجی',black:'مشکی',white:'سفید',calico:'سه‌رنگ'};
+const profileCanUseNative=NATIVE&&typeof Android.getProfile==='function'&&typeof Android.setProfile==='function';
+function readProfile(){const p=readJSON(profileCanUseNative?Android.getProfile():browserLoad('meow-profile')||'{}',{});
+  return {avatar:['male','female'].includes(p.avatar)?p.avatar:'male',cat:Object.prototype.hasOwnProperty.call(cats,p.cat)?p.cat:'tabby',roomMode:['pixel','classic'].includes(p.roomMode)?p.roomMode:'classic',onboardingComplete:!!p.onboardingComplete};}
+let profile=readProfile(),obDraft={...profile},obStep=1,obEditing=false,pixelPetUntil=0,pixelFeedUntil=0,lastPixelRender=-1;
+function profileSave(){const raw=JSON.stringify(profile);let ok=true;
+  if(profileCanUseNative)ok=Android.setProfile(raw);
+  else browserSave('meow-profile',raw);
+  return ok;
+}
+function updateProfileUI(){
+  const room=profile.roomMode;
+  document.documentElement.dataset.roomMode=room;
+  $('pixelHouse').hidden=room!=='pixel';
+  $('classicMode').setAttribute('aria-pressed',String(room==='classic'));
+  $('pixelMode').setAttribute('aria-pressed',String(room==='pixel'));
+  const avatar='sprites/avatar_'+profile.avatar+'.png',cat='sprites/cat_'+profile.cat+'.png';
+  $('pixelManTop').src=avatar;$('pixelManBottom').src=avatar;$('pixelCat').src=cat;
+  $('pixelCat').alt='گربه '+cats[profile.cat];
+  $('profileDescription').textContent='شخصیت '+(profile.avatar==='female'?'زن':'مرد')+' · گربه '+cats[profile.cat]+' · '+(room==='pixel'?'خانهٔ پیکسلی':'اتاق کلاسیک');
+  // Classic SVG palette follows cat choice; female gains distinctive longer hair.
+  document.documentElement.dataset.avatar=profile.avatar;
+  document.documentElement.dataset.cat=profile.cat;
+  const colors={tabby:['#8f939b','#4b4e57'],orange:['#dca05d','#a46738'],black:['#53515f','#34323e'],white:['#f8f2e9','#c1aeb7'],calico:['#e6c5a3','#9f654c']};
+  const [fur,stripes]=colors[profile.cat];
+  document.querySelectorAll('#catBody > ellipse:first-child,#catHead > ellipse:first-of-type').forEach(el=>el.setAttribute('fill',fur));
+  document.querySelectorAll('#catBody > g path,#catHead > path[stroke-width="3"]').forEach(el=>el.setAttribute('stroke',stripes));
+  if($('catVariantTail'))$('catVariantTail').setAttribute('stroke',fur);
+  if($('femaleHair'))$('femaleHair').style.display=profile.avatar==='female'?'':'none';
+  if($('femaleShirt'))$('femaleShirt').setAttribute('fill',profile.avatar==='female'?'#ce8eaa':'#0e8c8c');
+}
+function setRoom(room){if(!['classic','pixel'].includes(room))return;profile.roomMode=room;profileSave();updateProfileUI();}
+$('classicMode').onclick=()=>setRoom('classic');$('pixelMode').onclick=()=>setRoom('pixel');
+function updateOnboardingPreview(){
+  $('obPreviewAvatar').src='sprites/avatar_'+obDraft.avatar+'.png';$('obPreviewCat').src='sprites/cat_'+obDraft.cat+'.png';
+  document.querySelectorAll('[data-avatar]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.avatar===obDraft.avatar)));
+  document.querySelectorAll('[data-cat]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.cat===obDraft.cat)));
+  $('chooseCharacter').hidden=obStep!==1;$('chooseCat').hidden=obStep!==2;
+  $('obProgress').textContent=obStep+' از ۲';$('obBack').hidden=obStep===1;$('obCancel').hidden=!obEditing;
+  $('obNext').textContent=obStep===1?'بعدی ←':'بریم توی خونه! 🐾';
+}
+function showOnboarding(step=1,editing=true){
+  if(mode==='ringing'||(NATIVE&&typeof Android.isRinging==='function'&&Android.isRinging()))return;
+  obDraft={...profile};obStep=step;obEditing=editing;
+  updateOnboardingPreview();$('onboarding').hidden=false;
+}
+function finishOnboarding(){
+  profile={...obDraft,onboardingComplete:true};
+  if(!profileSave()){$('obProgress').textContent='ذخیره نشد؛ دوباره امتحان کن';return;}
+  $('onboarding').hidden=true;updateProfileUI();
+}
+$('obNext').onclick=()=>{if(obStep===1){obStep=2;updateOnboardingPreview()}else finishOnboarding()};
+$('obBack').onclick=()=>{obStep=1;updateOnboardingPreview()};
+$('obCancel').onclick=()=>{$('onboarding').hidden=true};
+document.querySelectorAll('[data-avatar]').forEach(b=>b.onclick=()=>{obDraft.avatar=b.dataset.avatar;updateOnboardingPreview()});
+document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{obDraft.cat=b.dataset.cat;updateOnboardingPreview()});
+$('editAvatar').onclick=()=>showOnboarding(1,true);$('editCat').onclick=()=>showOnboarding(2,true);
+function refreshAlarmDiagnostics(){
+ $('alarmDiagnostic').textContent=NATIVE&&typeof Android.getLastAlarmStage==='function'?Android.getLastAlarmStage():'Browser preview / no Android alarm';
+}
+$('refreshDiagnostic').onclick=refreshAlarmDiagnostics;
+$('openPhoneSettings').onclick=()=>{if(NATIVE&&typeof Android.openAppSettings==='function')Android.openAppSettings();else $('alarmDiagnostic').textContent='این گزینه در APK کار می‌کند'};
+
+function finishPixelPet(){
+ if(mode!=='ringing')return;
+ mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;
+ sleepAt=performance.now()/1000;smoked=false;food=0;fill=0;pixelPetUntil=0;
+ if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}
+}
+function pixelFeedSuccess(){
+ if(mode!=='snooze'||food!==1)return;
+ mode='fed';food=0;fedAt=performance.now()/1000;done=true;sleep=false;lvl=45;ph=null;
+ pixelFeedUntil=0;feedSound();if(NATIVE)Android.dismiss();
+}
+$('pixelPet').onclick=()=>{if(mode==='ringing'&&!pixelPetUntil){pixelPetUntil=Date.now()+timings.petSec*1000}};
+$('pixelFeed').onclick=()=>{if(mode==='snooze'&&food===1&&!pixelFeedUntil){pixelFeedUntil=Date.now()+timings.feedSec*1000}};
+$('pixelSnooze').onclick=()=>{if(mode==='ringing')finishPixelPet();else if(mode==='snooze'){
+  snoozeEnd=Date.now()+timings.snoozeSec*1000;if(NATIVE)Android.ringIn(timings.snoozeSec);
+}};
+$('pixelDismiss').onclick=()=>{if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;ph=null;food=0;pixelPetUntil=0;pixelFeedUntil=0;};
+$('pixelTest').onclick=()=>$('test').click();
+function updatePixelScene(){
+ const now=Date.now();if(now-lastPixelRender<160)return;lastPixelRender=now;
+ if(pixelPetUntil&&mode==='ringing'&&now>=pixelPetUntil)finishPixelPet();
+ if(pixelFeedUntil&&mode==='snooze'&&food===1&&now>=pixelFeedUntil)pixelFeedSuccess();
+ if(mode!=='ringing')pixelPetUntil=0;
+ if(mode!=='snooze')pixelFeedUntil=0;
+ let stage='idle',title='خانه در آرامش است',detail='منتظر آلارم بعدی 💤';
+ if(mode==='ringing'){stage=pixelPetUntil?'petting':'ringing';title=pixelPetUntil?'داریم میو رو ناز می‌کنیم 💗':'میــــو! وقت بیدار شدنه!';
+  detail=pixelPetUntil?'تا خوابیدن گربه '+fmt(pixelPetUntil-now):'شخصیتت میاد پیش گربه؛ نازش کن یا اسنوز بزن.'}
+ else if(mode==='snooze'&&food===0){stage='searching';title='میو خوابیده؛ دنبال غذا می‌گردیم 🧺';detail='غذا تا '+Math.max(0,Math.ceil(timings.foodDelaySec-(performance.now()/1000-sleepAt)))+' ثانیه دیگه می‌رسه · اسنوز '+fmt(snoozeEnd-now)}
+ else if(mode==='snooze'){stage=pixelFeedUntil?'feeding':'food-ready';title=pixelFeedUntil?'غذا رو توی کاسه می‌ریزیم 🍲':'غذا رسید! وقت صبحانه‌ست 🥣';detail=pixelFeedUntil?'پایان در '+fmt(pixelFeedUntil-now):'به گربه غذا بده تا آلارم کامل خاموش بشه.'}
+ else if(mode==='fed'||done){stage='fed';title='آفرین! میو سیر شد 😻';detail='آلارم خاموش شد. روز خوبی داشته باشی!'}
+ $('pixelHouse').dataset.stage=stage;$('pixelHouse').dataset.smoking=String(!!ph);$('pixelStageTitle').textContent=title;$('pixelStageDetail').textContent=detail;
+ $('pixelPet').hidden=mode!=='ringing';$('pixelPet').disabled=!!pixelPetUntil;
+ $('pixelFeed').hidden=mode!=='snooze'||food!==1;$('pixelFeed').disabled=!!pixelFeedUntil;
+ $('pixelSnooze').hidden=mode!=='ringing';$('pixelDismiss').hidden=mode!=='ringing'&&mode!=='snooze';
+ $('pixelTest').hidden=mode==='ringing'||mode==='snooze';
+}
+updateProfileUI();refreshAlarmDiagnostics();
+// A fresh Android install gets onboarding; a migrated install is never blocked.
+if(profileCanUseNative&&!profile.onboardingComplete&&!(typeof Android.isRinging==='function'&&Android.isRinging()))showOnboarding(1,false);
+
 function clockValue(a){return two(a.h)+':'+two(a.m)}
 function daysText(a){return a.days===0?'فقط یک‌بار':a.days===127?'هر روز':dayFull.filter((_,i)=>a.days&(1<<i)).join(' · ')}
 function updateNextAlarm(){
@@ -761,7 +992,7 @@ function fire(){if(mode==='ringing')return;mode='ringing';sleep=false;lvl=0;ph=n
 setInterval(()=>{const n=new Date(),hm=two(n.getHours())+':'+two(n.getMinutes());$('clock').textContent=hm;
   if(testAt&&Date.now()>=testAt){testAt=0;fire()}
   else if(!NATIVE&&alarmList.some(a=>a.on&&clockValue(a)===hm)&&fired!==hm+n.getDate()){fired=hm+n.getDate();fire()}},500);
-window.nativeRing=()=>{if(mode==='ringing')return;mode='idle';fire()};
+window.nativeRing=()=>{if(mode==='ringing')return;$('onboarding').hidden=true;pixelPetUntil=0;pixelFeedUntil=0;mode='idle';fire()};
 window.nativeStopped=()=>{if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
 document.querySelectorAll('[data-jump]').forEach(button=>{
   button.addEventListener('click',()=>{

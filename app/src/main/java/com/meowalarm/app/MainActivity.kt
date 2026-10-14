@@ -30,6 +30,7 @@ class MainActivity : Activity() {
 
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
+        ProfileStore.init(this) // Must run before the WebView migrates the alarm list.
         web = WebView(this)
         setContentView(web)
         web.setBackgroundColor(0xFF342B40.toInt())
