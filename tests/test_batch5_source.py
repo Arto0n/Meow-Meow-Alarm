@@ -23,8 +23,8 @@ class Batch5Checks(unittest.TestCase):
         js=(P/'app/src/main/assets/index.html').read_text()
         self.assertIn('if(NATIVE)return;', js.replace('if(NATIVE||!aud||muted)return;', 'if(NATIVE)return;'))
         self.assertIn('profileCanUseNative',js)
-        self.assertIn('finishPixelPet',js)
-        self.assertIn('pixelFeedSuccess',js)
+        self.assertIn('gainPet(px)',js)
+        self.assertIn('completeFeeding()',js)
         self.assertIn('window.nativeRing',js)
     def test_javascript_syntax(self):
         html=(P/'app/src/main/assets/index.html').read_text()

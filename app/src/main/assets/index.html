@@ -280,66 +280,64 @@ body.ring{animation:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.masthead h1{animation:none}.ring .scene-card{transition:none}}
 
 
-/* Batch 5 — compact playable pixel-house, avatar/cat personalization. */
-:root[data-room-mode="pixel"] .scene-status,:root[data-room-mode="pixel"] .scene-controls{display:none}
-.pixel-floor{background-image:radial-gradient(#ffe3b022 2px,transparent 2px),linear-gradient(#e9bc92,#c59575);background-size:22px 22px,100% 100%}
-.pixel-catroom{background-image:radial-gradient(#fff2d72c 2px,transparent 2px),linear-gradient(#efcba3,#d9ab85);background-size:23px 22px,100% 100%}
-.pixel-catroom:before{content:"🎁  📚  🌿";position:absolute;top:22px;left:6%;font-size:1.1rem;padding:4px 8px;border-bottom:6px solid #a26f69;opacity:.9}
-.pixel-floor:first-of-type:before{content:"📕 📙 🌿";position:absolute;top:21px;left:5%;padding:3px 8px;border-bottom:6px solid #9f6b65;font-size:1.1rem}
-
+:root[data-room-mode='pixel'] body.ring{animation:none}
+/* Batch 6: interactive illustrated dollhouse. No change to Classic Mode styles. */
+:root[data-room-mode="pixel"] .quick-nav{display:none!important}
 .mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#3d3452;padding:5px;border-radius:9px;margin:10px 11px;color:#fff}
 .mode-switch button{min-height:45px;background:#433850;color:#fcead4;border-color:#79617b;box-shadow:none;font-size:.83rem}
 .mode-switch button[aria-pressed="true"]{background:#ffda91;color:#433348;border-color:#fff0cc}
-:root[data-room-mode="pixel"] #classicRoom,:root[data-room-mode="pixel"] .scene-tip,:root[data-room-mode="pixel"] .meter,:root[data-room-mode="pixel"] .scene-controls #snd{display:none}
-:root[data-room-mode="classic"] #pixelHouse,:root[data-room-mode="classic"] #pixelControls{display:none}
-.pixel-house{position:relative;overflow:hidden;border-top:3px solid #57445d;background:#232a4b;padding:13px 10px 8px}
-.pixel-house:before{content:"✧ · ✦ · ⋆ ✧ ⋆ · ✦";position:absolute;inset:3px 0 auto;color:#ffe3a2;letter-spacing:7px;opacity:.7;text-align:center;pointer-events:none}
-.pixel-roof{height:22px;margin:0 5px -4px;background:repeating-linear-gradient(90deg,#684558 0 26px,#7b5362 26px 50px);clip-path:polygon(0 100%,10% 10%,90% 10%,100% 100%);border-bottom:5px solid #332939}
-.pixel-floor{position:relative;height:235px;overflow:hidden;border:5px solid #423247;box-shadow:inset 0 0 0 5px #855968;background-color:#ddab85;background-image:repeating-linear-gradient(90deg,transparent 0 23px,#f4c19e22 23px 27px),linear-gradient(#e6bb93,#bf906e);isolation:isolate}
-.pixel-floor+.pixel-floor{border-top:8px solid #58374b}
-.pixel-floor:after{position:absolute;inset:auto 0 0;content:"";height:27px;background:repeating-linear-gradient(90deg,#946b69 0 18px,#a98272 18px 36px);border-top:5px solid #6a4a57;z-index:-1}
-.pixel-room-name{position:absolute;top:9px;right:9px;background:#fff0c9;border:2px solid #5a4257;box-shadow:2px 3px #503648;padding:3px 7px;color:#4f394d;font-size:.74rem;font-weight:bold;z-index:5}
-.pixel-window{position:absolute;left:39%;top:20px;width:38%;height:95px;border:9px solid #784a60;box-shadow:4px 4px #563d59;background:linear-gradient(#524976,#a17b97 65%,#384b65 65%);overflow:hidden}
-.pixel-window:after{content:"";position:absolute;left:46%;top:0;bottom:0;width:7px;background:#e8baa4;box-shadow:-55px 45px 0 -1px #ffe1a0}
-.pixel-moon{position:absolute;left:17px;top:10px;width:24px;height:24px;background:#fce4a4;box-shadow:6px 0 0 #665577;image-rendering:pixelated}
-.pixel-wall{position:absolute;left:9%;top:26px;width:16%;height:62px;background:repeating-linear-gradient(90deg,#8e6477 0 13px,#dfb08c 13px 18px);border-bottom:7px solid #624557}
-.pixel-lamp{position:absolute;bottom:28px;left:6%;width:22px;height:36px;background:linear-gradient(#fce3a9 0 40%,#f2b865 40% 70%,#80556b 70%);box-shadow:0 0 19px 9px #fceab35c;border:3px solid #755467}
-.pixel-chair{position:absolute;bottom:25px;right:16%;width:80px;height:72px;border:7px solid #4b5565;background:#568276;box-shadow:7px 6px #74526b;border-radius:12px 12px 4px 4px}
-.pixel-decor{position:absolute;bottom:29px;left:5%;font-size:2rem;filter:drop-shadow(2px 3px #765d6d)}
-.pixel-catroom{height:250px;background-image:radial-gradient(circle at 90% 5%,#f6c989 0 25px,transparent 26px),linear-gradient(#f0c89c,#d4a57d)}
-.pixel-catroom .pixel-window{left:12%;width:26%;height:81px;top:30px}
-.pixel-cat-bed{position:absolute;bottom:23px;right:20%;width:115px;height:50px;background:#e4b5b7;border:7px solid #aa778e;box-shadow:4px 4px #775371;border-radius:40% 40% 45% 45%}
-.pixel-bowl{position:absolute;bottom:22px;left:22%;width:70px;height:27px;background:#ed8da1;border:5px solid #795168;border-radius:5px 5px 18px 18px;text-align:center;color:#ffdbaf;font-size:1rem;line-height:20px}
-.pixel-food{position:absolute;bottom:22px;left:16%;font-size:1.3rem;display:none;z-index:5}
-.pixel-house[data-stage="food-ready"] .pixel-food,.pixel-house[data-stage="feeding"] .pixel-food,.pixel-house[data-stage="fed"] .pixel-food{display:block}
-
-.pixel-steam{position:absolute;z-index:4;bottom:135px;right:25%;font-size:1.1rem;color:#fff1df;opacity:.65;animation:smokePuff 2.3s ease-out infinite}
-.pixel-house[data-stage="petting"] .pixel-steam,.pixel-house[data-stage="feeding"] .pixel-steam,.pixel-house[data-stage="fed"] .pixel-steam{display:none}
-.pixel-house[data-stage="searching"] .pixel-steam{opacity:0}
-.pixel-house[data-smoking="true"] .pixel-steam{opacity:.9;animation-duration:1.3s}
-@keyframes smokePuff{0%{transform:translateY(6px);opacity:.05}50%{opacity:.6}100%{transform:translateY(-28px);opacity:0}}
-.pixel-sprite{position:absolute;image-rendering:pixelated;object-fit:contain;filter:drop-shadow(4px 4px 0 #4b394a6f);transition:transform .6s ease,opacity .3s;user-select:none;-webkit-user-drag:none}
-#pixelManTop{width:119px;height:145px;right:14%;bottom:23px;z-index:3;animation:pixelBreath 2.7s ease-in-out infinite}
-#pixelManBottom{width:102px;height:132px;right:44%;bottom:20px;z-index:4;opacity:0;transform:translateY(-10px)}
-#pixelCat{width:136px;height:119px;right:15%;bottom:21px;z-index:5;animation:pixelBreath 2.6s ease-in-out infinite}
-.pixel-house[data-stage="ringing"] #pixelCat{animation:pixelBounce .5s ease-in-out infinite}
-.pixel-house[data-stage="petting"] #pixelManTop,.pixel-house[data-stage="feeding"] #pixelManTop,.pixel-house[data-stage="fed"] #pixelManTop{opacity:0;transform:translateY(20px)}
-.pixel-house[data-stage="petting"] #pixelManBottom,.pixel-house[data-stage="feeding"] #pixelManBottom,.pixel-house[data-stage="fed"] #pixelManBottom{opacity:1;transform:translateY(0)}
-.pixel-house[data-stage="searching"] #pixelManTop{transform:translateX(-30px);animation:pixelWalk 1.3s infinite alternate}
-.pixel-house[data-stage="fed"] #pixelCat{animation:pixelBounce 1.8s ease-in-out 2}
-.pixel-speech{position:absolute;bottom:133px;right:14%;background:#fff4d9;color:#6b4154;border:3px solid #765066;padding:5px 8px;font-weight:900;font-size:.9rem;z-index:6;display:none;box-shadow:3px 3px #473044}
-.pixel-house[data-stage="ringing"] .pixel-speech{display:block}
-@keyframes pixelBreath{50%{transform:translateY(3px)}}
-@keyframes pixelBounce{50%{transform:translateY(-10px)}}
-@keyframes pixelWalk{100%{transform:translateX(-65px)}}
-.pixel-status{display:flex;gap:9px;align-items:center;background:#283453;color:#ffebcc;padding:10px 12px;border-top:4px solid #a3767c;font-size:.83rem;line-height:1.7;min-height:70px}
-.pixel-status .p-cat{font-size:1.6rem}
-.pixel-status strong{display:block;font-size:.93rem;color:#ffe7ad}
-.pixel-controls{display:flex;gap:7px;flex-wrap:wrap;background:#283453;padding:4px 12px 14px}
-.pixel-controls button{flex:1;min-width:95px;min-height:50px;background:#ffd996;color:#3c3045;font-size:.82rem}
-.pixel-controls button.danger{background:#ffb2af;color:#5b2d43}
-.pixel-controls button:disabled{opacity:.5;cursor:not-allowed}
-.pixel-help{color:#fff0d3;background:#354260;padding:8px 11px;font-size:.72rem;text-align:center}
+:root[data-room-mode="pixel"] #classicRoom,:root[data-room-mode="pixel"] .scene-tip,:root[data-room-mode="pixel"] .meter,:root[data-room-mode="pixel"] .scene-controls{display:none}
+:root[data-room-mode="classic"] #pixelHouse{display:none!important}
+.story-house{overflow:hidden;background:#101d35;border-top:3px solid #57445d;padding:0;color:#ffeac9}
+.story-house[hidden],.story-house [hidden]{display:none!important}
+.story-art{position:relative;aspect-ratio:2/3;width:100%;overflow:hidden;background:#14253c url('pixel/house.webp') center / 100% 100% no-repeat;isolation:isolate;touch-action:pan-y}
+.story-art::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#120f2633,transparent 20%,transparent 65%,#18182b22);pointer-events:none;z-index:12}
+.story-sky{position:absolute;z-index:1;left:18.6%;top:25.4%;width:25.2%;height:10.6%;overflow:hidden;background:linear-gradient(#142449,#46588b);box-shadow:inset 0 0 0 3px #2e2935;opacity:.94;transition:background 1.5s ease}
+.story-sky[data-dayphase="morning"]{background:linear-gradient(#8fd1ea,#ffca92 80%,#ffd9b1)}
+.story-sky[data-dayphase="afternoon"]{background:linear-gradient(#65bce4,#aedfee)}
+.story-sky[data-dayphase="sunset"]{background:linear-gradient(#66599c,#e8879d 55%,#f8b276)}
+.story-sky[data-dayphase="night"]{background:linear-gradient(#15274f,#4a4771)}
+.story-sun-moon{position:absolute;width:17%;aspect-ratio:1;top:9%;left:23%;border-radius:50%;background:#ffedb2;box-shadow:0 0 12px 5px #ffd59466}
+.story-sky[data-dayphase="night"] .story-sun-moon{background:#fff1ba;box-shadow:4px 0 0 #36456f,0 0 12px #fff4a477}
+.story-horizon{position:absolute;bottom:0;width:100%;height:40%;background:repeating-linear-gradient(90deg,#32445c 0 14%,#4b526a 14% 23%,#38465d 23% 29%);clip-path:polygon(0 25%,13% 25%,13% 0,28% 0,28% 28%,44% 28%,44% 5%,67% 5%,67% 35%,84% 35%,84% 12%,100% 12%,100% 100%,0 100%)}
+.story-sky[data-dayphase="afternoon"] .story-horizon,.story-sky[data-dayphase="morning"] .story-horizon{background:#6c9eb0}
+.story-sky[data-dayphase="sunset"] .story-horizon{background:#554c75}
+.story-sprite{position:absolute;image-rendering:pixelated;user-select:none;-webkit-user-drag:none;pointer-events:none;filter:drop-shadow(0 4px 2px #302332aa);z-index:6;object-fit:contain;transform:translate(-50%,-100%)}
+.story-human{width:16%;height:20%;left:28%;top:49.8%}
+.story-human.walking{animation:storyWalkBob .32s steps(2,end) infinite alternate}
+@keyframes storyWalkBob{to{transform:translate(-50%,calc(-100% - 3px))}}
+.story-cat{width:27%;height:16.5%;left:42%;top:75%;z-index:7}
+.story-cat.meowing{animation:storyWiggle .36s ease-in-out infinite alternate}
+.story-cat.asleep{animation:storyBreathe 2.9s ease-in-out infinite alternate}
+.story-smoke{position:absolute;left:33%;top:38%;z-index:8;opacity:.8;font-size:1.1rem;color:#fff4e1;text-shadow:0 0 5px #fff2e3;animation:smokePuff 2.4s linear infinite;pointer-events:none}
+@keyframes smokePuff{0%{transform:translateY(8px);opacity:0}45%{opacity:.8}100%{transform:translateY(-26px);opacity:0}}
+@keyframes storyBreathe{to{margin-top:2px}}
+@keyframes storyWiggle{to{margin-left:3px}}
+.story-pet-target{position:absolute;left:24%;top:63%;width:40%;height:14%;z-index:9;border:3px dashed transparent;border-radius:45%;touch-action:none;pointer-events:none}
+.story-house[data-stage="PET_READY"] .story-pet-target,.story-house[data-stage="PETTING"] .story-pet-target{pointer-events:auto;border-color:#ffe09e88;background:#ffdfa019}
+.story-touch-hint{display:none;position:absolute;top:-25px;left:50%;transform:translateX(-50%);background:#fff3d4;color:#493448;border:2px solid #533c4e;border-radius:7px;padding:2px 8px;font-size:11px;white-space:nowrap;box-shadow:2px 3px 0 #47374a}
+.story-house[data-stage="PET_READY"] .story-touch-hint,.story-house[data-stage="PETTING"] .story-touch-hint{display:block}
+.story-carry-bag{position:absolute;width:6%;height:9%;z-index:8;object-fit:contain;image-rendering:pixelated;transform:translate(-50%,-100%);pointer-events:none}
+.story-food-bag{position:absolute;width:11%;height:13%;object-fit:contain;image-rendering:pixelated;left:76%;top:74%;transform:translate(-50%,-90%);z-index:10;touch-action:none;user-select:none;-webkit-user-drag:none;filter:drop-shadow(2px 3px 0 #352538);cursor:grab}
+.story-food-bag:active{cursor:grabbing}
+.story-pour-target{position:absolute;left:55%;top:70.8%;width:19%;height:8%;z-index:5;border:3px dashed transparent;border-radius:50%;pointer-events:none}
+.story-house[data-stage="FEED_READY"] .story-pour-target,.story-house[data-stage="POURING"] .story-pour-target{border-color:#ffe082aa;background:#ffeb9760;animation:storyWiggle .8s ease infinite alternate}
+.story-particles{position:absolute;inset:0;pointer-events:none;z-index:11;overflow:hidden}
+.story-particles i{position:absolute;width:5px;height:6px;background:#bd7a39;border:1px solid #694527;animation:storyFall .55s ease-in forwards}
+@keyframes storyFall{to{transform:translateY(55px);opacity:0}}
+.story-stage-pill{position:absolute;top:3%;right:3%;background:#fff0d3e6;color:#49344b;border:2px solid #614859;box-shadow:2px 2px 0 #301e36;padding:4px 8px;font-size:.69rem;font-weight:bold;z-index:14}
+.story-status{display:flex;gap:8px;align-items:center;background:#253251;color:#f9e4cb;padding:10px 12px;border-top:4px solid #a3767c;font-size:.82rem;line-height:1.6;min-height:72px}
+.story-status strong{display:block;font-size:.93rem;color:#ffe4a1}
+.story-status .p-cat{font-size:1.7rem}
+.story-progress{display:flex;gap:8px;align-items:center;padding:9px 12px;background:#354563;font-size:.78rem;color:#fff0d4}
+.story-track{flex:1;height:14px;border:2px solid #d8bd9f;border-radius:7px;background:#20293f;overflow:hidden;min-width:70px}
+#storyProgressFill{height:100%;width:0;background:linear-gradient(90deg,#f7c58e,#9fceb2);transition:width .08s}
+.story-controls{display:flex;gap:7px;flex-wrap:wrap;background:#253251;padding:10px 12px}
+.story-controls button{flex:1;min-width:110px;min-height:46px;background:#f7d79d;color:#3c3045;font-size:.79rem}
+.story-controls button.danger{background:#e98a91;color:#381e35}
+.pixel-help{color:#fff0d3;background:#364462;padding:8px 11px;font-size:.72rem;text-align:center;line-height:1.7}
+@media(max-width:360px){.story-stage-pill{font-size:.58rem}.story-touch-hint{font-size:9px}.story-controls button{min-width:96px}}
+@media(prefers-reduced-motion:reduce){.story-sprite,.story-smoke,.story-particles i{animation:none!important;transition:none!important}}
 .profile-settings{border:2px solid #d5b3a5;border-radius:9px;background:#fff9e9;padding:12px;margin:13px 14px 8px;color:#514052}
 .profile-settings .row{justify-content:start}.profile-settings button{font-size:.8rem}.profile-settings h3{margin:0 0 6px}
 .profile-settings p{margin:4px 0 12px;color:#776476;font-size:.78rem}
@@ -372,17 +370,17 @@ body.ring{animation:none}
 <div id="onboarding" class="onboarding-overlay" role="dialog" aria-modal="true" aria-label="انتخاب شخصیت و گربه" hidden>
  <div class="onboarding-card">
   <div class="ob-progress" id="obProgress">۱ از ۲</div>
-  <div class="ob-topscene"><img id="obPreviewAvatar" alt="شخصیت انتخاب‌شده" src="sprites/avatar_male.png"><span style="font-size:2.3rem">🏠</span><img id="obPreviewCat" alt="گربه انتخاب‌شده" src="sprites/cat_tabby.png"></div>
+  <div class="ob-topscene"><img id="obPreviewAvatar" alt="شخصیت انتخاب‌شده" src="pixel/human_male_relax.png"><span style="font-size:2.3rem">🏠</span><img id="obPreviewCat" alt="گربه انتخاب‌شده" src="pixel/cat_tabby_awake.png"></div>
   <section id="chooseCharacter"><h2>✨ شخصیتت رو انتخاب کن</h2><p>قهرمان داستان میو کی باشه؟ بعداً می‌تونی عوضش کنی.</p>
-   <div class="ob-grid"><button type="button" class="ob-option" data-avatar="male" aria-pressed="true"><img src="sprites/avatar_male.png" alt="شخصیت مرد"><strong>👨 مرد</strong></button><button type="button" class="ob-option" data-avatar="female" aria-pressed="false"><img src="sprites/avatar_female.png" alt="شخصیت زن"><strong>👩 زن</strong></button></div>
+   <div class="ob-grid"><button type="button" class="ob-option" data-avatar="male" aria-pressed="true"><img src="pixel/human_male_relax.png" alt="شخصیت مرد"><strong>👨 مرد</strong></button><button type="button" class="ob-option" data-avatar="female" aria-pressed="false"><img src="pixel/human_female_relax.png" alt="شخصیت زن"><strong>👩 زن</strong></button></div>
   </section>
   <section id="chooseCat" hidden><h2>🐾 گربه‌ات رو انتخاب کن</h2><p>کدوم میو قراره هر روز بیدارت کنه؟</p>
    <div class="ob-grid cats">
-    <button type="button" class="ob-option" data-cat="tabby" aria-pressed="true"><img src="sprites/cat_tabby.png" alt="گربه راه‌راه"><strong>راه‌راه</strong></button>
-    <button type="button" class="ob-option" data-cat="orange" aria-pressed="false"><img src="sprites/cat_orange.png" alt="گربه نارنجی"><strong>نارنجی</strong></button>
-    <button type="button" class="ob-option" data-cat="black" aria-pressed="false"><img src="sprites/cat_black.png" alt="گربه مشکی"><strong>مشکی</strong></button>
-    <button type="button" class="ob-option" data-cat="white" aria-pressed="false"><img src="sprites/cat_white.png" alt="گربه سفید"><strong>سفید</strong></button>
-    <button type="button" class="ob-option" data-cat="calico" aria-pressed="false"><img src="sprites/cat_calico.png" alt="گربه سه‌رنگ"><strong>سه‌رنگ</strong></button>
+    <button type="button" class="ob-option" data-cat="tabby" aria-pressed="true"><img src="pixel/cat_tabby_awake.png" alt="گربه راه‌راه"><strong>راه‌راه</strong></button>
+    <button type="button" class="ob-option" data-cat="orange" aria-pressed="false"><img src="pixel/cat_orange_awake.png" alt="گربه نارنجی"><strong>نارنجی</strong></button>
+    <button type="button" class="ob-option" data-cat="black" aria-pressed="false"><img src="pixel/cat_black_awake.png" alt="گربه مشکی"><strong>مشکی</strong></button>
+    <button type="button" class="ob-option" data-cat="white" aria-pressed="false"><img src="pixel/cat_white_awake.png" alt="گربه سفید"><strong>سفید</strong></button>
+    <button type="button" class="ob-option" data-cat="calico" aria-pressed="false"><img src="pixel/cat_calico_awake.png" alt="گربه سه‌رنگ"><strong>سه‌رنگ</strong></button>
    </div>
   </section>
   <div class="ob-controls"><button type="button" class="ob-cancel" id="obBack" hidden>↩ قبلی</button><button type="button" id="obCancel" class="ob-cancel" hidden>انصراف</button></div>
@@ -398,17 +396,33 @@ body.ring{animation:none}
 <section class="card scene-card" id="roomSection" aria-label="اتاق میو و بازی تعاملی">
   <div class="scene-head"><h2>🛏️ اتاق کوچولوی میو</h2><span id="roomMood" class="scene-tag">● گربه خوابالو</span></div>
   <div class="mode-switch" role="group" aria-label="انتخاب نمای اتاق"><button type="button" id="classicMode" aria-pressed="true">☕ اتاق کلاسیک</button><button type="button" id="pixelMode" aria-pressed="false">🏠 داستان پیکسلی</button></div>
-  <div class="pixel-house" id="pixelHouse" data-stage="idle" hidden>
-    <div class="pixel-roof"></div>
-    <div class="pixel-floor" aria-label="اتاق شخصیت کنار پنجره">
-      <span class="pixel-room-name">🪟 اتاق آدم‌ها</span><div class="pixel-window"><i class="pixel-moon"></i></div><div class="pixel-wall"></div><div class="pixel-chair"></div><span class="pixel-decor">🌿</span>
-      <span class="pixel-steam" aria-hidden="true">〰 〰</span><img class="pixel-sprite" id="pixelManTop" alt="شخصیت در کنار پنجره" src="sprites/avatar_male.png">
+  <div class="pixel-house story-house" id="pixelHouse" data-stage="IDLE" hidden>
+    <div class="story-art" id="storyArt" aria-label="خانه دو طبقه، اتاق آدم‌ها، راه‌پله و اتاق گربه">
+      <div class="story-sky" id="storySky" data-dayphase="night" aria-label="پنجره بر اساس ساعت گوشی">
+        <span class="story-sun-moon" id="storySunMoon"></span><span class="story-horizon"></span>
+      </div>
+      <img class="story-sprite story-human" id="storyHuman" src="pixel/human_male_idle.png" alt="شخصیت انتخابی" draggable="false">
+      <img class="story-sprite story-cat" id="storyCat" src="pixel/cat_tabby_sleep.png" alt="گربه انتخابی" draggable="false">
+      <div class="story-smoke" id="storySmoke" aria-hidden="true">〰</div>
+      <div class="story-pet-target" id="storyPetZone" role="button" tabindex="0" aria-label="گربه را با انگشت نوازش کن" aria-disabled="true">
+        <span class="story-touch-hint" id="storyTouchHint">↔ نوازش کن 💗</span>
+      </div>
+      <img class="story-carry-bag" id="storyCarryBag" src="pixel/food_bag.png" alt="شخصیت پاکت غذا را حمل می‌کند" draggable="false" hidden>
+      <img class="story-food-bag" id="storyBag" src="pixel/food_bag.png" alt="پاکت غذای گربه را تا کاسه بکش" draggable="false" hidden>
+      <div class="story-pour-target" id="storyBowlTarget" aria-hidden="true"></div>
+      <div class="story-particles" id="storyParticles" aria-hidden="true"></div>
+      <div class="story-stage-pill" id="storyStagePill">☾ همه‌چی آرومه</div>
     </div>
-    <div class="pixel-floor pixel-catroom" aria-label="اتاق گربه و ظرف غذا">
-      <span class="pixel-room-name">🐾 اتاق میو</span><div class="pixel-window"><i class="pixel-moon"></i></div><div class="pixel-cat-bed"></div><div class="pixel-bowl">♥</div>
-      <span class="pixel-food">🥣</span><img class="pixel-sprite" id="pixelManBottom" alt="شخصیت کنار گربه" src="sprites/avatar_male.png"><img class="pixel-sprite" id="pixelCat" alt="گربهٔ شما" src="sprites/cat_tabby.png"><span class="pixel-speech">میــــو!</span>
+    <div class="pixel-status story-status" aria-live="polite"><span class="p-cat">🐈</span><div><strong id="pixelStageTitle">گربه خوابه و آدم‌ها در حال استراحتن</strong><span id="pixelStageDetail">وقتی آلارم شروع بشه، داستان زنده می‌شه.</span></div></div>
+    <div class="story-progress" id="storyProgressWrap" hidden><span id="storyProgressLabel">پیشرفت</span><div class="story-track"><div id="storyProgressFill"></div></div><span id="storyProgressNumber">۰٪</span></div>
+    <div id="pixelControls" class="pixel-controls story-controls">
+      <button type="button" id="storyTest">🐾 تست ۵ ثانیه‌ای</button>
+      <button type="button" id="storySnooze" hidden>💤 اسنوز معمولی</button>
+      <button type="button" id="storyHoldPet" hidden>💗 نگه‌دار برای نوازش</button>
+      <button type="button" id="storyHoldPour" hidden>🥣 نگه‌دار برای ریختن غذا</button>
+      <button type="button" class="danger" id="storyStop" hidden>⏹ قطع کامل آلارم</button>
     </div>
-    <div class="pixel-status" aria-live="polite"><span class="p-cat">🐱</span><div><strong id="pixelStageTitle">همه خوابن، چه آرامشی!</strong><span id="pixelStageDetail">آلارم که بزنه، میو شروع می‌کنه.</span></div></div>
+    <div class="pixel-help" id="storyHelp">☁ آدم‌ها روی مبل چرت می‌زنن؛ میو هم پایین خوابیده.</div>
   </div>
   <div class="scene" id="classicRoom">
 <svg id="s" viewBox="0 0 400 300" role="img" aria-label="گربه در اتاق گرم و دنج کنار مرد نشسته و می‌توانی نوازشش کنی">
@@ -638,12 +652,12 @@ function puff(x,y,dx){mk('circle','sm',{cx:x,cy:y,r:5},0,2800).style.setProperty
 function lid(id,x,y){const w=Math.sqrt(121-(y-87)**2);$(id).setAttribute('d',`M${x-w} ${y}A11 11 0 ${y>87?1:0} 1 ${x+w} ${y}Z`)}
 function frame(ts){const t=ts/1000,dt=Math.min(.05,t-(last??t));last=t;
   const petting=t-lastPet<.35;
-  if(mode==='ringing'){lvl=petting?Math.min(100,lvl+dt*100/timings.petSec):Math.max(0,lvl-6*dt)}
-  if(mode==='ringing'&&lvl>=100){mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;sleepAt=t;smoked=false;food=0;fill=0;if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}}
+  if(mode==='ringing'&&!(profile.roomMode==='pixel'&&story.active)){lvl=petting?Math.min(100,lvl+dt*100/timings.petSec):Math.max(0,lvl-6*dt)}
+  if(mode==='ringing'&&!(profile.roomMode==='pixel'&&story.active)&&lvl>=100){mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;sleepAt=t;smoked=false;food=0;fill=0;if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}}
   if(mode==='snooze'&&!smoked&&food!==1&&t-sleepAt>=timings.smokeDelaySec){smoked=true;ph={t0:t}}
   if(mode==='snooze'&&food===0&&t-sleepAt>=timings.foodDelaySec){food=1;fill=0;ph=null}
-  if(!NATIVE&&mode==='snooze'&&Date.now()>=snoozeEnd){mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;ringStart=t;nextMeow=t+.4}
-  if(mode==='fed'&&t-fedAt>4){mode='idle';sleep=true;lvl=100}
+  if(!NATIVE&&mode==='snooze'&&Date.now()>=snoozeEnd&&!(profile.roomMode==='pixel'&&story.active)){mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;ringStart=t;nextMeow=t+.4}
+  if(mode==='fed'&&t-fedAt>4&&!(profile.roomMode==='pixel'&&story.active)){mode='idle';sleep=true;lvl=100}
   let pt=ph?(t-ph.t0)*8/timings.smokeDurationSec:-1;
   if(ph){
     if(pt>=8){ph=null;state=-1;pt=-1}
@@ -667,7 +681,7 @@ function frame(ts){const t=ts/1000,dt=Math.min(.05,t-(last??t));last=t;
     e.style.setProperty('--fy',(276-ky)+'px');e.style.setProperty('--fx',(192+Math.random()*16-kx)+'px');fill=Math.min(100,fill+dt*100/timings.feedSec)}
   const kb=$('kib');kb.style.display=fill>0?'':'none';kb.setAttribute('rx',4+17*fill/100);kb.setAttribute('ry',1+8*fill/100);
   $('bowl').style.display=food===1||mode==='fed'||(done&&mode==='idle')?'':'none';
-  if(fill>=100&&mode==='snooze'){mode='fed';food=0;fedAt=t;done=true;sleep=false;lvl=45;ph=null;feedSound();if(NATIVE)Android.dismiss()}
+  if(fill>=100&&mode==='snooze'&&!(profile.roomMode==='pixel'&&story.active)){mode='fed';food=0;fedAt=t;done=true;sleep=false;lvl=45;ph=null;feedSound();if(NATIVE)Android.dismiss()}
   // cigarette
   mb+=((ph&&pt>.6&&pt<6.6?1:0)-mb)*Math.min(1,dt*5);
   const ang=-35*(1-mb);
@@ -733,7 +747,7 @@ const cats={tabby:'راه‌راه',orange:'نارنجی',black:'مشکی',white
 const profileCanUseNative=NATIVE&&typeof Android.getProfile==='function'&&typeof Android.setProfile==='function';
 function readProfile(){const p=readJSON(profileCanUseNative?Android.getProfile():browserLoad('meow-profile')||'{}',{});
   return {avatar:['male','female'].includes(p.avatar)?p.avatar:'male',cat:Object.prototype.hasOwnProperty.call(cats,p.cat)?p.cat:'tabby',roomMode:['pixel','classic'].includes(p.roomMode)?p.roomMode:'classic',onboardingComplete:!!p.onboardingComplete};}
-let profile=readProfile(),obDraft={...profile},obStep=1,obEditing=false,pixelPetUntil=0,pixelFeedUntil=0,lastPixelRender=-1;
+let profile=readProfile(),obDraft={...profile},obStep=1,obEditing=false;
 function profileSave(){const raw=JSON.stringify(profile);let ok=true;
   if(profileCanUseNative)ok=Android.setProfile(raw);
   else browserSave('meow-profile',raw);
@@ -745,9 +759,9 @@ function updateProfileUI(){
   $('pixelHouse').hidden=room!=='pixel';
   $('classicMode').setAttribute('aria-pressed',String(room==='classic'));
   $('pixelMode').setAttribute('aria-pressed',String(room==='pixel'));
-  const avatar='sprites/avatar_'+profile.avatar+'.png',cat='sprites/cat_'+profile.cat+'.png';
-  $('pixelManTop').src=avatar;$('pixelManBottom').src=avatar;$('pixelCat').src=cat;
-  $('pixelCat').alt='گربه '+cats[profile.cat];
+  const avatar='pixel/human_'+profile.avatar+'_relax.png',cat='pixel/cat_'+profile.cat+'_awake.png';
+  if(window.story)window.story.setProfile(profile);
+  $('storyCat').alt='گربه '+cats[profile.cat];
   $('profileDescription').textContent='شخصیت '+(profile.avatar==='female'?'زن':'مرد')+' · گربه '+cats[profile.cat]+' · '+(room==='pixel'?'خانهٔ پیکسلی':'اتاق کلاسیک');
   // Classic SVG palette follows cat choice; female gains distinctive longer hair.
   document.documentElement.dataset.avatar=profile.avatar;
@@ -760,10 +774,10 @@ function updateProfileUI(){
   if($('femaleHair'))$('femaleHair').style.display=profile.avatar==='female'?'':'none';
   if($('femaleShirt'))$('femaleShirt').setAttribute('fill',profile.avatar==='female'?'#ce8eaa':'#0e8c8c');
 }
-function setRoom(room){if(!['classic','pixel'].includes(room))return;profile.roomMode=room;profileSave();updateProfileUI();}
+function setRoom(room){if(!['classic','pixel'].includes(room))return;profile.roomMode=room;profileSave();updateProfileUI();if(room==='pixel'&&mode==='ringing'&&!story.active)story.start()}
 $('classicMode').onclick=()=>setRoom('classic');$('pixelMode').onclick=()=>setRoom('pixel');
 function updateOnboardingPreview(){
-  $('obPreviewAvatar').src='sprites/avatar_'+obDraft.avatar+'.png';$('obPreviewCat').src='sprites/cat_'+obDraft.cat+'.png';
+  $('obPreviewAvatar').src='pixel/human_'+obDraft.avatar+'_relax.png';$('obPreviewCat').src='pixel/cat_'+obDraft.cat+'_awake.png';
   document.querySelectorAll('[data-avatar]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.avatar===obDraft.avatar)));
   document.querySelectorAll('[data-cat]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.cat===obDraft.cat)));
   $('chooseCharacter').hidden=obStep!==1;$('chooseCat').hidden=obStep!==2;
@@ -792,42 +806,215 @@ function refreshAlarmDiagnostics(){
 $('refreshDiagnostic').onclick=refreshAlarmDiagnostics;
 $('openPhoneSettings').onclick=()=>{if(NATIVE&&typeof Android.openAppSettings==='function')Android.openAppSettings();else $('alarmDiagnostic').textContent='این گزینه در APK کار می‌کند'};
 
-function finishPixelPet(){
- if(mode!=='ringing')return;
- mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;
- sleepAt=performance.now()/1000;smoked=false;food=0;fill=0;pixelPetUntil=0;
- if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}
+/* Batch 6 — real gesture-driven Pixel Story. Classic SVG and native Android alarm stay independent. */
+class PixelStory {
+  constructor(){
+    this.stage='IDLE';this.active=false;this.nativeRinging=false;this.snoozeScheduled=false;this.dismissed=false;
+    this.human={x:28,y:49.8};this.path=[];this.pathArrival=null;this.pose='idle';this.catPose='sleep';
+    this.petProgress=0;this.pourProgress=0;this.petPointer=null;this.bagPointer=null;this.holdPet=false;this.holdPour=false;
+    this.bag={x:76,y:74};this.lastTick=performance.now();this.stageSince=Date.now();this.snoozedAt=0;this.clockMinute=null;
+    this.humanEl=$('storyHuman');this.catEl=$('storyCat');this.bagEl=$('storyBag');this.carryEl=$('storyCarryBag');this.art=$('storyArt');
+    this.bind();this.setProfile(profile);this.updateWindow(true);this.render();
+  }
+  setProfile(p){
+    this.avatar=p.avatar==='female'?'female':'male';this.cat=['tabby','orange','black','white','calico'].includes(p.cat)?p.cat:'tabby';
+    this.setHumanPose(this.pose);this.setCatPose(this.catPose);
+  }
+  setHumanPose(pose){
+    this.pose=pose;
+    this.humanEl.src='pixel/human_'+this.avatar+'_'+pose+'.png';
+    this.humanEl.alt=(this.avatar==='female'?'زن':'مرد')+' در خانه';this.humanEl.classList.toggle('walking',pose==='walk');
+  }
+  setCatPose(pose){
+    this.catPose=pose;this.catEl.src='pixel/cat_'+this.cat+'_'+pose+'.png';
+    this.catEl.classList.toggle('asleep',pose==='sleep');this.catEl.classList.toggle('meowing',pose==='meow');
+  }
+  static phase(hour){return hour>=5&&hour<11?'morning':hour>=11&&hour<17?'afternoon':hour>=17&&hour<20?'sunset':'night'}
+  updateWindow(force=false){
+    const d=new Date(),minute=d.getHours()*60+d.getMinutes();if(!force&&minute===this.clockMinute)return;
+    this.clockMinute=minute;const phase=PixelStory.phase(d.getHours());$('storySky').dataset.dayphase=phase;
+    $('storySky').setAttribute('aria-label','هوای '+({morning:'صبح',afternoon:'روز',sunset:'غروب',night:'شب'}[phase])+' مطابق ساعت گوشی');
+  }
+  transition(stage){this.stage=stage;this.stageSince=Date.now();this.render()}
+  start(){
+    if(this.active&&this.stage!=='COMPLETED'&&this.stage!=='IDLE'){
+      this.nativeRinging=true;
+      // Snooze may ring again while the character is searching for food. Keep the quest intact.
+      if(['SNOOZED','WALK_TO_CLOSET','SEARCH_FOOD','CARRY_FOOD','FEED_READY','POURING'].includes(this.stage)){
+        this.setCatPose('meow');this.render();return;
+      }
+      return;
+    }
+    this.active=true;this.nativeRinging=true;this.snoozeScheduled=false;this.dismissed=false;
+    this.petProgress=0;this.pourProgress=0;this.petPointer=null;this.bagPointer=null;this.holdPet=this.holdPour=false;
+    this.human={x:28,y:49.8};this.path=[];this.bag={x:76,y:74};this.placeBag();this.bagEl.hidden=true;
+    lastPet=-999;mode='ringing';sleep=false;lvl=0;
+    this.setHumanPose('idle');this.setCatPose('meow');this.transition('ALARM_REACT');
+  }
+  reset(){
+    this.active=false;this.nativeRinging=false;this.petPointer=null;this.bagPointer=null;this.holdPet=this.holdPour=false;
+    this.human={x:28,y:49.8};this.path=[];this.bag={x:76,y:74};this.placeBag();this.bagEl.hidden=true;
+    this.setHumanPose('idle');this.setCatPose('sleep');this.transition('IDLE');
+  }
+  route(points,arrival){
+    this.path=points.map(p=>({x:p[0],y:p[1]}));this.pathArrival=arrival;
+    this.setHumanPose('walk');
+  }
+  reach(){
+    const arrival=this.pathArrival;this.pathArrival=null;
+    if(arrival==='cat'){this.setHumanPose('pet');this.transition('PET_READY')}
+    else if(arrival==='closet'){this.transition('SEARCH_FOOD')}
+    else if(arrival==='bowl'){this.setHumanPose('carry');this.bag={x:76,y:74};this.placeBag();this.bagEl.hidden=false;this.transition('FEED_READY')}
+    else if(arrival==='sofa'){this.setHumanPose('relax');this.transition('COMPLETED')}
+  }
+  tick(){
+    const now=performance.now(),dt=Math.min((now-this.lastTick)/1000,.10);this.lastTick=now;
+    this.updateWindow();
+    if(!this.active){this.placeHuman();return}
+    if(this.stage==='ALARM_REACT'&&Date.now()-this.stageSince>700){
+      this.transition('WALK_TO_CAT');this.route([[62,49.8],[76,50.2],[80,55],[84,60],[86,65],[84,69],[79,76],[49,75.5]],'cat');
+    }
+    if(this.path.length){
+      let travel=dt*34;
+      while(travel>0&&this.path.length){
+        const p=this.path[0],dx=p.x-this.human.x,dy=p.y-this.human.y,dist=Math.hypot(dx,dy);
+        if(dist<=travel){this.human={...p};this.path.shift();travel-=dist}
+        else{this.human.x+=dx/dist*travel;this.human.y+=dy/dist*travel;travel=0}
+      }
+      if(!this.path.length)this.reach();
+    }
+    if(this.stage==='SNOOZED'&&Date.now()-this.stageSince>700){
+      this.transition('WALK_TO_CLOSET');this.route(this.human.y<60?[[68,49.8]]:[[79,76],[84,69],[86,64],[84,60],[80,55],[76,50.2],[68,49.8]],'closet');
+    }
+    if(this.stage==='SEARCH_FOOD'){
+      const searchElapsed=Date.now()-this.snoozedAt;
+      if(searchElapsed>=Math.max(1,timings.foodDelaySec)*1000&&Date.now()-this.stageSince>=800){
+        this.transition('CARRY_FOOD');this.route([[76,50.2],[80,55],[84,60],[86,65],[84,69],[79,76],[68,75.5]],'bowl');
+        this.setHumanPose('carry');
+      }
+    }
+    if(this.petPointer!==null&&this.holdPet&&['PET_READY','PETTING'].includes(this.stage))this.gainPet(dt*timings.petSec*0+dt*72);
+    if((this.bagPointer!==null&&this.isBagOverBowl())||this.holdPour){
+      if(['FEED_READY','POURING'].includes(this.stage)){
+        if(this.stage!=='POURING')this.transition('POURING');
+        this.pourProgress+=dt*1000;
+        if(Math.random()<dt*22)this.kibble();
+        if(this.pourProgress>=Math.max(1,timings.feedSec)*1000)this.completeFeeding();
+        else this.renderProgress();
+      }
+    }else if(this.stage==='POURING')this.transition('FEED_READY');
+    if(this.stage==='EATING'&&Date.now()-this.stageSince>=1700){
+      this.transition('RETURN_TO_SOFA');this.route([[79,76],[84,69],[86,64],[84,60],[80,55],[76,50.2],[28,49.8]],'sofa');
+    }
+    this.placeHuman();
+  }
+  placeHuman(){this.humanEl.style.left=this.human.x+'%';this.humanEl.style.top=this.human.y+'%';this.carryEl.style.left=(this.human.x+5)+'%';this.carryEl.style.top=(this.human.y-3)+'%'}
+  placeBag(){this.bagEl.style.left=this.bag.x+'%';this.bagEl.style.top=this.bag.y+'%'}
+  gainPet(px){
+    if(!['PET_READY','PETTING'].includes(this.stage))return;
+    if(px<1)return;
+    if(this.stage==='PET_READY')this.transition('PETTING');
+    this.petProgress+=Math.min(px,40);
+    if(this.petProgress>=Math.max(1,timings.petSec)*65){this.startSnooze()}
+    else this.renderProgress();
+  }
+  startSnooze(){
+    if(this.snoozeScheduled)return;
+    this.snoozeScheduled=true;this.nativeRinging=false;
+    mode='snooze';sleep=true;ph=null;snoozeEnd=Date.now()+timings.snoozeSec*1000;
+    sleepAt=performance.now()/1000;smoked=false;food=0;fill=0;
+    this.snoozedAt=Date.now();this.petPointer=null;this.holdPet=false;this.path=[];this.pathArrival=null;
+    if(NATIVE){Android.silence();Android.ringIn(timings.snoozeSec)}
+    this.setCatPose('sleep');this.transition('SNOOZED');
+  }
+  completeFeeding(){
+    if(this.dismissed)return;
+    this.dismissed=true;this.nativeRinging=false;this.bagPointer=null;this.holdPour=false;
+    this.bagEl.hidden=true;mode='fed';fedAt=performance.now()/1000;done=true;sleep=false;lvl=45;ph=null;
+    if(NATIVE)Android.dismiss();feedSound();this.setCatPose('eat');this.transition('EATING');
+  }
+  emergencyStop(){
+    if(NATIVE)Android.dismiss();
+    mode='idle';sleep=true;lvl=100;ph=null;food=0;fill=0;this.reset();
+  }
+  snoozeDirect(){if(this.active&&!this.snoozeScheduled&&['ALARM_REACT','WALK_TO_CAT','PET_READY','PETTING'].includes(this.stage))this.startSnooze()}
+  position(e){const b=this.art.getBoundingClientRect();return {x:(e.clientX-b.left)/b.width*100,y:(e.clientY-b.top)/b.height*100}}
+  isBagOverBowl(){return Math.hypot((this.bag.x-64)*1.0,(this.bag.y-73.4)*1.7)<10}
+  kibble(){const el=document.createElement('i');el.style.left=(61+Math.random()*6)+'%';el.style.top=(70+Math.random()*4)+'%';$('storyParticles').append(el);setTimeout(()=>el.remove(),650)}
+  bind(){
+    const zone=$('storyPetZone');
+    zone.addEventListener('pointerdown',e=>{
+      if(!['PET_READY','PETTING'].includes(this.stage)||this.petPointer!==null)return;
+      this.petPointer=e.pointerId;this.petPrev={x:e.clientX,y:e.clientY};this.holdPet=false;
+      try{zone.setPointerCapture(e.pointerId)}catch(_){} e.preventDefault();
+    });
+    zone.addEventListener('pointermove',e=>{
+      if(e.pointerId!==this.petPointer)return;
+      const within=e.clientX>=zone.getBoundingClientRect().left&&e.clientX<=zone.getBoundingClientRect().right&&e.clientY>=zone.getBoundingClientRect().top&&e.clientY<=zone.getBoundingClientRect().bottom;
+      const d=Math.hypot(e.clientX-this.petPrev.x,e.clientY-this.petPrev.y);
+      this.petPrev={x:e.clientX,y:e.clientY};if(within&&d>=3)this.gainPet(Math.min(d,35));
+    });
+    const endPet=e=>{if(e.pointerId===this.petPointer){this.petPointer=null;this.holdPet=false}};
+    zone.addEventListener('pointerup',endPet);zone.addEventListener('pointercancel',endPet);zone.addEventListener('lostpointercapture',endPet);
+    zone.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&['PET_READY','PETTING'].includes(this.stage)){e.preventDefault();this.gainPet(18)}});
+    const bag=this.bagEl;
+    bag.addEventListener('pointerdown',e=>{
+      if(this.stage!=='FEED_READY'&&this.stage!=='POURING')return;
+      this.bagPointer=e.pointerId;try{bag.setPointerCapture(e.pointerId)}catch(_){};e.preventDefault();
+    });
+    bag.addEventListener('pointermove',e=>{
+      if(e.pointerId!==this.bagPointer)return;
+      const pos=this.position(e);this.bag={x:Math.max(6,Math.min(94,pos.x)),y:Math.max(7,Math.min(92,pos.y))};this.placeBag();
+    });
+    const endBag=e=>{if(e.pointerId===this.bagPointer){this.bagPointer=null;this.bag={x:76,y:74};this.placeBag();if(this.stage==='POURING')this.transition('FEED_READY')}};
+    bag.addEventListener('pointerup',endBag);bag.addEventListener('pointercancel',endBag);bag.addEventListener('lostpointercapture',endBag);
+    $('storyTest').onclick=()=>$('test').click();
+    $('storySnooze').onclick=()=>this.snoozeDirect();
+    $('storyStop').onclick=()=>this.emergencyStop();
+    const pet=$('storyHoldPet');pet.addEventListener('pointerdown',e=>{if(['PET_READY','PETTING'].includes(this.stage)){this.petPointer=e.pointerId;this.holdPet=true;pet.setPointerCapture(e.pointerId)}});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(name=>pet.addEventListener(name,()=>{if(this.holdPet){this.holdPet=false;this.petPointer=null}}));
+    const pour=$('storyHoldPour');pour.addEventListener('pointerdown',e=>{if(['FEED_READY','POURING'].includes(this.stage)){this.holdPour=true;pour.setPointerCapture(e.pointerId)}});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(name=>pour.addEventListener(name,()=>{this.holdPour=false;if(this.stage==='POURING')this.transition('FEED_READY')}));
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)this.updateWindow(true)});
+    window.addEventListener('focus',()=>this.updateWindow(true));
+  }
+  renderProgress(){
+    const pet=['PET_READY','PETTING'].includes(this.stage),pour=['FEED_READY','POURING'].includes(this.stage);
+    const p=pet?Math.min(100,Math.round(this.petProgress/(Math.max(1,timings.petSec)*65)*100)):pour?Math.min(100,Math.round(this.pourProgress/(Math.max(1,timings.feedSec)*1000)*100)):0;
+    $('storyProgressWrap').hidden=!(pet||pour);$('storyProgressLabel').textContent=pet?'💗 نوازش':'🥣 غذا';$('storyProgressFill').style.width=p+'%';$('storyProgressNumber').textContent=p+'٪';
+  }
+  render(){
+    $('pixelHouse').dataset.stage=this.stage;
+    const notes={
+      IDLE:['آدم اخمو کنار پنجره نشسته ☕','میو پایین خوابیده؛ منتظر زنگ بعدی هستیم.','☾ خانه آرومه'],
+      ALARM_REACT:['میــــو! گربه بیدار شد 😾','شخصیتت سیگار رو کنار می‌ذاره و از مبل بلند می‌شه.','! وقت بیداری'],
+      WALK_TO_CAT:['داره از پله‌ها میاد پایین 🚶','یکم صبر کن تا به میو برسه…','↓ به سوی میو'],
+      PET_READY:['حالا خودت میو رو نوازش کن! 🐾','انگشتت رو چند بار روی بدن گربه بکش؛ فقط لمس ساده کافی نیست.','♡ نوازش کن'],
+      PETTING:['آخی! میو داره آروم می‌شه 💗','ادامه بده؛ هر حرکت واقعی انگشت حساب می‌شه.','♡ نوازش کن'],
+      SNOOZED:['میو خوابش برده 💤','آلارم اسنوز شد؛ شخصیت می‌ره دنبال غذا.','💤 اسنوز شد'],
+      WALK_TO_CLOSET:['وقت پیدا کردن غذاست 🧺','شخصیت از پله‌ها بالا می‌ره طرف کمد غذا.','↑ به کمد'],
+      SEARCH_FOOD:['توی کمد دنبال غذا می‌گرده 🧺','تا پیدا شدن غذا کمی صبر کن…','🔎 دنبال غذا'],
+      CARRY_FOOD:['غذا پیدا شد! 🥫','شخصیت پاکت غذا رو از پله‌ها میاره پایین.','↓ پاکت غذا'],
+      FEED_READY:['حالا نوبت توئه! 🥣','پاکت غذا رو بکش بالای ظرف و نگه دار تا غذا بریزه.','🍽️ غذا بریز'],
+      POURING:['خوشمزه‌ست! داره کاسه پر می‌شه 🐟','تا پر شدن ظرف، پاکت رو روی کاسه نگه دار.','🍽️ غذا بریز'],
+      EATING:['آفرین! میو داره می‌خوره 😻','آلارم کامل خاموش شد؛ میو خیلی خوشحاله.','✓ میو سیر شد'],
+      RETURN_TO_SOFA:['وقت برگشتن به مبل 🛋️','شخصیت از پله‌ها برمی‌گرده و استراحت می‌کنه.','↗ به مبل'],
+      COMPLETED:['تموم شد؛ روز خوبی داشته باشی! ✨','میو غذا خورده و شخصیت برگشته به مبل.','✓ پایان داستان']};
+    const [title,detail,pill]=notes[this.stage]||notes.IDLE;
+    $('pixelStageTitle').textContent=title;$('pixelStageDetail').textContent=detail;$('storyStagePill').textContent=pill;
+    $('storyHelp').textContent=detail;
+    $('storySmoke').hidden=this.stage!=='IDLE';this.carryEl.hidden=this.stage!=='CARRY_FOOD';
+    $('storyTest').hidden=this.active&&this.stage!=='COMPLETED';
+    $('storySnooze').hidden=!(this.active&&!this.snoozeScheduled&&['ALARM_REACT','WALK_TO_CAT','PET_READY','PETTING'].includes(this.stage));
+    $('storyStop').hidden=!this.active||['COMPLETED','IDLE'].includes(this.stage);
+    $('storyHoldPet').hidden=!['PET_READY','PETTING'].includes(this.stage);
+    $('storyHoldPour').hidden=!['FEED_READY','POURING'].includes(this.stage);
+    $('storyPetZone').setAttribute('aria-disabled',String(!['PET_READY','PETTING'].includes(this.stage)));
+    this.renderProgress();
+  }
 }
-function pixelFeedSuccess(){
- if(mode!=='snooze'||food!==1)return;
- mode='fed';food=0;fedAt=performance.now()/1000;done=true;sleep=false;lvl=45;ph=null;
- pixelFeedUntil=0;feedSound();if(NATIVE)Android.dismiss();
-}
-$('pixelPet').onclick=()=>{if(mode==='ringing'&&!pixelPetUntil){pixelPetUntil=Date.now()+timings.petSec*1000}};
-$('pixelFeed').onclick=()=>{if(mode==='snooze'&&food===1&&!pixelFeedUntil){pixelFeedUntil=Date.now()+timings.feedSec*1000}};
-$('pixelSnooze').onclick=()=>{if(mode==='ringing')finishPixelPet();else if(mode==='snooze'){
-  snoozeEnd=Date.now()+timings.snoozeSec*1000;if(NATIVE)Android.ringIn(timings.snoozeSec);
-}};
-$('pixelDismiss').onclick=()=>{if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;ph=null;food=0;pixelPetUntil=0;pixelFeedUntil=0;};
-$('pixelTest').onclick=()=>$('test').click();
-function updatePixelScene(){
- const now=Date.now();if(now-lastPixelRender<160)return;lastPixelRender=now;
- if(pixelPetUntil&&mode==='ringing'&&now>=pixelPetUntil)finishPixelPet();
- if(pixelFeedUntil&&mode==='snooze'&&food===1&&now>=pixelFeedUntil)pixelFeedSuccess();
- if(mode!=='ringing')pixelPetUntil=0;
- if(mode!=='snooze')pixelFeedUntil=0;
- let stage='idle',title='خانه در آرامش است',detail='منتظر آلارم بعدی 💤';
- if(mode==='ringing'){stage=pixelPetUntil?'petting':'ringing';title=pixelPetUntil?'داریم میو رو ناز می‌کنیم 💗':'میــــو! وقت بیدار شدنه!';
-  detail=pixelPetUntil?'تا خوابیدن گربه '+fmt(pixelPetUntil-now):'شخصیتت میاد پیش گربه؛ نازش کن یا اسنوز بزن.'}
- else if(mode==='snooze'&&food===0){stage='searching';title='میو خوابیده؛ دنبال غذا می‌گردیم 🧺';detail='غذا تا '+Math.max(0,Math.ceil(timings.foodDelaySec-(performance.now()/1000-sleepAt)))+' ثانیه دیگه می‌رسه · اسنوز '+fmt(snoozeEnd-now)}
- else if(mode==='snooze'){stage=pixelFeedUntil?'feeding':'food-ready';title=pixelFeedUntil?'غذا رو توی کاسه می‌ریزیم 🍲':'غذا رسید! وقت صبحانه‌ست 🥣';detail=pixelFeedUntil?'پایان در '+fmt(pixelFeedUntil-now):'به گربه غذا بده تا آلارم کامل خاموش بشه.'}
- else if(mode==='fed'||done){stage='fed';title='آفرین! میو سیر شد 😻';detail='آلارم خاموش شد. روز خوبی داشته باشی!'}
- $('pixelHouse').dataset.stage=stage;$('pixelHouse').dataset.smoking=String(!!ph);$('pixelStageTitle').textContent=title;$('pixelStageDetail').textContent=detail;
- $('pixelPet').hidden=mode!=='ringing';$('pixelPet').disabled=!!pixelPetUntil;
- $('pixelFeed').hidden=mode!=='snooze'||food!==1;$('pixelFeed').disabled=!!pixelFeedUntil;
- $('pixelSnooze').hidden=mode!=='ringing';$('pixelDismiss').hidden=mode!=='ringing'&&mode!=='snooze';
- $('pixelTest').hidden=mode==='ringing'||mode==='snooze';
-}
+const story=new PixelStory();window.story=story;
+function updatePixelScene(){story.tick()}
 updateProfileUI();refreshAlarmDiagnostics();
 // A fresh Android install gets onboarding; a migrated install is never blocked.
 if(profileCanUseNative&&!profile.onboardingComplete&&!(typeof Android.isRinging==='function'&&Android.isRinging()))showOnboarding(1,false);
@@ -984,16 +1171,16 @@ window.onMeowPreviewError=message=>{$('customStatus').textContent='⚠ '+message
 $('customStatus').textContent=NATIVE&&Android.hasCustomMeow()?'✓ فایل شخصی قبلی آماده است':'';
 function checkPermission(){if(NATIVE)$('permissionHelp').hidden=Android.canSetExactAlarms();else $('permissionHelp').hidden=true}
 $('requestAlarmPermission').onclick=()=>{if(NATIVE)Android.requestExactAlarmPermission()};
-$('stopAlarm').onclick=()=>{if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;food=0;ph=null};
+$('stopAlarm').onclick=()=>{if(story.active){story.emergencyStop();return}if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;food=0;ph=null};
 async function lock(){try{if(NATIVE&&navigator.wakeLock&&Android.isRinging())await navigator.wakeLock.request('screen')}catch(e){}}
 $('test').onclick=()=>{initAudio();done=false;if(NATIVE){if(!Android.canSetExactAlarms()){checkPermission();return}if(!alarmList.some(a=>a.id===focusId)&&alarmList.length)focusId=alarmList[0].id;Android.testAlarm(focusId);return}testAt=Date.now()+5000};
 document.addEventListener('pointerdown',initAudio);
-function fire(){if(mode==='ringing')return;mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;done=false;ringStart=performance.now()/1000;nextMeow=0}
+function fire(){if(mode==='ringing')return;mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;done=false;ringStart=performance.now()/1000;nextMeow=0;if(profile.roomMode==='pixel')story.start()}
 setInterval(()=>{const n=new Date(),hm=two(n.getHours())+':'+two(n.getMinutes());$('clock').textContent=hm;
   if(testAt&&Date.now()>=testAt){testAt=0;fire()}
   else if(!NATIVE&&alarmList.some(a=>a.on&&clockValue(a)===hm)&&fired!==hm+n.getDate()){fired=hm+n.getDate();fire()}},500);
-window.nativeRing=()=>{if(mode==='ringing')return;$('onboarding').hidden=true;pixelPetUntil=0;pixelFeedUntil=0;mode='idle';fire()};
-window.nativeStopped=()=>{if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
+window.nativeRing=()=>{$('onboarding').hidden=true;if(profile.roomMode==='pixel'&&story.active&&story.stage!=='COMPLETED'){story.start();return}if(mode==='ringing')return;mode='idle';fire()};
+window.nativeStopped=()=>{if(profile.roomMode==='pixel'&&story.active){story.nativeRinging=false;return}if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
 document.querySelectorAll('[data-jump]').forEach(button=>{
   button.addEventListener('click',()=>{
     const id=button.dataset.jump;
