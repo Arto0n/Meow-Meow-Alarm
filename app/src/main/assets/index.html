@@ -280,6 +280,7 @@ body.ring{animation:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.masthead h1{animation:none}.ring .scene-card{transition:none}}
 
 </style>
+<link rel="stylesheet" href="cozy2d.css">
 </head>
 <body>
 <header class="masthead" id="top">
@@ -290,6 +291,61 @@ body.ring{animation:none}
 <section class="card scene-card" id="roomSection" aria-label="اتاق میو و بازی تعاملی">
   <div class="scene-head"><h2>🛏️ اتاق کوچولوی میو</h2><span id="roomMood" class="scene-tag">● گربه خوابالو</span></div>
   <div class="scene">
+<div id="cozyStage" class="cozy-stage" data-time="afternoon" data-step="idle" aria-label="اتاق آرام و گربهٔ دوست‌داشتنی">
+  <div class="cozy-background" aria-hidden="true"></div><div class="cozy-window-tone" aria-hidden="true"></div>
+  <div class="cozy-tip" id="cozyBubble">یه روز آروم کنار گربه شروع می‌شه ☀️</div>
+  <div id="cozyHuman" class="cozy-human sitting chilling" data-human="male" aria-label="شخصیت انتخابی">
+    <svg viewBox="0 0 115 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="انسان خوش‌قلب و کمی خواب‌آلود">
+      <defs><linearGradient id="hSkin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffdfb1"/><stop offset="1" stop-color="#d79c7c"/></linearGradient><linearGradient id="hShirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7ba4ae"/><stop offset="1" stop-color="#476d80"/></linearGradient></defs>
+      <ellipse cx="59" cy="176" rx="42" ry="5" fill="#53433544"/>
+      <path d="M39 117L30 167Q31 174 42 172L54 129L68 170Q80 176 86 167L77 112Z" fill="#606070" stroke="#503e4f" stroke-width="3"/>
+      <path d="M23 164q-13 3-9 12h32q9-7-4-13zM67 164q-12 4-5 12h33q4-9-11-12z" fill="#fff5ea" stroke="#766276" stroke-width="3"/>
+      <path class="human-shirt" d="M39 80q-21 1-23 24L12 139Q20 150 32 140L38 123L37 145q28 9 50-2l-4-21 8 18q13 5 16-9l-9-31Q94 81 76 79Z" fill="#4f7189" stroke="#504455" stroke-width="3"/>
+      <path d="M20 132L13 143Q18 154 30 148l8-19M92 134l7 8Q109 145 110 134" fill="url(#hSkin)" stroke="#74545a" stroke-width="3"/>
+      <path d="M50 74h21v20q-10 12-21 0z" fill="url(#hSkin)" stroke="#694f50" stroke-width="2.6"/>
+      <ellipse cx="59" cy="48" rx="35" ry="39" fill="url(#hSkin)" stroke="#74545a" stroke-width="3"/>
+      <path class="human-hair-male" d="M25 45Q9 9 47 9Q58-3 79 10Q105 13 93 50L86 34Q81 24 72 26Q58 15 48 31Q32 26 25 45Z" fill="#503d39" stroke="#503d39" stroke-width="4"/>
+      <g class="human-hair-female"><path d="M22 48Q2 9 43 5Q66-3 84 14Q109 34 94 91Q91 111 103 117Q80 119 74 86L26 87Q19 118 5 122Q16 100 22 48Z" fill="#6c4540" stroke="#573636" stroke-width="3"/><path d="M24 36Q35 8 76 26L93 54Q82 30 61 27Q44 42 24 36" fill="#8b5650"/></g>
+      <path d="M36 52q11-10 20-2M67 49q10-7 16 0" stroke="#594044" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M37 60q10 4 17 0M66 60q9 4 17 0" stroke="#70474d" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="37" cy="74" rx="6" ry="3" fill="#e9948e" opacity=".65"/><ellipse cx="79" cy="74" rx="6" ry="3" fill="#e9948e" opacity=".65"/>
+      <path d="M51 78Q58 82 66 77" stroke="#794c50" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path class="human-hair-male" d="M37 81q3 18 23 18Q81 97 84 78Q69 85 60 85Q47 85 37 81" fill="#77584c" opacity=".85"/>
+      <path d="M51 119q9 5 19-1" fill="none" stroke="#b1c5c6" stroke-width="4"/>
+    </svg>
+  </div>
+  <div id="cozyCat" class="cozy-cat sleeping" data-cat="tabby" aria-label="گربه؛ برای نوازش با انگشت روی آن بکش">
+    <svg viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="گربهٔ پشمالوی دوست‌داشتنی">
+      <ellipse cx="85" cy="144" rx="68" ry="10" fill="#4d403744"/>
+      <g class="cat-tail"><path d="M115 104Q160 116 163 67Q164 48 146 43" fill="none" stroke="#554b4c" stroke-width="24" stroke-linecap="round"/><path d="M115 104Q160 116 163 67Q164 48 146 43" fill="none" stroke="var(--cat-fur)" stroke-width="18" stroke-linecap="round"/></g>
+      <ellipse class="fur" cx="91" cy="105" rx="60" ry="39" stroke="#59494f" stroke-width="3"/>
+      <path class="stripes" d="M85 71l5 14M104 71l2 17M120 80l-1 17M137 96l-4 12" fill="none" stroke-width="6" stroke-linecap="round"/>
+      <path class="calico-patch" d="M90 73q20-14 34 6l-12 29-26-4z" fill="#a66a48"/><path class="calico-patch" d="M127 102q20 1 17 18l-18 9-6-17z" fill="#443f42"/>
+      <ellipse class="chest" cx="59" cy="124" rx="21" ry="18"/><ellipse class="chest" cx="114" cy="133" rx="17" ry="10"/>
+      <path class="fur" d="M25 66L23 18L56 42L91 20L103 67Z" stroke="#55454b" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M31 55L31 30L48 45ZM80 43L92 30L94 56Z" fill="#db9699" stroke="none"/>
+      <ellipse class="fur" cx="62" cy="77" rx="54" ry="50" stroke="#59494f" stroke-width="3"/>
+      <path class="stripes" d="M47 31l3 16M61 29l0 18M74 31l-3 16" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <ellipse class="chest" cx="62" cy="102" rx="29" ry="18"/>
+      <g class="eye-open"><ellipse cx="41" cy="73" rx="9" ry="12" fill="#f9df93"/><ellipse cx="80" cy="73" rx="9" ry="12" fill="#f9df93"/><ellipse cx="42" cy="73" rx="3" ry="9" fill="#3e3840"/><ellipse cx="79" cy="73" rx="3" ry="9" fill="#3e3840"/></g>
+      <g class="eye-closed" stroke="#503c46" stroke-width="4" fill="none" stroke-linecap="round"><path d="M32 74q9 9 18 0M70 74q9 9 18 0"/></g>
+      <path d="M56 91l11 0-5 6Z" fill="#c97e7b"/><path d="M62 98q-6 8-15 2M62 98q8 9 15 2" stroke="#645057" fill="none" stroke-width="2.6" stroke-linecap="round"/>
+      <path class="cat-mouth" d="M60 100q4 13 9 0" fill="#8a515d" stroke="#795063" stroke-width="2"/>
+      <path d="M32 92L1 86M33 99L0 101M91 92l29-6M91 99l30 2" stroke="#62565a" fill="none" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div id="cozyBowlTarget" class="cozy-drop-zone" aria-hidden="true"></div>
+  <div id="cozyFoodBag" class="cozy-food-bag" hidden role="button" aria-label="پاکت غذا را روی ظرف بکش و نگه دار">🥣</div>
+  <div id="cozyFeather" class="cozy-feather" hidden role="button" aria-label="پر را کنار گربه حرکت بده">🪶</div>
+  <div id="cozyBlanket" class="cozy-blanket" hidden role="button" aria-label="پتو را روی گربه بکش">🧣</div>
+  <div id="cozyHiddenToy" class="cozy-hidden-toy" hidden role="button" aria-label="اسباب‌بازی پنهان را پیدا کن">🧶</div>
+</div>
+<div class="cozy-controls"><span id="cozyActivityTitle" class="cozy-story-title">🐾 اتاق دنج میو</span><span id="cozyCountdown" class="cozy-timer">☀️</span></div>
+<div id="cozyHelp" class="cozy-activity-help">یک گربهٔ خوابالو منتظر بیدارباشه</div>
+<div class="cozy-progress" aria-label="میزان پیشرفت تعامل"><div id="cozyProgress"></div></div>
+<div id="cozyComplete" class="cozy-success" hidden>🐱 میو خوشحاله! آلارم خاموش شد.</div>
+<div class="cozy-snooze"><button type="button" id="cozySnooze" class="secondary">💤 اسنوز</button><button type="button" id="cozySkip" class="secondary">⏭ رفتن به مرحلهٔ بعد</button></div>
+
 <svg id="s" viewBox="0 0 400 300" role="img" aria-label="گربه در اتاق گرم و دنج کنار مرد نشسته و می‌توانی نوازشش کنی">
   <defs>
     <pattern id="floorTile" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#b89883"/><rect width="10" height="10" fill="#d7b59a"/><rect x="10" y="10" width="10" height="10" fill="#d7b59a"/></pattern>
@@ -406,6 +462,9 @@ body.ring{animation:none}
     <label class="field">صدای این آلارم
       <select id="alarmSound"><option value="real">🐈 واقعی</option><option value="cute">💗 بانمک</option><option value="custom">🎵 صدای من</option></select>
     </label>
+    <label class="field">برنامهٔ بیدارباش
+      <select id="alarmPreset" class="cozy-routine-select"><option value="lazy">☀️ صبح تنبل — نوازش</option><option value="breakfast">🥣 صبحانه — نوازش و غذا</option><option value="playtime">🪶 بازی — دنبال پر</option><option value="grumpy">😾 بداخلاق — نوازش، اسباب‌بازی و غذا</option><option value="custom">⚙️ دلخواه — نوازش، بازی، پتو، غذا</option></select>
+    </label>
     <label class="inlinefield"><input id="on" type="checkbox" checked> روشن باشد</label>
     <div class="row actions"><button id="saveAlarm" type="button">💾 ذخیره</button><button id="cancelEdit" class="secondary" type="button">بستن</button><button id="deleteAlarm" class="danger" type="button">حذف</button></div>
   </div>
@@ -429,7 +488,27 @@ body.ring{animation:none}
     <p id="soundStatus" class="status-text" role="status"></p>
     <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus" class="status-text" role="status"></span></div>
     <p class="hintText">فایل باید روی گوشی قابل پخش باشد (مثل MP3، WAV، M4A). فایلِ معتبر در حافظهٔ برنامه ذخیره می‌شود و آلارم بدون اینترنت کار می‌کند.</p></div>
-  <h3>⏳ زمان‌بندی داستان</h3>
+  <div class="cozy-card" id="cozyProfileSettings">
+  <h3>🎨 شخصیت و گربهٔ تو</h3>
+  <p>همیشه قابل تغییرند؛ آلارم‌های قبلی پاک نمی‌شوند.</p>
+  <div class="cozy-profile-row" id="cozyHumanChoices"><button type="button" class="cozy-choice" data-human="male">👨 مرد</button><button type="button" class="cozy-choice" data-human="female">👩 زن</button></div>
+  <div class="cozy-profile-row" id="cozyCatChoices"><button type="button" class="cozy-choice" data-cat="tabby">🐈 راه‌راه</button><button type="button" class="cozy-choice" data-cat="orange">🐈 نارنجی</button><button type="button" class="cozy-choice" data-cat="black">🐈‍⬛ مشکی</button><button type="button" class="cozy-choice" data-cat="white">🐱 سفید</button><button type="button" class="cozy-choice" data-cat="calico">🐈 سه‌رنگ</button></div>
+  <div class="cozy-sfx-slider"><label for="cozyVolume">🔉 صدای تعامل‌ها</label><input id="cozyVolume" type="range" min="0" max="100" value="55" step="5"/><output id="cozyVolumeText">۵۵٪</output></div>
+  <p class="cozy-small">صدای اصلی آلارم از کانال Alarm اندروید پخش می‌شود. این کنترل فقط مربوط به خرخر و جلوه‌های بازی است.</p>
+</div>
+<div class="cozy-card" id="cozyPresetsSettings">
+  <h3>🌷 برنامهٔ بیدارباش پیش‌فرض</h3>
+  <p>برای هر آلارم هم می‌توانی برنامهٔ متفاوتی انتخاب کنی.</p>
+  <div class="cozy-profile-row" id="cozyPresetChoices">
+    <button type="button" class="cozy-choice" data-routine="lazy">☀️ صبح تنبل</button>
+    <button type="button" class="cozy-choice" data-routine="breakfast">🥣 صبحانه</button>
+    <button type="button" class="cozy-choice" data-routine="playtime">🪶 بازی</button>
+    <button type="button" class="cozy-choice" data-routine="grumpy">😾 گربه بداخلاق</button>
+    <button type="button" class="cozy-choice" data-routine="custom">⚙️ دلخواه</button>
+  </div>
+</div>
+
+  <h3>⏳ زمان‌بندی پیشرفته</h3>
   <div class="row"><button class="secondary" data-preset="quick">سریع</button><button class="secondary" data-preset="classic">کلاسیک</button><button class="secondary" data-preset="relaxed">آروم</button></div>
   <div class="timing">
     <label>مدت نوازش <input id="petSec" type="number" min="1" max="60" step="1"> ثانیه</label>
@@ -444,6 +523,15 @@ body.ring{animation:none}
 <div id="permissionHelp" class="card permission" hidden><b>🔔 مجوز آلارم دقیق لازم است</b><p>برای اجرای آلارم در ساعت مقرر، مجوز «Alarms & reminders» را فعال کن.</p><button id="requestAlarmPermission">باز کردن تنظیمات</button></div>
 
 <p class="note">🔔 آلارم مهمه: یک‌بار با صفحهٔ قفل‌شده هم امتحانش کن. در بعضی گوشی‌ها اجازهٔ آلارم دقیق و تنظیمات باتری لازمه.</p>
+<div id="cozyOnboarding" class="cozy-onboard" hidden role="dialog" aria-modal="true" aria-labelledby="cozyOnboardingTitle">
+  <div class="cozy-onboard-inner"><div style="font-size:2.5rem">🐱</div><h2 id="cozyOnboardingTitle">به خونهٔ میو خوش اومدی!</h2>
+    <p>شخصیت و گربه‌ات رو انتخاب کن. هر وقت خواستی می‌تونی عوضشون کنی.</p>
+    <div class="cozy-profile-row" id="cozyOnboardHumans"><button class="cozy-choice" type="button" data-human="male">👨 مرد</button><button class="cozy-choice" type="button" data-human="female">👩 زن</button></div>
+    <div class="cozy-profile-row" id="cozyOnboardCats"><button class="cozy-choice" type="button" data-cat="tabby">🐈 راه‌راه</button><button class="cozy-choice" type="button" data-cat="orange">🐈 نارنجی</button><button class="cozy-choice" type="button" data-cat="black">🐈‍⬛ مشکی</button><button class="cozy-choice" type="button" data-cat="white">🐱 سفید</button><button class="cozy-choice" type="button" data-cat="calico">🐈 سه‌رنگ</button></div>
+    <button id="cozyFinish" type="button">بریم خونهٔ میو! <span aria-hidden="true">🐾</span></button>
+  </div>
+</div>
+
 <nav class="quick-nav" aria-label="دسترسی سریع">
   <button type="button" data-jump="alarmsSection" aria-current="page"><span class="nav-icon" aria-hidden="true">⏰</span>آلارم‌ها</button>
   <button type="button" data-jump="roomSection"><span class="nav-icon" aria-hidden="true">🐱</span>اتاق میو</button>
@@ -635,7 +723,7 @@ function renderAlarms(){const root=$('alarmList');root.replaceChildren();
     const info=document.createElement('div');info.className='alarm-info';
     const time=document.createElement('div');time.className='alarm-time';time.textContent=clockValue(a);
     const title=document.createElement('div');title.className='alarm-title';title.textContent=a.label||'Wake up';
-    const sub=document.createElement('div');sub.className='alarm-sub';sub.textContent=daysText(a)+' · '+({real:'میوی واقعی',cute:'میوی بانمک',custom:'میوی من'}[a.sound]||'میو');
+    const sub=document.createElement('div');sub.className='alarm-sub';sub.textContent=daysText(a)+' · '+({real:'میوی واقعی',cute:'میوی بانمک',custom:'میوی من'}[a.sound]||'میو')+' · '+({lazy:'صبح تنبل',breakfast:'صبحانه',playtime:'بازی',grumpy:'بداخلاق',custom:'دلخواه'}[a.preset]||'صبحانه');
     info.append(time,title,sub);
     const ops=document.createElement('div');ops.className='alarm-ops';
     const toggle=document.createElement('input');toggle.type='checkbox';toggle.className='alarm-toggle';toggle.checked=!!a.on;toggle.setAttribute('aria-label','فعال کردن '+(a.label||'alarm'));
@@ -656,9 +744,9 @@ function persistAlarm(a){if(NATIVE){const result=readJSON(Android.saveAlarm(JSON
 function openEditor(id=null){
   editingId=id;
   if(id!==null)focusId=id;
-  const a=alarmList.find(x=>x.id===id)||{h:7,m:0,on:true,days:127,label:'Wake up',sound:defaultSound};
+  const a=alarmList.find(x=>x.id===id)||{h:7,m:0,on:true,days:127,label:'Wake up',sound:defaultSound,preset:window.cozyProfile?.preset||'breakfast'};
   $('editorTitle').textContent=id?'ویرایش آلارم':'آلارم جدید';$('label').value=a.label||'';$('at').value=clockValue(a);
-  $('on').checked=!!a.on;$('alarmSound').value=a.sound||'real';
+  $('on').checked=!!a.on;$('alarmSound').value=a.sound||'real';$('alarmPreset').value=a.preset||'breakfast';
   $('days').replaceChildren();for(let i=0;i<7;i++){const label=document.createElement('label'),ck=document.createElement('input');ck.type='checkbox';ck.value=String(i);ck.checked=!!(a.days&(1<<i));label.title=dayFull[i];label.append(ck,document.createTextNode(' '+dayNames[i]));$('days').appendChild(label)}
   $('deleteAlarm').hidden=!id;$('editor').hidden=false;updateEditorTime();renderSoundSelection();$('editor').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -667,7 +755,7 @@ $('saveAlarm').onclick=()=>{
   const fields=$('at').value.split(':');const days=[...$('days').querySelectorAll('input:checked')].reduce((mask,box)=>mask|(1<<Number(box.value)),0);
   const sound=$('alarmSound').value;
   if(sound==='custom'&&NATIVE&&!Android.hasCustomMeow()){alert('اول یک فایل صوتی معتبر وارد کن.');return}
-  const a={id:editingId||0,h:Number(fields[0]),m:Number(fields[1]),on:$('on').checked,days,label:$('label').value.trim()||'Wake up',sound};
+  const a={id:editingId||0,h:Number(fields[0]),m:Number(fields[1]),on:$('on').checked,days,label:$('label').value.trim()||'Wake up',sound,preset:$('alarmPreset').value};
   persistAlarm(a);$('editor').hidden=true;editingId=null;renderSoundSelection();checkPermission()
 };
 // Android WebView may silently reject window.confirm(). Use our own in-app confirmation.
@@ -777,5 +865,6 @@ if(NATIVE&&Android.isRinging())window.nativeRing();
 
 requestAnimationFrame(frame);
 </script>
+<script src="cozy2d.js"></script>
 </body>
 </html>

@@ -23,12 +23,12 @@ object Ring {
 
 data class AlarmEntry(
     val id: Int, val hour: Int, val minute: Int, val enabled: Boolean,
-    val days: Int, val label: String, val sound: String
+    val days: Int, val label: String, val sound: String, val preset: String = "breakfast"
 ) {
     fun toJson(): JSONObject = JSONObject()
         .put("id", id).put("h", hour).put("m", minute)
         .put("on", enabled).put("days", days)
-        .put("label", label).put("sound", sound)
+        .put("label", label).put("sound", sound).put("preset", preset)
 
     companion object {
         fun fromJson(o: JSONObject) = AlarmEntry(
@@ -38,7 +38,8 @@ data class AlarmEntry(
             o.optBoolean("on", true),
             o.optInt("days", 127).coerceIn(0, 127),
             o.optString("label", "Wake up").take(50),
-            o.optString("sound", "real").takeIf { it in setOf("real", "cute", "custom") } ?: "real"
+            o.optString("sound", "real").takeIf { it in setOf("real", "cute", "custom") } ?: "real",
+            o.optString("preset", "breakfast").takeIf { it in setOf("lazy", "breakfast", "playtime", "grumpy", "custom") } ?: "breakfast"
         )
     }
 }
@@ -216,6 +217,23 @@ class Bridge(private val c: Context) {
     }
 
     @JavascriptInterface fun deleteAlarm(id: Int): Boolean = Alarms.remove(c, id)
+    @JavascriptInterface fun getActiveAlarmId(): Int =
+        Alarms.prefs(c).getInt("active_alarm_id", -1)
+
+    @JavascriptInterface fun getCozyProfile(): String =
+        Alarms.prefs(c).getString("cozy_profile_v7", "{}") ?: "{}"
+
+    @JavascriptInterface fun setCozyProfile(json: String): Boolean = try {
+        val input = JSONObject(json)
+        val human = input.optString("human", "male").takeIf { it in setOf("male", "female") } ?: "male"
+        val cat = input.optString("cat", "tabby").takeIf { it in setOf("tabby", "orange", "black", "white", "calico") } ?: "tabby"
+        val preset = input.optString("preset", "breakfast").takeIf { it in setOf("lazy", "breakfast", "playtime", "grumpy", "custom") } ?: "breakfast"
+        val interactionVolume = input.optDouble("interactionVolume", 0.55).coerceIn(0.0, 1.0)
+        val output = JSONObject().put("human", human).put("cat", cat)
+            .put("preset", preset).put("interactionVolume", interactionVolume)
+            .put("onboarded", input.optBoolean("onboarded", false))
+        Alarms.prefs(c).edit().putString("cozy_profile_v7", output.toString()).commit()
+    } catch (ex: Exception) { Log.e("MeowAlarm", "Could not save cozy profile", ex); false }
     @JavascriptInterface fun getSettings(): String = Alarms.prefs(c).getString("scene_settings", "{}") ?: "{}"
     @JavascriptInterface fun setSettings(json: String) {
         val input = JSONObject(json)

@@ -29,8 +29,10 @@ object MeowAudio {
                     custom.inputStream().use { player.setDataSource(it.fd) }
                 }
                 "cute", "real" -> {
-                    val resourceId = if (sound == "cute") R.raw.cute_cat_meow else
-                        c.resources.getIdentifier("real_cat_meow", "raw", c.packageName)
+                    val resourceId = if (sound == "cute") {
+                        c.resources.getIdentifier("cute_cat_v7", "raw", c.packageName)
+                            .takeIf { it != 0 } ?: R.raw.cute_cat_meow
+                    } else c.resources.getIdentifier("real_cat_meow", "raw", c.packageName)
                     require(resourceId != 0) { "Missing bundled $sound sound" }
                     c.resources.openRawResourceFd(resourceId)?.use { descriptor ->
                         player.setDataSource(descriptor.fileDescriptor, descriptor.startOffset, descriptor.length)
