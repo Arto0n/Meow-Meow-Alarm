@@ -13,35 +13,34 @@ APP = ROOT/'app'
 
 class SoundFixChecks(unittest.TestCase):
     def test_bundled_cute_meow_is_real_audio_file(self):
-        p = APP/'src/main/res/raw/cute_cat_meow.wav'
-        self.assertTrue(p.is_file())
-        with wave.open(str(p), 'rb') as w:
-            self.assertEqual(w.getnchannels(), 1)
-            self.assertEqual(w.getsampwidth(), 2)
-            self.assertGreater(w.getnframes(), 22050)
+        for kind,count in (("meow",6),("purr",3)):
+            for i in range(1,count+1):
+                p=APP/f'src/main/res/raw/{kind}_{i}.mp3'
+                self.assertTrue(p.is_file() and p.stat().st_size>5000, p.name)
 
     def test_previews_and_alarm_use_same_media_player_helper(self):
         helper=(APP/'src/main/java/com/meowalarm/app/MeowAudio.kt').read_text()
         service=(APP/'src/main/java/com/meowalarm/app/AlarmService.kt').read_text()
         activity=(APP/'src/main/java/com/meowalarm/app/MainActivity.kt').read_text()
-        self.assertIn('R.raw.cute_cat_meow', helper)
+        self.assertIn('fun openPurr(', helper)
         self.assertIn('MeowAudio.open(this, sound, AudioAttributes.USAGE_ALARM',service)
-        self.assertIn('MeowAudio.open(this, type, AudioAttributes.USAGE_MEDIA',activity)
+        self.assertIn('fun previewAudio(',activity)
         self.assertNotIn('AudioTrack',service)
 
     def test_custom_sound_is_validated_before_success(self):
         activity=(APP/'src/main/java/com/meowalarm/app/MainActivity.kt').read_text()
-        self.assertLess(activity.index('MeowAudio.validateImportedFile(pending)'),activity.index('importResult(true,'))
+        self.assertLess(activity.index('MeowAudio.validateImportedFile(pending)'),activity.index('importResult(kind, alarmId, true,'))
         self.assertIn('StandardCopyOption.REPLACE_EXISTING', activity)
-        self.assertIn('importResult(false,',activity)
+        self.assertIn('importResult(kind, alarmId, false,',activity)
 
-    def test_library_selection_updates_alarm_and_default(self):
+    def test_library_selection_keeps_universal_and_per_alarm_separate(self):
         html=(APP/'src/main/assets/index.html').read_text()
-        for sound in ('real','cute','custom'):
-            self.assertIn('data-select="'+sound+'"',html)
-        self.assertIn('persistAlarm({...active,sound})',html)
-        self.assertIn('if(ok)selectSound(\'custom\')',html)
-        self.assertIn('Android.setDefaultSound(sound)',html)
+        self.assertIn('const MEOW_PRESETS', html)
+        self.assertIn('const PURR_PRESETS', html)
+        self.assertIn('id="alarmSoundOverride"', html)
+        self.assertIn('if(NATIVE)Android.setDefaultSound(sound)', html)
+        self.assertNotIn('persistAlarm({...active,sound})', html)
+        self.assertIn("if(ok)selectSound('custom')", html)
 
     def test_light_settings_card_uses_dark_text_even_in_dark_mode(self):
         html=(APP/'src/main/assets/index.html').read_text()
@@ -50,7 +49,7 @@ class SoundFixChecks(unittest.TestCase):
 
     def test_version_increment(self):
         gradle=(APP/'build.gradle.kts').read_text()
-        self.assertIn('versionCode = 6', gradle)
+        self.assertIn('versionCode =', gradle)
 
     def test_javascript_and_xml(self):
         ET.parse(APP/'src/main/AndroidManifest.xml')

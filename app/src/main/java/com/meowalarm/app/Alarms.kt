@@ -23,12 +23,12 @@ object Ring {
 
 data class AlarmEntry(
     val id: Int, val hour: Int, val minute: Int, val enabled: Boolean,
-    val days: Int, val label: String, val sound: String
+    val days: Int, val label: String, val sound: String, val soundOverride: Boolean = false
 ) {
     fun toJson(): JSONObject = JSONObject()
         .put("id", id).put("h", hour).put("m", minute)
         .put("on", enabled).put("days", days)
-        .put("label", label).put("sound", sound)
+        .put("label", label).put("sound", sound).put("soundOverride", soundOverride)
 
     companion object {
         fun fromJson(o: JSONObject) = AlarmEntry(
@@ -38,7 +38,11 @@ data class AlarmEntry(
             o.optBoolean("on", true),
             o.optInt("days", 127).coerceIn(0, 127),
             o.optString("label", "Wake up").take(50),
-            o.optString("sound", "real").takeIf { it in setOf("real", "cute", "custom") } ?: "real"
+            MeowAudio.normalizeMeow(o.optString("sound", "meow_1")).takeIf { MeowAudio.isMeow(it) } ?: "meow_1",
+            // Old alarm entries contained a sound even when there was no override toggle.
+            // Only keep legacy imported sounds as specific to that alarm.
+            if (o.has("soundOverride")) o.optBoolean("soundOverride", false)
+            else o.optString("sound") == "custom"
         )
     }
 }
@@ -58,14 +62,21 @@ object Alarms {
             // Preserve existing users' single alarm during v2 migration.
             val old = AlarmEntry(FIRST_ID, p.getInt("h", 7).coerceIn(0, 23),
                 p.getInt("m", 0).coerceIn(0, 59), p.getBoolean("on", false),
-                127, "Wake up", "real")
+                127, "Wake up", "meow_1")
             write(c, listOf(old))
             return mutableListOf(old)
         }
         return try {
             val arr = JSONArray(raw)
-            MutableList(arr.length()) { AlarmEntry.fromJson(arr.getJSONObject(it)) }
-                .distinctBy { it.id }.toMutableList()
+            val legacyGlobal = MeowAudio.normalizeMeow(p.getString("default_meow_sound", "real") ?: "real")
+            MutableList(arr.length()) {
+                val json = arr.getJSONObject(it)
+                val entry = AlarmEntry.fromJson(json)
+                // Preserve old per-alarm selections when they differ from the old global default.
+                if (!json.has("soundOverride"))
+                    entry.copy(soundOverride = entry.sound == "custom" || entry.sound != legacyGlobal)
+                else entry
+            }.distinctBy { it.id }.toMutableList()
         } catch (ex: Exception) {
             Log.e("MeowAlarm", "Invalid stored alarm list", ex)
             mutableListOf()
@@ -161,6 +172,7 @@ object Alarms {
         if (!entries.removeAll { it.id == id }) return false
         write(c, entries)
         cancel(c, id)
+        runCatching { MeowAudio.alarmFile(c, id).delete() }
         // If this alarm is waiting for a snooze, do not let it ring after deletion.
         if (prefs(c).getInt("active_alarm_id", -1) == id) cancelSnooze(c)
         return true
@@ -179,9 +191,25 @@ object Alarms {
         }
     }
 
+    fun effectiveSound(c: Context, entry: AlarmEntry?): String {
+        val fallback = MeowAudio.normalizeMeow(prefs(c).getString("default_meow_sound", "meow_1") ?: "meow_1")
+        val global = fallback.takeIf { MeowAudio.isMeow(it) && it != "alarm_custom" } ?: "meow_1"
+        return if (entry?.soundOverride == true && MeowAudio.isMeow(entry.sound)) entry.sound else global
+    }
+
     fun active(c: Context): AlarmEntry? {
         val id = prefs(c).getInt("active_alarm_id", FIRST_ID)
         return read(c).firstOrNull { it.id == id }
+    }
+
+    @Synchronized
+    fun setAlarmImportedAudio(c: Context, id: Int) {
+        val entries = read(c)
+        val index = entries.indexOfFirst { it.id == id }
+        if (index >= 0) {
+            entries[index] = entries[index].copy(sound = "alarm_custom", soundOverride = true)
+            write(c, entries)
+        }
     }
 
     fun cancelSnooze(c: Context) = cancel(c, SNOOZE_ID)
@@ -257,25 +285,65 @@ class Bridge(private val c: Context) {
     @JavascriptInterface fun silence() { c.stopService(Intent(c, AlarmService::class.java)) }
     @JavascriptInterface fun dismiss() { silence(); Alarms.cancelSnooze(c) }
     @JavascriptInterface fun isRinging(): Boolean = Ring.active
-    @JavascriptInterface fun getDefaultSound(): String =
-        Alarms.prefs(c).getString("default_meow_sound", "real") ?: "real"
-
+    @JavascriptInterface fun getDefaultSound(): String = Alarms.effectiveSound(c, null)
     @JavascriptInterface fun setDefaultSound(sound: String) {
-        if (sound in setOf("real", "cute", "custom")) {
-            Alarms.prefs(c).edit().putString("default_meow_sound", sound).apply()
+        if (MeowAudio.isMeow(sound) && sound != "alarm_custom") {
+            Alarms.prefs(c).edit().putString("default_meow_sound", MeowAudio.normalizeMeow(sound)).apply()
         }
     }
-
-    @JavascriptInterface fun hasCustomMeow(): Boolean = MeowAudio.customFile(c).isFile && MeowAudio.customFile(c).length() > 0
+    @JavascriptInterface fun getDefaultPurr(): String =
+        (Alarms.prefs(c).getString("default_purr_sound", "purr_1") ?: "purr_1")
+            .takeIf { MeowAudio.isPurr(it) } ?: "purr_1"
+    @JavascriptInterface fun setDefaultPurr(sound: String) {
+        if (MeowAudio.isPurr(sound)) Alarms.prefs(c).edit().putString("default_purr_sound", sound).apply()
+    }
+    @JavascriptInterface fun getCatName(): String =
+        Alarms.prefs(c).getString("cat_name", "گربه") ?: "گربه"
+    @JavascriptInterface fun setCatName(name: String) {
+        Alarms.prefs(c).edit().putString("cat_name", name.trim().take(24).ifEmpty { "گربه" }).apply()
+    }
+    @JavascriptInterface fun getCatColor(): String =
+        Alarms.prefs(c).getString("cat_color", "gray") ?: "gray"
+    @JavascriptInterface fun setCatColor(value: String) {
+        if (value in setOf("gray", "orange", "black", "white", "calico"))
+            Alarms.prefs(c).edit().putString("cat_color", value).apply()
+    }
+    @JavascriptInterface fun hasCustomMeow(): Boolean =
+        MeowAudio.customFile(c).isFile && MeowAudio.customFile(c).length() > 0
+    @JavascriptInterface fun hasCustomPurr(): Boolean =
+        MeowAudio.customPurrFile(c).isFile && MeowAudio.customPurrFile(c).length() > 0
+    @JavascriptInterface fun hasAlarmMeow(id: Int): Boolean =
+        id >= 100 && MeowAudio.alarmFile(c, id).let { it.isFile && it.length() > 0 }
     @JavascriptInterface fun chooseCustomMeow() {
-        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.selectCustomMeow() } }
+        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.selectCustomAudio("meow") } }
+    }
+    @JavascriptInterface fun chooseCustomPurr() {
+        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.selectCustomAudio("purr") } }
+    }
+    @JavascriptInterface fun chooseAlarmMeow(id: Int) {
+        if (Alarms.read(c).any { it.id == id })
+            (c as? MainActivity)?.let { a -> a.runOnUiThread { a.selectCustomAudio("alarm", id) } }
     }
     @JavascriptInterface fun previewMeow(type: String) {
-        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.previewMeow(type) } }
+        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.previewAudio("meow", type) } }
+    }
+    @JavascriptInterface fun previewAlarmMeow(id: Int) {
+        if (hasAlarmMeow(id)) (c as? MainActivity)?.let { a ->
+            a.runOnUiThread { a.previewAudio("alarm", "alarm_custom", id) }
+        }
+    }
+    @JavascriptInterface fun previewPurr(type: String) {
+        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.previewAudio("purr", type) } }
+    }
+    @JavascriptInterface fun startPurr() {
+        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.startPurr() } }
+    }
+    @JavascriptInterface fun stopPurr() {
+        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.stopPurr() } }
     }
     // Compatibility for old WebView pages and automated source checks.
     @JavascriptInterface fun getAlarmState(): String {
-        val entry = Alarms.read(c).firstOrNull() ?: AlarmEntry(100, 7, 0, false, 127, "Wake up", "real")
+        val entry = Alarms.read(c).firstOrNull() ?: AlarmEntry(100, 7, 0, false, 127, "Wake up", "meow_1")
         return entry.toJson().toString()
     }
 }

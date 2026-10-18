@@ -12,12 +12,13 @@ def native_stub():
       ];
       window.cancelled=[];
       window.Android={
-        getAlarms:()=>JSON.stringify(window.saved),getSettings:()=>'{}',getDefaultSound:()=>'real',
+        getAlarms:()=>JSON.stringify(window.saved),getSettings:()=>'{}',getDefaultSound:()=>'meow_1', getDefaultPurr:()=>'purr_1', getCatName:()=>'گربه',getCatColor:()=>'gray',
         saveAlarm:(raw)=>{const a=JSON.parse(raw); const i=window.saved.findIndex(x=>x.id===a.id);
            if(i<0){a.id=103;window.saved.push(a)}else window.saved[i]=a;return JSON.stringify(a)},
         deleteAlarm:(id)=>{window.cancelled.push(id);let before=window.saved.length;
            window.saved=window.saved.filter(a=>a.id!==id);return window.saved.length!==before},
-        hasCustomMeow:()=>false,previewMeow:()=>{},chooseCustomMeow:()=>{},
+        hasCustomMeow:()=>false,hasCustomPurr:()=>false,hasAlarmMeow:()=>false,
+        previewMeow:()=>{},chooseCustomMeow:()=>{},previewPurr:()=>{},startPurr:()=>{},stopPurr:()=>{},
         canSetExactAlarms:()=>true,isRinging:()=>false,pickTime:()=>{},
         testAlarm:()=>{},setDefaultSound:()=>{},setSettings:()=>{},dismiss:()=>{},
         ringIn:()=>{},requestExactAlarmPermission:()=>{}

@@ -279,6 +279,17 @@ body.ring{animation:none}
 @media(min-width:720px){body{max-width:710px}.clock{font-size:4rem}.scene-card svg{max-height:470px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.masthead h1{animation:none}.ring .scene-card{transition:none}}
 
+
+/* User-supplied meow/purr library and simple cat profile; existing room is untouched. */
+.library + .library{border-top:2px dashed #d5b7a7}
+.sound-option{display:grid;grid-template-columns:minmax(74px,1fr) auto auto;gap:6px;align-items:center}
+.sound-option button{white-space:nowrap;min-height:37px}
+.sound-option strong{font-variant-numeric:tabular-nums}
+#alarmSoundField[hidden],#alarmPersonalControls[hidden]{display:none!important}
+#alarmSoundOverride{width:18px;height:18px;accent-color:#9a677e}
+#catProfileStatus,#customStatus,#purrStatus,#alarmCustomStatus{font-size:.78rem;color:#5b4658;line-height:1.7}
+#catColor{width:100%}
+@media(max-width:360px){.sound-option{grid-template-columns:1fr auto}.sound-option strong{grid-column:1 / -1}}
 </style>
 </head>
 <body>
@@ -288,7 +299,7 @@ body.ring{animation:none}
   <span class="level-badge">COZY<br>ROOM</span>
 </header>
 <section class="card scene-card" id="roomSection" aria-label="اتاق میو و بازی تعاملی">
-  <div class="scene-head"><h2>🛏️ اتاق کوچولوی میو</h2><span id="roomMood" class="scene-tag">● گربه خوابالو</span></div>
+  <div class="scene-head"><h2 id="roomTitle">🛏️ اتاق کوچولوی میو</h2><span id="roomMood" class="scene-tag">● گربه خوابالو</span></div>
   <div class="scene">
 <svg id="s" viewBox="0 0 400 300" role="img" aria-label="گربه در اتاق گرم و دنج کنار مرد نشسته و می‌توانی نوازشش کنی">
   <defs>
@@ -348,20 +359,21 @@ body.ring{animation:none}
   </g>
   <g id="bowl" stroke="#1f2a6b" stroke-width="2.2" stroke-linejoin="round" style="display:none"><ellipse id="kib" cx="200" cy="277" rx="4" ry="1" fill="#a86b3c" style="display:none"/><path d="M176 277H224Q222 291 200 291Q178 291 176 277Z" fill="#e0607e"/></g>
   <!-- cat -->
-  <g transform="translate(238 222)" stroke="#1f2a6b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+  <g id="catSprite" transform="translate(238 222)" stroke="#1f2a6b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
     <g id="tail"><path d="M112 40Q148 44 146 6Q144-8 130-6" fill="none" stroke-width="16"/>
-    <path d="M112 40Q148 44 146 6Q144-8 130-6" fill="none" stroke="#8f939b" stroke-width="12"/>
-    <path d="M146 10Q144-8 130-6" fill="none" stroke="#4b4e57" stroke-width="12"/></g>
+    <path d="M112 40Q148 44 146 6Q144-8 130-6" fill="none" stroke="var(--cat-fur,#8f939b)" stroke-width="12"/>
+    <path d="M146 10Q144-8 130-6" fill="none" stroke="var(--cat-markings,#4b4e57)" stroke-width="12"/></g>
     <g id="catBody">
-      <ellipse cx="58" cy="24" rx="64" ry="32" fill="#8f939b"/>
-      <g stroke="#4b4e57" stroke-width="4" fill="none"><path d="M34-4q-2 12 2 22M52-7q-2 14 2 26M70-7q-2 14 2 26M88-3q-2 12 2 22M104 5q-2 10 0 16"/></g>
+      <ellipse cx="58" cy="24" rx="64" ry="32" fill="var(--cat-fur,#8f939b)"/>
+      <g stroke="var(--cat-markings,#4b4e57)" stroke-width="4" fill="none"><path d="M34-4q-2 12 2 22M52-7q-2 14 2 26M70-7q-2 14 2 26M88-3q-2 12 2 22M104 5q-2 10 0 16"/></g>
+      <g id="catCalicoPatches" style="display:none" stroke="none"><ellipse cx="88" cy="6" rx="17" ry="14" fill="#d18b49"/><ellipse cx="36" cy="18" rx="15" ry="12" fill="#42414a"/></g>
       <ellipse cx="-12" cy="52" rx="13" ry="7" fill="#f4eedd"/><ellipse cx="12" cy="54" rx="13" ry="7" fill="#f4eedd"/>
     </g>
     <g id="catHead">
-      <path d="M-24-14L-20-44-2-26Z" fill="#8f939b"/><path d="M-21-17L-19-36-8-26Z" fill="#d98c7c" stroke="none"/>
-      <path d="M2-27L22-44 25-14Z" fill="#8f939b"/><path d="M6-27L19-36 21-17Z" fill="#d98c7c" stroke="none"/>
-      <ellipse rx="32" ry="28" fill="#8f939b"/>
-      <path d="M-4-26v9M3-26v9M-11-23l1 8M10-23l-1 8" stroke="#4b4e57" stroke-width="3" fill="none"/>
+      <path d="M-24-14L-20-44-2-26Z" fill="var(--cat-fur,#8f939b)"/><path d="M-21-17L-19-36-8-26Z" fill="#d98c7c" stroke="none"/>
+      <path d="M2-27L22-44 25-14Z" fill="var(--cat-fur,#8f939b)"/><path d="M6-27L19-36 21-17Z" fill="#d98c7c" stroke="none"/>
+      <ellipse rx="32" ry="28" fill="var(--cat-fur,#8f939b)"/>
+      <path d="M-4-26v9M3-26v9M-11-23l1 8M10-23l-1 8" stroke="var(--cat-markings,#4b4e57)" stroke-width="3" fill="none"/>
       <ellipse cy="11" rx="15" ry="10" fill="#f4eedd" stroke="none"/>
       <g id="cOpen">
         <circle cx="-13" cy="-3" r="9.5" fill="#c5c46a"/><circle cx="13" cy="-3" r="9.5" fill="#c5c46a"/>
@@ -384,7 +396,7 @@ body.ring{animation:none}
   </g>
 <circle id="hint" class="hint" r="24" fill="none" stroke="#e0607e" stroke-width="3" stroke-dasharray="6 5" style="display:none"/></svg>
 </div>
-<p class="scene-tip">✧ وقتی گربه میو کرد، با انگشت نوازشش کن ✧</p>
+<p id="sceneTip" class="scene-tip">✧ وقتی گربه میو کرد، با انگشت نوازشش کن ✧</p>
 <div class="meter" aria-hidden="true"><div id="bar"></div></div>
 <div class="scene-status"><span class="scene-face" aria-hidden="true">🐱</span><p id="msg" aria-live="polite"></p></div>
 <div class="scene-controls"><button id="test">🐾 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div>
@@ -403,9 +415,17 @@ body.ring{animation:none}
     <label class="field">اسم آلارم<input id="label" type="text" maxlength="50" placeholder="مثلاً صبح بخیر!" value="Wake up"></label>
     <div class="field"><span>زمان بیدارباش</span><input id="at" type="time" value="07:00"><button id="pickTime" type="button">07:00 · انتخاب ساعت</button></div>
     <div class="field"><span>تکرار در روزهای هفته (بدون انتخاب = فقط یک‌بار)</span><div id="days" class="days"></div></div>
-    <label class="field">صدای این آلارم
-      <select id="alarmSound"><option value="real">🐈 واقعی</option><option value="cute">💗 بانمک</option><option value="custom">🎵 صدای من</option></select>
+    <label class="inlinefield"><input type="checkbox" id="alarmSoundOverride"> 🔊 برای این آلارم صدای اختصاصی انتخاب شود</label>
+    <p class="hintText" id="alarmSoundExplanation">خاموش = صدای سراسری. اگر صدای سراسری تغییر کند، این آلارم هم تغییر می‌کند.</p>
+    <label class="field" id="alarmSoundField" hidden>میوی اختصاصی این آلارم
+      <select id="alarmSound"></select>
     </label>
+    <div id="alarmPersonalControls" hidden>
+      <button type="button" id="importAlarmSound" class="secondary">＋ انتخاب فایل مخصوص همین آلارم</button>
+      <button type="button" id="previewAlarmSound" class="secondary">▶ تست فایل همین آلارم</button>
+      <span id="alarmCustomStatus" role="status" class="status-text"></span>
+      <p class="hintText">برای فایل اختصاصی، ابتدا آلارم را یک‌بار ذخیره کن و بعد ویرایشش کن.</p>
+    </div>
     <label class="inlinefield"><input id="on" type="checkbox" checked> روشن باشد</label>
     <div class="row actions"><button id="saveAlarm" type="button">💾 ذخیره</button><button id="cancelEdit" class="secondary" type="button">بستن</button><button id="deleteAlarm" class="danger" type="button">حذف</button></div>
   </div>
@@ -419,16 +439,35 @@ body.ring{animation:none}
   </div>
 </div>
 <details class="card extras" id="settingsSection"><summary>صداهای میو و تنظیمات اتاق کوچولو</summary>
-  <div class="library"><div class="sectionHead"><h3>صدای گربه</h3></div>
-    <p class="hintText">▶ برای گوش‌دادن، ✓ برای انتخاب صدای آلارم. صدای انتخابی همان لحظه ذخیره می‌شود.</p>
-    <div class="sound-options">
-      <div class="sound-option"><strong>🐈 واقعی</strong><button class="secondary" data-preview="real">▶ گوش بده</button><button type="button" data-select="real">✓ انتخاب</button></div>
-      <div class="sound-option"><strong>💗 بانمک</strong><button class="secondary" data-preview="cute">▶ گوش بده</button><button type="button" data-select="cute">✓ انتخاب</button></div>
-      <div class="sound-option"><strong>🎵 صدای من</strong><button class="secondary" data-preview="custom">▶ گوش بده</button><button type="button" data-select="custom">✓ انتخاب</button></div>
-    </div>
+  <div class="library">
+    <div class="sectionHead"><h3>🔊 میوی سراسری</h3></div>
+    <p class="hintText">صدای پیش‌فرض همهٔ آلارم‌هایی که صدای اختصاصی ندارند. نام‌ها عمداً ساده‌اند.</p>
+    <div id="meowLibrary" class="sound-options" aria-label="پریست‌های میو"></div>
     <p id="soundStatus" class="status-text" role="status"></p>
-    <div class="row"><button id="importSound" class="secondary">＋ انتخاب فایل صوتی</button><span id="customStatus" class="status-text" role="status"></span></div>
-    <p class="hintText">فایل باید روی گوشی قابل پخش باشد (مثل MP3، WAV، M4A). فایلِ معتبر در حافظهٔ برنامه ذخیره می‌شود و آلارم بدون اینترنت کار می‌کند.</p></div>
+    <div class="row"><button id="importSound" class="secondary" type="button">＋ وارد کردن میوی شخصی</button><span id="customStatus" class="status-text" role="status"></span></div>
+    <p class="hintText">میوی شخصی سراسری روی دستگاه ذخیره می‌شود. فایل شخصیِ متفاوت برای هر آلارم هم از بخش ویرایش همان آلارم قابل انتخاب است.</p>
+  </div>
+  <div class="library">
+    <div class="sectionHead"><h3>🎧 صدای خرخر</h3></div>
+    <p class="hintText">خرخرِ هنگام نوازش؛ از خرخرهای آماده یا یک فایل شخصی انتخاب کن.</p>
+    <div id="purrLibrary" class="sound-options" aria-label="پریست‌های خرخر"></div>
+    <div class="row"><button id="importPurr" class="secondary" type="button">＋ وارد کردن خرخر شخصی</button><span id="purrStatus" class="status-text" role="status"></span></div>
+  </div>
+  <div class="library">
+    <h3>🐈 اسم و رنگ گربه</h3>
+    <label class="field">اسم گربه <input type="text" id="catName" maxlength="24" placeholder="مثلاً موچی"></label>
+    <label class="field">ظاهر گربه
+      <select id="catColor">
+        <option value="gray">خاکستری راه‌راه</option>
+        <option value="orange">نارنجی</option>
+        <option value="black">مشکی</option>
+        <option value="white">سفید</option>
+        <option value="calico">سه‌رنگ</option>
+      </select>
+    </label>
+    <button type="button" id="saveCatProfile">✓ ذخیرهٔ اسم و ظاهر</button><span id="catProfileStatus" class="status-text" role="status"></span>
+    <p class="hintText">همین گربهٔ دوبعدی قبلی می‌مونه؛ فقط رنگ و نوشته‌های مربوط بهش تغییر می‌کنه.</p>
+  </div>
   <h3>⏳ زمان‌بندی داستان</h3>
   <div class="row"><button class="secondary" data-preset="quick">سریع</button><button class="secondary" data-preset="classic">کلاسیک</button><button class="secondary" data-preset="relaxed">آروم</button></div>
   <div class="timing">
@@ -453,6 +492,17 @@ body.ring{animation:none}
 const $=id=>document.getElementById(id),svg=$('s'),SH={x:112,y:140},HEAD={x:238,y:222},REST={x:150,y:190},MOUTH={x:138,y:113},NS='http://www.w3.org/2000/svg';
 const NATIVE=typeof Android!=='undefined';
 if(NATIVE)document.documentElement.classList.add('native');
+const MEOW_PRESETS=Array.from({length:6},(_,i)=>'meow_'+(i+1));
+const PURR_PRESETS=Array.from({length:3},(_,i)=>'purr_'+(i+1));
+const normalizeMeow=key=>key==='real'?'meow_1':key==='cute'?'meow_2':key;
+const validMeow=key=>MEOW_PRESETS.includes(normalizeMeow(key))||key==='custom'||key==='alarm_custom';
+const nameOfSound=key=>{
+  const value=normalizeMeow(key);
+  return value==='custom'?'میوی شخصی':value==='alarm_custom'?'فایل مخصوص این آلارم':
+    MEOW_PRESETS.includes(value)?'میو '+value.split('_')[1]:'میو ۱';
+};
+const nameOfPurr=key=>key==='custom'?'خرخر شخصی':'خرخر '+String(key).split('_')[1];
+
 let P=null,hand={x:150,y:190},lvl=100,sleep=true,state=-1,lastPet=-9,lastHeart=0,last=null,dip=0,muted=false,aud=null,ph=null,mb=0,lastPuff=0,nextMeow=1,meowEnd=0,mode='idle',snoozeEnd=0,ringStart=0,testAt=0,fired='',alarmOn=false,lastMsg='',curPt=-1,done=false,food=0,fill=0,fedAt=0,sleepAt=0,bagRot=0,lastKib=0,smoked=false;
 const pt0=e=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())};
 const inCat=p=>((p.x-292)/90)**2+((p.y-232)/52)**2<1;
@@ -465,7 +515,7 @@ function initAudio(){if(aud||muted)return;try{
   const lfo=c.createOscillator();lfo.frequency.value=25;const lg=c.createGain();lg.gain.value=.5;lfo.connect(lg);lg.connect(am.gain);
   const m=c.createGain();m.gain.value=0;src.connect(lp);lp.connect(am);am.connect(m);m.connect(c.destination);
   src.start();lfo.start();aud={c,m};vol();}catch(e){}}
-function vol(){if(!aud)return;aud.c.resume&&aud.c.resume();aud.m.gain.setTargetAtTime(muted?0:[0,.7,0][state<0?0:state],aud.c.currentTime,.3)}
+function vol(){if(!aud)return;aud.c.resume&&aud.c.resume();aud.m.gain.setTargetAtTime(NATIVE||muted?0:[0,.7,0][state<0?0:state],aud.c.currentTime,.3)}
 function meow(vl=1){if(NATIVE||!aud||muted)return;aud.c.resume&&aud.c.resume();const c=aud.c,s=c.currentTime+.02,o=c.createOscillator(),g=c.createGain(),f1=c.createBiquadFilter(),f2=c.createBiquadFilter(),g1=c.createGain(),g2=c.createGain(),lp=c.createBiquadFilter(),v=c.createOscillator(),vg=c.createGain();
   const fr=o.frequency;fr.setValueAtTime(420,s);fr.linearRampToValueAtTime(720,s+.18);fr.linearRampToValueAtTime(600,s+.4);fr.linearRampToValueAtTime(340,s+.68);
   v.frequency.value=7;vg.gain.value=10;v.connect(vg);vg.connect(fr);
@@ -498,7 +548,7 @@ function feedSound(){
 }
 function setState(s){state=s;
   $('cOpen').style.display=s===0?'':'none';$('cHappy').style.display=s===1?'':'none';$('cSleep').style.display=s===2?'':'none';
-  $('zs').style.display=s===2?'':'none';vol();}
+  $('zs').style.display=s===2?'':'none';vol();if(NATIVE){if(s===1&&!muted)Android.startPurr();else Android.stopPurr();}}
 svg.addEventListener('pointerdown',e=>{initAudio();P=pt0(e)});
 svg.addEventListener('pointermove',e=>{const p=pt0(e);
   if(!ph&&!sleep&&P&&inCat(p)&&Math.hypot(p.x-P.x,p.y-P.y)>0.5){lastPet=performance.now()/1000}
@@ -506,7 +556,7 @@ svg.addEventListener('pointermove',e=>{const p=pt0(e);
 svg.addEventListener('pointerleave',()=>{P=null});
 svg.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')P=null});
 svg.addEventListener('pointercancel',()=>{P=null});
-$('snd').onclick=()=>{muted=!muted;$('snd').textContent='صدای خرخر: '+(muted?'خاموش':'روشن');if(!muted)initAudio();vol()};
+$('snd').onclick=()=>{muted=!muted;$('snd').textContent='صدای خرخر: '+(muted?'خاموش':'روشن');if(!muted)initAudio();vol();if(NATIVE){if(muted)Android.stopPurr();else if(state===1)Android.startPurr()}};
 function mk(tag,cls,at,txt,ms){const e=document.createElementNS(NS,tag);e.setAttribute('class',cls);for(const k in at)e.setAttribute(k,at[k]);if(txt)e.textContent=txt;$('fx').appendChild(e);setTimeout(()=>e.remove(),ms);return e}
 const heart=()=>mk('text','heart',{x:HEAD.x-20+Math.random()*50,y:HEAD.y-36},'♥',1600);
 function puff(x,y,dx){mk('circle','sm',{cx:x,cy:y,r:5},0,2800).style.setProperty('--dx',dx+'px')}
@@ -576,13 +626,13 @@ const two=n=>String(n).padStart(2,'0'),fmt=ms=>{const q=Math.ceil(ms/1000);retur
 function updUI(pt){
   document.body.classList.toggle('ring',mode==='ringing');
   const rem=Math.max(0,snoozeEnd-Date.now());let m;
-  if(mode==='ringing')m=state===1?'خرررر… داره آروم میشه 😌 ادامه بده!':'آلارم! گربه میو میو می‌کنه 😾 نازش کن تا بخوابه';
-  else if(mode==='snooze')m=food===1?'پاکت غذا اومد! 🐟 دستت رو روی کاسه نگه دار تا غذا بریزی. وگرنه '+fmt(rem)+' دیگه گربه دوباره میو می‌کنه':ph?'اسنوز فعاله 💤 مرد داره سیگار می‌کشه…':'گربه خوابیده 💤 اسنوز: '+fmt(rem)+' دیگه دوباره میو می‌کنه';
-  else if(mode==='fed')m='ممم! گربه داره غذا می‌خوره 😻 آلارم امروز کامل قطع شد ☀️';
-  else m=done?'آلارم امروز کامل قطع شد ☀️ گربه سیر و راضی خوابیده':alarmList.some(a=>a.on)?'آلارم‌ها آماده‌ان! 🐱 گربه خوابه':'هنوز آلارم روشنی نداری 💤';
+  if(mode==='ringing')m=state===1?'خرررر… '+catName+' داره آروم میشه 😌 ادامه بده!':'آلارم! '+catName+' میو میو می‌کنه 😾 نازش کن تا بخوابه';
+  else if(mode==='snooze')m=food===1?'پاکت غذا اومد! 🐟 دستت رو روی کاسه نگه دار تا غذا بریزی. وگرنه '+fmt(rem)+' دیگه '+catName+' دوباره میو می‌کنه':ph?'اسنوز فعاله 💤 مرد داره سیگار می‌کشه…':catName+' خوابیده 💤 اسنوز: '+fmt(rem)+' دیگه دوباره میو می‌کنه';
+  else if(mode==='fed')m='ممم! '+catName+' داره غذا می‌خوره 😻 آلارم امروز کامل قطع شد ☀️';
+  else m=done?'آلارم امروز کامل قطع شد ☀️ '+catName+' سیر و راضی خوابیده':alarmList.some(a=>a.on)?'آلارم‌ها آماده‌ان! 🐱 '+catName+' خوابه':'هنوز آلارم روشنی نداری 💤';
   if(m!==lastMsg){
     $('msg').textContent=m;lastMsg=m;
-    $('roomMood').textContent=mode==='ringing'?'● میومیو!':mode==='snooze'?'● وقت چُرت':mode==='fed'?'● گربه سیر شد':'● گربه خوابالو';
+    $('roomMood').textContent=mode==='ringing'?'● میومیو!':mode==='snooze'?'● وقت چُرت':mode==='fed'?'● '+catName+' سیر شد':'● '+catName+' خوابالو';
   }
   $('bar').style.width=(mode==='ringing'?lvl:mode==='snooze'?(food===1?fill:100*rem/(timings.snoozeSec*1000)):mode==='fed'?100:0)+'%';
   const h=$('hint');h.style.display=food===1&&fill<15&&mode==='snooze'?'':'none';h.setAttribute('cx',200);h.setAttribute('cy',262);h.setAttribute('r',34)}
@@ -599,8 +649,23 @@ let timings={...defaults,...readJSON(NATIVE?Android.getSettings():browserLoad('m
 let alarmList=readJSON(NATIVE?Android.getAlarms():browserLoad('meow-alarms')||'[]',[]);
 let editingId=null;
 let focusId=alarmList[0]?.id||100;
-let defaultSound=NATIVE?Android.getDefaultSound():(browserLoad('meow-default-sound')||'real');
-if(!['real','cute','custom'].includes(defaultSound))defaultSound='real';
+let defaultSound=normalizeMeow(NATIVE?Android.getDefaultSound():(browserLoad('meow-default-sound')||'meow_1'));
+if(!validMeow(defaultSound)||defaultSound==='alarm_custom')defaultSound='meow_1';
+let defaultPurr=NATIVE?Android.getDefaultPurr():(browserLoad('meow-default-purr')||'purr_1');
+if(!PURR_PRESETS.includes(defaultPurr)&&defaultPurr!=='custom')defaultPurr='purr_1';
+let catName=NATIVE?Android.getCatName():(browserLoad('meow-cat-name')||'گربه');
+if(!catName)catName='گربه';
+let catColor=NATIVE?Android.getCatColor():(browserLoad('meow-cat-color')||'gray');
+function applyCatColor(){
+  const colors={gray:['#8f939b','#4b4e57'],orange:['#de9a52','#a86732'],black:['#464551','#242333'],white:['#f4eee7','#ada7a6'],calico:['#f3e5cb','#a78d77']};
+  const [fur,marks]=colors[catColor]||colors.gray;
+  const node=$('catSprite');node.style.setProperty('--cat-fur',fur);node.style.setProperty('--cat-markings',marks);
+  $('catCalicoPatches').style.display=catColor==='calico'?'':'none';
+  svg.setAttribute('aria-label',catName+' کنار مرد نشسته و می‌توانی نوازشش کنی');
+  $('roomTitle').textContent='🛏️ اتاق کوچولوی '+catName;
+  $('sceneTip').textContent='✧ وقتی '+catName+' میو کرد، با انگشت نوازشش کن ✧';
+}
+
 function clockValue(a){return two(a.h)+':'+two(a.m)}
 function daysText(a){return a.days===0?'فقط یک‌بار':a.days===127?'هر روز':dayFull.filter((_,i)=>a.days&(1<<i)).join(' · ')}
 function updateNextAlarm(){
@@ -608,7 +673,7 @@ function updateNextAlarm(){
   $('alarmCount').textContent=enabled.length+' فعال';
   if(!enabled.length){
     $('nextIcon').textContent='💤';$('nextLabel').textContent='هنوز آلارم فعالی نیست';
-    $('nextDetail').textContent='یه آلارم روشن کن تا گربه بیدارت کنه';$('nextTime').textContent='--:--';return;
+    $('nextDetail').textContent='یه آلارم روشن کن تا '+catName+' بیدارت کنه';$('nextTime').textContent='--:--';return;
   }
   const now=new Date();let best=null;
   for(const a of enabled){
@@ -635,7 +700,7 @@ function renderAlarms(){const root=$('alarmList');root.replaceChildren();
     const info=document.createElement('div');info.className='alarm-info';
     const time=document.createElement('div');time.className='alarm-time';time.textContent=clockValue(a);
     const title=document.createElement('div');title.className='alarm-title';title.textContent=a.label||'Wake up';
-    const sub=document.createElement('div');sub.className='alarm-sub';sub.textContent=daysText(a)+' · '+({real:'میوی واقعی',cute:'میوی بانمک',custom:'میوی من'}[a.sound]||'میو');
+    const sub=document.createElement('div');sub.className='alarm-sub';sub.textContent=daysText(a)+' · '+(a.soundOverride?'اختصاصی: '+nameOfSound(a.sound):'سراسری: '+nameOfSound(defaultSound));
     info.append(time,title,sub);
     const ops=document.createElement('div');ops.className='alarm-ops';
     const toggle=document.createElement('input');toggle.type='checkbox';toggle.className='alarm-toggle';toggle.checked=!!a.on;toggle.setAttribute('aria-label','فعال کردن '+(a.label||'alarm'));
@@ -656,9 +721,14 @@ function persistAlarm(a){if(NATIVE){const result=readJSON(Android.saveAlarm(JSON
 function openEditor(id=null){
   editingId=id;
   if(id!==null)focusId=id;
-  const a=alarmList.find(x=>x.id===id)||{h:7,m:0,on:true,days:127,label:'Wake up',sound:defaultSound};
+  const a=alarmList.find(x=>x.id===id)||{h:7,m:0,on:true,days:127,label:'Wake up',sound:defaultSound,soundOverride:false};
   $('editorTitle').textContent=id?'ویرایش آلارم':'آلارم جدید';$('label').value=a.label||'';$('at').value=clockValue(a);
-  $('on').checked=!!a.on;$('alarmSound').value=a.sound||'real';
+  $('on').checked=!!a.on;
+  $('alarmSoundOverride').checked=!!a.soundOverride;
+  $('alarmSound').value=normalizeMeow(a.sound||defaultSound);
+  if(!$('alarmSound').value)$('alarmSound').value='meow_1';
+  $('alarmCustomStatus').textContent='';
+  updateSoundOverrideUI();
   $('days').replaceChildren();for(let i=0;i<7;i++){const label=document.createElement('label'),ck=document.createElement('input');ck.type='checkbox';ck.value=String(i);ck.checked=!!(a.days&(1<<i));label.title=dayFull[i];label.append(ck,document.createTextNode(' '+dayNames[i]));$('days').appendChild(label)}
   $('deleteAlarm').hidden=!id;$('editor').hidden=false;updateEditorTime();renderSoundSelection();$('editor').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -666,8 +736,10 @@ $('addAlarm').onclick=()=>openEditor();$('cancelEdit').onclick=()=>{$('editor').
 $('saveAlarm').onclick=()=>{
   const fields=$('at').value.split(':');const days=[...$('days').querySelectorAll('input:checked')].reduce((mask,box)=>mask|(1<<Number(box.value)),0);
   const sound=$('alarmSound').value;
-  if(sound==='custom'&&NATIVE&&!Android.hasCustomMeow()){alert('اول یک فایل صوتی معتبر وارد کن.');return}
-  const a={id:editingId||0,h:Number(fields[0]),m:Number(fields[1]),on:$('on').checked,days,label:$('label').value.trim()||'Wake up',sound};
+  const soundOverride=$('alarmSoundOverride').checked;
+  if(soundOverride&&sound==='custom'&&NATIVE&&!Android.hasCustomMeow()){alert('اول فایل میوی شخصی سراسری را وارد کن.');return}
+  if(soundOverride&&sound==='alarm_custom'&&(!editingId||NATIVE&&!Android.hasAlarmMeow(editingId))){alert('اول فایل مخصوص همین آلارم را از دکمهٔ ورود فایل اضافه کن.');return}
+  const a={id:editingId||0,h:Number(fields[0]),m:Number(fields[1]),on:$('on').checked,days,label:$('label').value.trim()||'Wake up',sound,soundOverride};
   persistAlarm(a);$('editor').hidden=true;editingId=null;renderSoundSelection();checkPermission()
 };
 // Android WebView may silently reject window.confirm(). Use our own in-app confirmation.
@@ -710,47 +782,109 @@ function saveTimings(){const result={};for(const [key,[min,max]] of Object.entri
 }
 $('saveTimings').onclick=saveTimings;
 document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{timings={...presetConfigs[b.dataset.preset]};renderTimings();saveTimings()});
+function renderPresetCards(rootId,kind,keys,active){
+  const root=$(rootId);root.replaceChildren();
+  const options=[...keys,'custom'];
+  for(const key of options){
+    const div=document.createElement('div');div.className='sound-option';
+    const title=document.createElement('strong');title.textContent=kind==='purr'?nameOfPurr(key):nameOfSound(key);
+    const preview=document.createElement('button');preview.type='button';preview.className='secondary';preview.textContent='▶ گوش بده';
+    preview.dataset.preview=key;
+    preview.onclick=()=>{
+      const missing=key==='custom'&&NATIVE&&!(kind==='purr'?Android.hasCustomPurr():Android.hasCustomMeow());
+      if(missing){(kind==='purr'?$('purrStatus'):$('customStatus')).textContent='اول فایل شخصی وارد کن';return}
+      if(NATIVE){if(kind==='purr')Android.previewPurr(key);else Android.previewMeow(key)}
+      else preview.textContent='پیش‌نمایش صوتی در APK فعال است';
+    };
+    const select=document.createElement('button');select.type='button';select.dataset.select=key;
+    select.textContent=active===key?'✓ انتخاب‌شده':'✓ انتخاب';select.classList.toggle('selected',active===key);
+    select.onclick=()=>kind==='purr'?selectPurr(key):selectSound(key);
+    div.append(title,preview,select);root.appendChild(div);
+  }
+}
 function renderSoundSelection(){
-  const active=alarmList.find(a=>a.id===focusId);
-  const selected=active?.sound||defaultSound;
-  const names={real:'واقعی',cute:'بانمک',custom:'صدای من'};
-  document.querySelectorAll('[data-select]').forEach(b=>{
-    const chosen=b.dataset.select===selected;
-    b.classList.toggle('selected',chosen);
-    b.textContent=chosen?'✓ انتخاب‌شده':'✓ انتخاب';
-  });
-  $('soundStatus').textContent=active?
-    'صدای آلارم «'+(active.label||clockValue(active))+'»: '+names[selected]:
-    'صدای پیش‌فرض آلارم جدید: '+names[selected];
+  renderPresetCards('meowLibrary','meow',MEOW_PRESETS,defaultSound);
+  renderPresetCards('purrLibrary','purr',PURR_PRESETS,defaultPurr);
+  $('soundStatus').textContent='میوی سراسری فعلی: '+nameOfSound(defaultSound)+' — آلارم‌های بدون صدای اختصاصی از این استفاده می‌کنند.';
 }
 function selectSound(sound){
-  if(sound==='custom'&&NATIVE&&!Android.hasCustomMeow()){
-    $('customStatus').textContent='⚠ اول یک فایل صوتی معتبر وارد کن';return;
-  }
+  if(sound==='custom'&&NATIVE&&!Android.hasCustomMeow()){$('customStatus').textContent='اول فایل میوی شخصی را وارد کن';return}
   defaultSound=sound;
   if(NATIVE)Android.setDefaultSound(sound);else browserSave('meow-default-sound',sound);
-  const active=alarmList.find(a=>a.id===focusId);
-  if(active)persistAlarm({...active,sound});
-  if(!$('editor').hidden)$('alarmSound').value=sound;
+  renderSoundSelection();renderAlarms();if(!$('editor').hidden)updateSoundOverrideUI();
+}
+function selectPurr(sound){
+  if(sound==='custom'&&NATIVE&&!Android.hasCustomPurr()){$('purrStatus').textContent='اول فایل خرخر شخصی را وارد کن';return}
+  defaultPurr=sound;
+  if(NATIVE){Android.stopPurr();Android.setDefaultPurr(sound)}else browserSave('meow-default-purr',sound);
   renderSoundSelection();
 }
-document.querySelectorAll('[data-select]').forEach(b=>b.onclick=()=>selectSound(b.dataset.select));
-document.querySelectorAll('[data-preview]').forEach(b=>b.onclick=()=>{
-  if(b.dataset.preview==='custom'&&NATIVE&&!Android.hasCustomMeow()){
-    $('customStatus').textContent='⚠ اول یک فایل صوتی معتبر وارد کن';return;
+function updateSoundOverrideUI(){
+  const active=$('alarmSoundOverride').checked;
+  $('alarmSoundField').hidden=!active;
+  $('alarmPersonalControls').hidden=!active;
+  $('alarmSound').disabled=!active;
+  $('importAlarmSound').disabled=editingId===null;
+  $('previewAlarmSound').disabled=editingId===null||(NATIVE&&!Android.hasAlarmMeow(editingId));
+  $('alarmSoundExplanation').textContent=active?'روشن = این آلارم از صدای انتخابی خودش استفاده می‌کند.':
+    'خاموش = صدای سراسری «'+nameOfSound(defaultSound)+'»؛ تغییر سراسری روی این آلارم هم اعمال می‌شود.';
+}
+$('alarmSoundOverride').onchange=updateSoundOverrideUI;
+function fillAlarmSoundOptions(){
+  $('alarmSound').replaceChildren();
+  for(const sound of [...MEOW_PRESETS,'custom','alarm_custom']){
+    const opt=document.createElement('option');opt.value=sound;
+    opt.textContent=nameOfSound(sound);$('alarmSound').appendChild(opt);
   }
-  if(NATIVE)Android.previewMeow(b.dataset.preview);else{initAudio();meow()}
-});
+}
+fillAlarmSoundOptions();
+$('previewAlarmSound').onclick=()=>{
+  if(NATIVE&&editingId!==null&&Android.hasAlarmMeow(editingId))Android.previewAlarmMeow(editingId);
+  else $('alarmCustomStatus').textContent='اول فایل همین آلارم را وارد کن';
+};
+$('importAlarmSound').onclick=()=>{
+  if(editingId===null){$('alarmCustomStatus').textContent='اول این آلارم را ذخیره کن';return}
+  if(NATIVE)Android.chooseAlarmMeow(editingId);
+  else $('alarmCustomStatus').textContent='وارد کردن فایل در APK فعال است';
+};
 $('importSound').onclick=()=>{
-  if(NATIVE){$('customStatus').textContent='در حال انتخاب و بررسی فایل…';Android.chooseCustomMeow()}
-  else alert('وارد کردن صدا در نسخهٔ اندروید فعاله')
+  if(NATIVE){$('customStatus').textContent='در حال انتخاب فایل…';Android.chooseCustomMeow()}
+  else $('customStatus').textContent='وارد کردن فایل در نسخهٔ اندروید فعال است';
+};
+$('importPurr').onclick=()=>{
+  if(NATIVE){$('purrStatus').textContent='در حال انتخاب فایل…';Android.chooseCustomPurr()}
+  else $('purrStatus').textContent='وارد کردن فایل در نسخهٔ اندروید فعال است';
 };
 window.onCustomMeowImported=(ok,message='')=>{
-  $('customStatus').textContent=(ok?'✓ ':'⚠ ')+(message||(ok?'فایل صوتی آماده است':'فایل صوتی وارد نشد'));
+  $('customStatus').textContent=(ok?'✓ ':'⚠ ')+(message||(ok?'صدای میو آماده است':'فایل وارد نشد'));
   if(ok)selectSound('custom');
 };
+window.onCustomPurrImported=(ok,message='')=>{
+  $('purrStatus').textContent=(ok?'✓ ':'⚠ ')+(message||(ok?'خرخر آماده است':'فایل وارد نشد'));
+  if(ok)selectPurr('custom');
+};
+window.onAlarmMeowImported=(id,ok,message='')=>{
+  $('alarmCustomStatus').textContent=(ok?'✓ ':'⚠ ')+message;
+  if(ok){
+    refreshAlarms();
+    if(editingId===id){$('alarmSoundOverride').checked=true;$('alarmSound').value='alarm_custom';updateSoundOverrideUI()}
+  }
+};
 window.onMeowPreviewError=message=>{$('customStatus').textContent='⚠ '+message};
-$('customStatus').textContent=NATIVE&&Android.hasCustomMeow()?'✓ فایل شخصی قبلی آماده است':'';
+$('customStatus').textContent=NATIVE&&Android.hasCustomMeow()?'✓ میوی شخصی قبلی آماده است':'';
+$('purrStatus').textContent=NATIVE&&Android.hasCustomPurr()?'✓ خرخر شخصی قبلی آماده است':'';
+$('catName').value=catName==='گربه'?'':catName;
+$('catColor').value=catColor;
+$('saveCatProfile').onclick=()=>{
+  catName=$('catName').value.trim().slice(0,24)||'گربه';
+  catColor=$('catColor').value;
+  if(NATIVE){Android.setCatName(catName);Android.setCatColor(catColor)}
+  else{browserSave('meow-cat-name',catName);browserSave('meow-cat-color',catColor)}
+  applyCatColor();renderAlarms();
+  $('catProfileStatus').textContent='✓ اسم و رنگ '+catName+' ذخیره شد';
+  lastMsg='';
+};
+applyCatColor();
 function checkPermission(){if(NATIVE)$('permissionHelp').hidden=Android.canSetExactAlarms();else $('permissionHelp').hidden=true}
 $('requestAlarmPermission').onclick=()=>{if(NATIVE)Android.requestExactAlarmPermission()};
 $('stopAlarm').onclick=()=>{if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;food=0;ph=null};

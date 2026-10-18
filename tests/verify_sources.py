@@ -54,9 +54,25 @@ class ProjectChecks(unittest.TestCase):
         for name in ('petSec', 'snoozeSec', 'smokeDelaySec', 'smokeDurationSec', 'foodDelaySec', 'feedSec'):
             self.assertIn(name, html)
         self.assertIn('Android.chooseCustomMeow()', html)
-        self.assertIn('resources.getIdentifier("real_cat_meow"', audio)
+        self.assertIn('c.resources.getIdentifier(resourceName', audio)
+        self.assertIn('openPurr(c: Context', audio)
         self.assertNotIn('R.raw.real_cat_meow', native)
         self.assertNotIn('navigator.vibrate&&navigator.vibrate', html)
+
+    def test_uploaded_sound_assets_and_override_contract(self):
+        base = ROOT / 'app/src/main/res/raw'
+        for kind, count in (('meow', 6), ('purr', 3)):
+            for number in range(1, count + 1):
+                asset = base / f'{kind}_{number}.mp3'
+                self.assertTrue(asset.is_file() and asset.stat().st_size > 5000, asset.name)
+        kotlin = (ROOT / 'app/src/main/java/com/meowalarm/app/Alarms.kt').read_text()
+        html = (ROOT / 'app/src/main/assets/index.html').read_text()
+        for name in ('soundOverride', 'getDefaultPurr()', 'chooseCustomPurr()',
+                     'chooseAlarmMeow(id: Int)', 'getCatName()', 'getCatColor()'):
+            self.assertIn(name, kotlin)
+        for name in ('id="alarmSoundOverride"', 'id="meowLibrary"',
+                     'id="purrLibrary"', 'id="catName"', 'id="catColor"'):
+            self.assertIn(name, html)
 
     def test_native_alarm_permissions(self):
         manifest = (ROOT / 'app/src/main/AndroidManifest.xml').read_text()

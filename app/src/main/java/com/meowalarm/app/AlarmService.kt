@@ -63,10 +63,11 @@ class AlarmService : Service() {
             ),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+        val catName = Alarms.prefs(this).getString("cat_name", "گربه")?.take(24) ?: "گربه"
         val n = Notification.Builder(this, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-            .setContentTitle("میو میو! ⏰")
-            .setContentText("گربه رو ناز کن تا ساکت بشه")
+            .setContentTitle("میو میو! ⏰ $catName")
+            .setContentText("$catName رو ناز کن تا ساکت بشه")
             .setCategory(Notification.CATEGORY_ALARM)
             .setPriority(Notification.PRIORITY_MAX)
             .setOngoing(true)
@@ -84,10 +85,11 @@ class AlarmService : Service() {
 
     private fun startSound() {
         if (meowPlayer != null) return
-        val selected = Alarms.active(this)?.sound ?: "real"
-        if (!playSelected(selected) && selected != "cute") {
-            Log.w("MeowAlarm", "Selected sound $selected failed; using bundled cute meow")
-            playSelected("cute")
+        val entry = Alarms.active(this)
+        val selected = Alarms.effectiveSound(this, entry)
+        if (!playSelected(selected, entry?.id ?: -1) && selected != "meow_1") {
+            Log.w("MeowAlarm", "Selected sound $selected failed; falling back to meow_1")
+            playSelected("meow_1", -1)
         }
         // A vibration exception must never stop the audio.
         try {
@@ -106,18 +108,18 @@ class AlarmService : Service() {
         }
     }
 
-    private fun playSelected(sound: String): Boolean {
+    private fun playSelected(sound: String, alarmId: Int): Boolean {
         var candidate: MediaPlayer? = null
         return try {
-            val player = MeowAudio.open(this, sound, AudioAttributes.USAGE_ALARM, loop = true)
+            val player = MeowAudio.open(this, sound, AudioAttributes.USAGE_ALARM, loop = true, alarmId = alarmId)
             candidate = player
             player.setVolume(1f, 1f)
             player.setOnErrorListener { failed, what, extra ->
                 Log.e("MeowAlarm", "$sound meow playback error ($what, $extra)")
                 if (meowPlayer === failed) meowPlayer = null
                 runCatching { failed.release() }
-                if (Ring.active && sound != "cute") handler.post {
-                    if (Ring.active && meowPlayer == null) playSelected("cute")
+                if (Ring.active && sound != "meow_1") handler.post {
+                    if (Ring.active && meowPlayer == null) playSelected("meow_1", -1)
                 }
                 true
             }

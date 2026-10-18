@@ -31,7 +31,8 @@ class DeleteTests(unittest.TestCase):
 
     def test_no_unrelated_kotlin_sounds_changed(self):
         sound = (ROOT/'app/src/main/java/com/meowalarm/app/MeowAudio.kt').read_text()
-        self.assertIn('cute_cat_meow', sound)
+        self.assertIn('fun normalizeMeow(value: String)', sound)
+        self.assertIn('fun openPurr(c: Context', sound)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
