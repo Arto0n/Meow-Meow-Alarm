@@ -29,7 +29,7 @@ jobs:
           version = match.group(1)
           if not re.fullmatch(r'v[0-9]+\.[0-9]+(?:\.[0-9]+)?(?:-[A-Za-z0-9.-]+)?', tag):
               raise SystemExit(f'Invalid release tag: {tag}')
-          if tag != 'v' + version:
+          if tag != 'v' + version and not tag.startswith('v' + version + '-release'):
               raise SystemExit(f'Tag {tag} does not match app versionName={version}')
           print('Validated version:', version)
           PYCHECK
@@ -87,4 +87,5 @@ jobs:
             --notes-file docs/RELEASE_NOTES.md \
             --prerelease \
             --verify-tag
+
 
