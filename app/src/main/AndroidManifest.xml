@@ -32,6 +32,12 @@
             </intent-filter>
         </activity>
 
+        <!-- One-time setup UI: never launched while a real alarm is ringing. -->
+        <activity
+            android:name=".PermissionSetupActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- SystemUI opens this screen from the alarm's full-screen notification.
              It is not a launcher activity. It must be allowed above the keyguard. -->
         <activity

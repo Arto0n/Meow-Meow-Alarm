@@ -257,6 +257,10 @@ class Bridge(private val c: Context) {
         Alarms.prefs(c).edit().putString("scene_settings", output.toString()).apply()
     }
 
+    @JavascriptInterface fun openPermissionSetup() {
+        (c as? MainActivity)?.let { a -> a.runOnUiThread { a.showPermissionSetup() } }
+    }
+
     @JavascriptInterface fun canShowFullScreenAlarm(): Boolean {
         if (Build.VERSION.SDK_INT < 34) return true
         return c.getSystemService(android.app.NotificationManager::class.java).canUseFullScreenIntent()

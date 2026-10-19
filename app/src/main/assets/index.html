@@ -479,6 +479,11 @@ body.ring{animation:none}
   </div>
   <button id="saveTimings" type="button">ذخیره تنظیمات</button><span id="timingStatus"></span>
 </details>
+<div class="card permission" id="permissionSetupCard">
+  <b>🔐 دسترسی‌های لازم برای آلارم</b>
+  <p>برای نمایش گربه روی صفحهٔ قفل، اعلان تمام‌صفحه، آلارم دقیق و تنظیمات باتری را بررسی کن. اگر گوشی جدیدی نصب کردی یا مجوزها تغییر کردند، از اینجا دوباره راه‌اندازی کن.</p>
+  <button id="openPermissionSetup" type="button">بررسی و فعال‌سازی مجوزها</button>
+</div>
 <div id="lockScreenHelp" class="card permission" hidden>
   <b>📱 نمایش آلارم روی صفحهٔ قفل</b>
   <p>برای باز شدن خودکار صفحهٔ نوازش گربه، مجوز «اعلان تمام‌صفحه» و اعلان‌های آلارم را فعال کن. اگر گوشی محدود کند، روی اعلان زنگ بزن تا همین صفحه باز شود.</p>
@@ -891,6 +896,7 @@ function checkPermission(){
   $('permissionHelp').hidden=Android.canSetExactAlarms();
   $('lockScreenHelp').hidden=Android.canShowFullScreenAlarm()&&Android.areAlarmNotificationsEnabled();
 }
+$('openPermissionSetup').onclick=()=>{if(NATIVE)Android.openPermissionSetup();else alert('این گزینه فقط داخل برنامهٔ اندروید فعال است')};
 $('requestAlarmPermission').onclick=()=>{if(NATIVE)Android.requestExactAlarmPermission()};
 $('requestLockScreenPermission').onclick=()=>{if(NATIVE)Android.openAlarmDisplaySettings()};
 window.refreshAlarmPermissionUI=checkPermission;

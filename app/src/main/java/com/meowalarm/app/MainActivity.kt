@@ -1,6 +1,5 @@
 package com.meowalarm.app
 
-import android.Manifest
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.app.NotificationManager
@@ -24,6 +23,7 @@ import android.webkit.WebViewClient
 
 open class MainActivity : Activity() {
     private lateinit var web: WebView
+    private var firstRunPermissionLaunched = false
     private var previewPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
     private val customSoundRequest = 4701
@@ -47,6 +47,8 @@ open class MainActivity : Activity() {
                 if (Ring.active) {
                     updateAlarmWindow(true)
                     syncRingJs()
+                } else if (this@MainActivity !is RingingActivity) {
+                    maybeLaunchPermissionSetup()
                 }
             }
         }
@@ -59,8 +61,6 @@ open class MainActivity : Activity() {
         }
         web.addJavascriptInterface(Bridge(this), "Android")
         web.loadUrl("file:///android_asset/index.html")
-        // Never launch a permissions screen on top of a real alarm.
-        if (this !is RingingActivity) askPermissions()
     }
 
     /** The ONLY editable clock: invoked from the alarm editor. */
@@ -227,12 +227,19 @@ open class MainActivity : Activity() {
         else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
-    private fun askPermissions() {
-        if (Build.VERSION.SDK_INT >= 33 &&
-            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED
-        ) requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 10)
-        // The in-app permission helper explains this permission when needed;
-        // do not automatically leave the app for Settings at every launch.
+    private fun maybeLaunchPermissionSetup() {
+        // Never cover an active alarm with a first-run settings screen.
+        if (firstRunPermissionLaunched || Ring.active || isFinishing) return
+        if (!Alarms.prefs(this).getBoolean(PermissionSetupActivity.DONE_KEY, false)) {
+            firstRunPermissionLaunched = true
+            startActivity(Intent(this, PermissionSetupActivity::class.java))
+        }
+    }
+
+    /** Reopen the permission walkthrough from MeowAlarm settings at any time. */
+    fun showPermissionSetup() {
+        if (!Ring.active && this !is RingingActivity)
+            startActivity(Intent(this, PermissionSetupActivity::class.java))
     }
 
     private fun syncRingJs() {

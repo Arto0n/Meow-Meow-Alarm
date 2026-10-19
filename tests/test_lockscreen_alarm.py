@@ -27,7 +27,7 @@ class LockScreenAlarmChecks(unittest.TestCase):
         activity=(APP/'java/com/meowalarm/app/MainActivity.kt').read_text()
         self.assertIn('override fun onPageFinished(',activity)
         self.assertIn('if (Ring.active) {\n                    updateAlarmWindow(true)\n                    syncRingJs()',activity)
-        self.assertIn('if (this !is RingingActivity) askPermissions()',activity)
+        self.assertIn('maybeLaunchPermissionSetup()',activity)
         html=(APP/'assets/index.html').read_text()
         self.assertIn("$('roomSection').scrollIntoView({behavior:'auto',block:'start'})",html)
 
