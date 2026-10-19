@@ -1,38 +1,70 @@
-# 🐱 Meow Meow Alarm | میو میو آلارم
+# 🐱 Meow Meow Alarm
 
-**A cozy, interactive Android alarm clock.** Wake up to your cat's meow, pet it, and help it settle down.
+<div align="center">
 
-**یک آلارم اندرویدی تعاملی و دوست‌داشتنی:** با میوی گربه بیدار شو، نوازشش کن و کمکش کن دوباره آروم بگیره.
+A cozy, interactive Android alarm clock where a cat wakes you up with meows, purrs, and a playful bedtime-to-breakfast routine.
 
-## 📖 Choose your language | انتخاب زبان
+**Choose your language / زبان مورد نظر را انتخاب کنید**
 
-### [🇮🇷 راهنمای کامل فارسی — Readme-Fa](Readme-Fa.md)
+[🇬🇧 English Documentation](./Readme-En.md) · [🇮🇷 مستندات فارسی](./Readme-Fa.md)
 
-توضیح امکانات، دانلود و نصب APK، پیش‌نیازها، دسترسی‌های اندروید، ساخت برنامه از سورس و رفع مشکلات رایج.
+<img src="./docs/images/preview-collage.png" alt="Meow Meow Alarm preview collage" width="100%" />
 
-### [🇬🇧 Full English README — Readme-En](Readme-En.md)
+</div>
 
-Features, APK installation, Android permissions, requirements, source builds, troubleshooting, and project status.
+---
 
-[![Build APK](https://github.com/Arto0n/Meow-Meow-Alarm/actions/workflows/build-apk.yml/badge.svg)](https://github.com/Arto0n/Meow-Meow-Alarm/actions/workflows/build-apk.yml)
-![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
-![Personal Project](https://img.shields.io/badge/personal%20project-in%20development-F0AD4E)
+## Quick Overview
 
-![Meow Meow Alarm original cozy 2D interface preview](docs/assets/settings-preview.png)
+**Meow Meow Alarm** is an Android alarm app built around a cozy 2D cat-and-human scene.
+Instead of a plain ringtone-only alarm, the app can open an interactive wake-up screen where the user pets the cat, hears meows and purrs, and manages alarms in a cute, game-like interface.
 
-### At a glance | امکانات اصلی
+### Main sections
+- **Cozy Room** – the main interactive wake-up scene
+- **Alarms** – create, edit, test, enable, and delete multiple alarms
+- **Settings** – manage meows, purrs, cat name, cat color, and timing behavior
 
-- ⏰ **Multiple alarms | چند آلارم مستقل**
-- 🐈 **Six meow presets + custom audio | شش میو و امکان صدای دلخواه**
-- 🎶 **Three purr presets + custom purr | سه خرخر و امکان خرخر دلخواه**
-- 🐾 **Cat name and appearance | انتخاب اسم و ظاهر گربه**
-- 💗 **Interactive petting, snooze and feeding | نوازش، اسنوز و غذا دادن**
-- 🔔 **Android lock-screen alarm support | پشتیبانی از آلارم روی صفحهٔ قفل**
+### Open the full docs
+- [Readme-En.md](./Readme-En.md)
+- [Readme-Fa.md](./Readme-Fa.md)
 
-**Install / نصب:** Obtain the debug APK from [GitHub Actions](https://github.com/Arto0n/Meow-Meow-Alarm/actions/workflows/build-apk.yml), then follow the [English](Readme-En.md) or [Persian](Readme-Fa.md) guide.
+---
 
-> This personal project is in development. Real-device alarm behavior may depend on Android permissions and manufacturer restrictions. Before depending on it as your only alarm, test it with the screen locked.
->
-> این پروژه هنوز در حال توسعه است. پیش از استفاده به‌عنوان تنها آلارم، عملکردش را با صفحهٔ قفل و برنامهٔ بسته روی گوشی خودت امتحان کن.
+## Preview Images
 
-**Documentation:** [Requirements](docs/REQUIREMENTS.md) · [Development](docs/DEVELOPMENT.md) · [Android permissions](docs/ANDROID_PERMISSIONS.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Media rights](docs/RIGHTS.md)
+### Cozy Room
+<img src="./docs/images/preview-room.png" alt="Cozy room preview" width="360" />
+
+### Alarms
+<img src="./docs/images/preview-alarms.png" alt="Alarms preview" width="360" />
+
+### Settings
+<img src="./docs/images/preview-settings.png" alt="Settings preview" width="360" />
+
+---
+
+## Repository Structure
+
+```text
+app/                     Android app source
+app/src/main/assets/     HTML / CSS / JavaScript UI
+app/src/main/java/       Android Kotlin host code
+app/src/main/res/raw/    Built-in audio files
+.github/workflows/       GitHub Actions APK build
+tests/                   Validation and smoke tests
+```
+
+---
+
+## Status
+
+- Android project is buildable through GitHub Actions
+- The current visual direction uses the original 2D cozy style
+- Pixel-art and 3D prototype directions are intentionally not part of the active product path
+
+---
+
+## Notes
+
+- Some internal test controls still exist in the app for development and verification.
+- The repository may contain custom audio assets. Review usage rights before redistributing them.

@@ -1,0 +1,15 @@
+Repository name: Meow-Meow-Alarm
+Display name: Meow Meow Alarm
+
+Suggested description:
+A cozy interactive Android alarm clock with cats, meows, purrs, custom alarms, and playful wake-up routines.
+
+Suggested topics:
+android
+kotlin
+alarm-clock
+cat
+meow
+android-app
+offline
+notifications

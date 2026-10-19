@@ -1,135 +1,213 @@
-# 🐱 Meow Meow Alarm
+# 🐱 Meow Meow Alarm — English Documentation
 
-**A cozy, interactive alarm clock for Android. Wake up to a cat's meow—and help your sleepy companion settle down.**
+<div align="center">
+<img src="./docs/images/preview-collage.png" alt="Meow Meow Alarm preview collage" width="100%" />
+</div>
 
-[🇮🇷 فارسی](Readme-Fa.md) · **🇬🇧 English** · [Project home](README.md)
+## What is Meow Meow Alarm?
 
-[![Build APK](https://github.com/Arto0n/Meow-Meow-Alarm/actions/workflows/build-apk.yml/badge.svg)](https://github.com/Arto0n/Meow-Meow-Alarm/actions/workflows/build-apk.yml)
-![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-1.9.24-7F52FF?logo=kotlin&logoColor=white)
-![Personal project](https://img.shields.io/badge/project-personal%20%26%20in%20development-F0AD4E)
+**Meow Meow Alarm** is a cozy, interactive Android alarm app.
+It combines a soft 2D art style, cat-themed audio, and a playful wake-up routine instead of a plain traditional alarm screen.
 
-> **Development project:** Please verify actual scheduled alarms on your specific phone before relying on Meow Meow Alarm as your only wake-up alarm. Background and lock-screen restrictions vary across Android devices.
-
-## 🎬 Preview
-
-![Settings and cozy 2D interface preview](docs/assets/settings-preview.png)
-
-*Development preview of the original cozy, hand-drawn 2D app; the appearance on your Android phone may differ.*
-
-## ✨ What it does
-
-Meow Meow Alarm combines an everyday Android alarm clock with a playful, interactive cat scene. When an alarm goes off, your cat calls for attention. The user can interact with the cat to snooze or finish the wake-up routine.
-
-- **Multiple alarms:** Create, edit, delete, enable/disable, label, and repeat alarms on selected days.
-- **Original cozy 2D design:** An interactive room with a cat and a human character—not pixel art or 3D.
-- **Six built-in meows:** `Meow 1` through `Meow 6`, with preview playback.
-- **Global default or per-alarm sound:** Alarms use the global meow unless an individual override is enabled. User-imported meows are supported.
-- **Three built-in purrs:** `Purr 1` through `Purr 3`, plus a custom purr option and previews.
-- **Make the cat yours:** Choose a cat appearance and give your cat a name, which appears in interface messages.
-- **Interactive alarm:** Petting, snooze, feeding, and the existing character animations.
-- **Adjustable interactions:** Settings for the timing of cat-related actions and the human's routine.
-- **Lock-screen ringing:** Native Android audio and a full-screen alarm notification where Android permits it.
-- **First-run permissions:** An onboarding helper for notifications, exact alarms, and full-screen alarm access; device-specific battery settings may still need manual adjustment.
-- **Offline:** Bundled alarms and purrs do not need an internet connection.
-
-The **5-second test** and other developer-facing controls are intentionally retained while the app is still being tested.
-
-## 📱 Download and install the APK
-
-No ready-made Play Store release is provided here. The project builds a **debug APK** via GitHub Actions:
-
-1. Open [Build APK workflow](https://github.com/Arto0n/Meow-Meow-Alarm/actions/workflows/build-apk.yml).
-2. Open the latest successful run. If needed, select **Run workflow** on the `main` branch.
-3. Under **Artifacts**, download **`MeowAlarm-debug`**. GitHub may require you to sign in.
-4. Extract the downloaded ZIP and transfer **`app-debug.apk`** to your Android phone.
-5. Install the APK from a source you trust, then complete the first-launch permission checklist.
-6. Test the 5-second preview **and** a scheduled alarm with the phone locked and the app closed.
-
-> **Debug signing:** Android may reject an in-place update if the APK was signed with a different debug key. Uninstalling the old app can erase saved alarms and settings, so keep a record of them first.
-
-## 🔔 Android permissions and reliability
-
-Alarms depend on OS and manufacturer policies. Meow Meow Alarm may need access to:
-
-| Capability | Purpose |
-| --- | --- |
-| Exact alarms / Alarms & reminders | Schedule an alarm for the chosen time |
-| Notifications | Show an alarm notification while ringing |
-| Full-screen notifications | Open the interactive alarm screen over the lock screen where allowed |
-| Background operation | Keep alarm playback working outside the visible app |
-| Battery settings / Autostart | Help prevent some phones, particularly Xiaomi/MIUI devices, from suppressing alarm behavior |
-
-Android does **not** allow apps to force users to accept special permissions. The setup screen guides users to the appropriate OS settings instead. For specific versions and common issues, see [Android permissions](docs/ANDROID_PERMISSIONS.md) and [troubleshooting](docs/TROUBLESHOOTING.md).
-
-## 🧰 Requirements
-
-| Component | Version |
-| --- | --- |
-| Android runtime | Android 8.0+ / API 26+ |
-| Compile / target SDK | Android API 34 |
-| JDK | 17 |
-| Android SDK platform / build tools | 34 / 34.0.0 |
-| Gradle | 8.9 (CI) |
-| Android Gradle Plugin | 8.5.2 |
-| Kotlin Gradle Plugin | 1.9.24 |
-| Optional checks | Python 3, Node.js |
-
-Full details: [requirements](docs/REQUIREMENTS.md) and [development guide](docs/DEVELOPMENT.md).
-
-## 🛠️ Build from source
-
-Clone the project (after the planned GitHub repository rename):
-
-```bash
-git clone https://github.com/Arto0n/Meow-Meow-Alarm.git
-cd Meow-Meow-Alarm
-```
-
-Until the rename has been completed, use [`Arto0n/MeowAlarm3`](https://github.com/Arto0n/MeowAlarm3).
-
-With JDK 17, SDK 34, Build Tools 34.0.0 and Gradle 8.9 installed:
-
-```bash
-gradle --no-daemon clean assembleDebug
-```
-
-Result: `app/build/outputs/apk/debug/app-debug.apk`.
-
-The repository may not contain a Gradle wrapper (`gradlew`). GitHub Actions is therefore the simplest build method. To run the basic source checks:
-
-```bash
-python tests/verify_sources.py
-```
-
-## 📁 Repository structure
-
-```text
-.github/workflows/build-apk.yml   Automatic debug APK build
-app/                              Kotlin Android app, WebView UI and sounds
-tests/                            Source and interface checks
-docs/                             Requirements, permissions and troubleshooting
-Readme-Fa.md                      Persian documentation
-Readme-En.md                      English documentation
-README.md                         Language selection and short overview
-build.gradle.kts                  Android build plugin configuration
-settings.gradle.kts               Gradle project configuration
-```
-
-**Tech stack:** Kotlin + Android SDK (alarm scheduling, audio service, notifications and permissions); HTML/CSS/JavaScript inside WebView (original cozy 2D interface); Gradle and GitHub Actions for builds.
-
-## 🗺️ Project status
-
-Meow Meow Alarm is a **personal project under active development**. Real-device reliability—especially full-screen alarm presentation and manufacturer-specific restrictions—matters more than experimental visual redesigns. The project intentionally retains its original hand-drawn 2D style. The APK is not a certified alarm-clock replacement and is not a production-signed Play Store release.
-
-## 🔒 License, media and privacy
-
-No open-source license has been selected for the repository. Being publicly accessible on GitHub does not automatically grant reuse or redistribution rights. Cat-meow, purr and visual files may have separate rights that should be verified before redistribution or commercial use. Read [source and media rights](docs/RIGHTS.md).
-
-The core app is intended to work offline without accounts. See the source for any permissions or local persistence behavior; this document is not a formal independent privacy audit.
+When the alarm rings, the app can show an interactive scene with the cat and the human character, making the user engage with the alarm instead of just hearing a sound.
 
 ---
 
-*Made for sleepy humans and very demanding cats.* 🐾
+## Core Idea
 
-[فارسی](Readme-Fa.md) · [Back to README](README.md)
+The app is built around three main experiences:
+
+1. **Interactive wake-up scene**
+2. **Flexible alarm management**
+3. **Deep meow / purr / cat customization**
+
+---
+
+## Feature Highlights
+
+### 1) Interactive alarm experience
+- Cozy 2D room scene with the original cat and human character
+- Interactive wake-up screen instead of a simple dismiss dialog
+- Pet-the-cat interaction as part of the alarm flow
+- Cat meows, purrs, and animated scene behavior
+- Lock-screen / full-screen alarm behavior when permissions are enabled
+- Screen wake-up flow designed to open the interactive alarm scene directly
+
+### 2) Alarm management
+- Create multiple alarms
+- Enable / disable alarms individually
+- Edit existing alarms
+- Delete saved alarms
+- Set custom labels for alarms
+- Repeat alarms on selected weekdays
+- View the next upcoming alarm
+- Built-in alarm test controls
+- 5-second quick test for development / checking behavior
+
+### 3) Audio system
+#### Meow presets
+- Multiple built-in meow presets
+- Neutral naming style: **Meow 1, Meow 2, Meow 3, ...**
+- Universal default meow for all alarms
+- Per-alarm meow override
+- Per-alarm custom audio file support
+
+#### Purr presets
+- Multiple built-in purr presets
+- Neutral naming style: **Purr 1, Purr 2, Purr 3, ...**
+- Custom purr file support
+- Purr preview buttons
+- Cleaner, more balanced purr playback
+
+### 4) Cat customization
+- Custom cat name
+- App text updates to use the selected cat name in relevant places
+- Built-in cat color presets
+- Current planned colors include:
+  - Gray / tabby
+  - Orange
+  - Black
+  - White
+  - Calico / tricolor
+
+### 5) Story / timing customization
+- Adjustable interaction timing
+- Story pacing presets (for example: calm / classic / fast)
+- Configurable values for wake-up routine steps
+- Timing controls for actions such as:
+  - petting duration
+  - snooze period / story step delays
+  - smoking timing
+  - food arrival timing
+  - food pouring timing
+
+### 6) Permissions & Android integration
+- First-run permission setup flow
+- Notification permission guidance
+- Exact alarm guidance
+- Full-screen notification guidance
+- Lock-screen alarm guidance
+- Battery optimization guidance
+- Xiaomi / restrictive-device guidance
+- Shortcut to re-check permissions later from inside the app
+
+### 7) Reliability / platform behavior
+- Designed for offline use after assets are available inside the app
+- GitHub Actions build flow for APK export
+- Fixes included for alarm deletion, custom sound selection, and interactive lock-screen behavior
+- Structured to work across different Android phones, while still depending on phone-specific permission settings
+
+---
+
+## Preview
+
+### Cozy Room / Interactive Scene
+<img src="./docs/images/preview-room.png" alt="Cozy room preview" width="420" />
+
+### Alarm Management
+<img src="./docs/images/preview-alarms.png" alt="Alarm management preview" width="420" />
+
+### Meows, Purrs, and Cat Settings
+<img src="./docs/images/preview-settings.png" alt="Settings preview" width="420" />
+
+---
+
+## Why this project is different
+
+Unlike a standard alarm app, **Meow Meow Alarm** is designed to feel personal, warm, and slightly playful.
+It treats the wake-up process as a tiny interactive routine rather than just a ringtone.
+
+It is especially focused on:
+- cute presentation
+- memorable alarm behavior
+- cat-themed interaction
+- user-controlled audio customization
+- practical Android alarm reliability
+
+---
+
+## Current Design Direction
+
+The active design direction is:
+- the original cozy **2D art style**
+- the original cat-and-man scene
+- practical improvements to reliability and customization
+
+The project intentionally moved away from:
+- pixel-art redesigns
+- 3D prototype directions
+
+---
+
+## Requirements
+
+### For users
+- Android phone
+- Notifications enabled
+- Alarm / full-screen permissions enabled where required by the device
+- Battery restrictions relaxed for the app on restrictive phones (especially Xiaomi / MIUI / HyperOS if needed)
+
+### For developers
+- Git
+- Java 17
+- Android SDK
+- Gradle (via wrapper / project setup)
+- GitHub Actions or Android Studio for building
+
+See also:
+- [`docs/REQUIREMENTS.md`](./docs/REQUIREMENTS.md)
+- [`docs/ANDROID_PERMISSIONS.md`](./docs/ANDROID_PERMISSIONS.md)
+- [`docs/TROUBLESHOOTING.md`](./docs/TROUBLESHOOTING.md)
+
+---
+
+## Building the APK
+
+The repository includes a GitHub Actions workflow for building the APK.
+
+Typical flow:
+1. Push your changes to the repository
+2. Open the **Actions** tab on GitHub
+3. Run or inspect the Android build workflow
+4. Download the APK artifact from the successful run
+
+If you are building locally, use the Android project under `app/` with the configured Gradle setup.
+
+---
+
+## Repository Layout
+
+```text
+app/                     Android app source
+app/src/main/assets/     HTML / CSS / JavaScript UI
+app/src/main/java/       Android Kotlin host code
+app/src/main/res/raw/    Built-in audio files
+.github/workflows/       GitHub Actions APK build workflow
+tests/                   Validation and smoke tests
+docs/                    Documentation
+```
+
+---
+
+## Important Notes
+
+- Some internal test controls remain in the app intentionally for development and validation.
+- These may be removed later in a final user-facing release.
+- Audio files may have separate usage or redistribution considerations.
+- If you rename the repository to **Meow-Meow-Alarm**, make sure to update badges, links, and Git remote URLs.
+
+---
+
+## Suggested GitHub About Section
+
+**Name:** Meow Meow Alarm  
+**Description:** A cozy interactive Android alarm clock with cats, meows, purrs, custom alarms, and playful wake-up routines.  
+**Topics:** `android`, `kotlin`, `alarm-clock`, `cat`, `meow`, `android-app`, `offline`, `notifications`
+
+---
+
+## License / Rights
+
+A final open-source license decision should be made carefully, especially if the repository includes user-provided or externally sourced audio files.
+
+See: [`docs/RIGHTS.md`](./docs/RIGHTS.md)
