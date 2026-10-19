@@ -54,7 +54,7 @@ class PermissionSetupActivity : Activity() {
         lastExactAllowed = Alarms.canSchedule(this)
         ensureAlarmChannel()
         screen = ScrollView(this).apply {
-            setBackgroundColor(background)
+            setBackgroundColor(this@PermissionSetupActivity.background)
             isFillViewport = true
             layoutDirection = View.LAYOUT_DIRECTION_RTL
         }
