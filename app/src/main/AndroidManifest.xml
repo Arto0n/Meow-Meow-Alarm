@@ -32,6 +32,18 @@
             </intent-filter>
         </activity>
 
+        <!-- SystemUI opens this screen from the alarm's full-screen notification.
+             It is not a launcher activity. It must be allowed above the keyguard. -->
+        <activity
+            android:name=".RingingActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
         <service
             android:name=".AlarmService"
             android:exported="false"

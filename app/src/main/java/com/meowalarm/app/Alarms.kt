@@ -257,6 +257,35 @@ class Bridge(private val c: Context) {
         Alarms.prefs(c).edit().putString("scene_settings", output.toString()).apply()
     }
 
+    @JavascriptInterface fun canShowFullScreenAlarm(): Boolean {
+        if (Build.VERSION.SDK_INT < 34) return true
+        return c.getSystemService(android.app.NotificationManager::class.java).canUseFullScreenIntent()
+    }
+
+    @JavascriptInterface fun areAlarmNotificationsEnabled(): Boolean {
+        val nm = c.getSystemService(android.app.NotificationManager::class.java)
+        if (!nm.areNotificationsEnabled()) return false
+        val channel = nm.getNotificationChannel("meow_fullscreen_alarm_v2")
+        return channel == null || channel.importance >= android.app.NotificationManager.IMPORTANCE_HIGH
+    }
+
+    @JavascriptInterface fun openAlarmDisplaySettings() {
+        (c as? Activity)?.runOnUiThread {
+            try {
+                val i = if (Build.VERSION.SDK_INT >= 34 && !canShowFullScreenAlarm()) {
+                    Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT,
+                        Uri.parse("package:${c.packageName}"))
+                } else {
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, c.packageName)
+                }
+                c.startActivity(i)
+            } catch (ex: Exception) {
+                Log.e("MeowAlarm", "Unable to open alarm display settings", ex)
+            }
+        }
+    }
+
     @JavascriptInterface fun canSetExactAlarms(): Boolean = Alarms.canSchedule(c)
     @JavascriptInterface fun requestExactAlarmPermission() {
         val a = c as? Activity ?: return
@@ -274,11 +303,6 @@ class Bridge(private val c: Context) {
         (c as? MainActivity)?.let { activity ->
             activity.runOnUiThread { activity.showAlarmTimePicker(h, m) }
         }
-    }
-
-    @JavascriptInterface fun testAlarm(id: Int) {
-        Alarms.prefs(c).edit().putInt("active_alarm_id", id).apply()
-        Alarms.scheduleSnooze(c, 5)
     }
 
     @JavascriptInterface fun ringIn(sec: Int) = Alarms.scheduleSnooze(c, sec)
@@ -340,10 +364,5 @@ class Bridge(private val c: Context) {
     }
     @JavascriptInterface fun stopPurr() {
         (c as? MainActivity)?.let { a -> a.runOnUiThread { a.stopPurr() } }
-    }
-    // Compatibility for old WebView pages and automated source checks.
-    @JavascriptInterface fun getAlarmState(): String {
-        val entry = Alarms.read(c).firstOrNull() ?: AlarmEntry(100, 7, 0, false, 127, "Wake up", "meow_1")
-        return entry.toJson().toString()
     }
 }

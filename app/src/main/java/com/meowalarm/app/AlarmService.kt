@@ -13,7 +13,8 @@ class AlarmService : Service() {
     companion object {
         const val ACTION_RING = "com.meowalarm.app.action.RING"
         const val ACTION_STOP = "com.meowalarm.app.action.STOP"
-        private const val CHANNEL_ID = "alarm_ring"
+        // New high-priority channel; an older channel may have been created silent/low.
+        private const val CHANNEL_ID = "meow_fullscreen_alarm_v2"
         private const val NOTIFICATION_ID = 1001
     }
 
@@ -32,13 +33,16 @@ class AlarmService : Service() {
         val id = intent?.getIntExtra("id", 2) ?: 2
         Alarms.onTriggered(this, id)
         try {
-            goForeground()
+            // Set before posting the full-screen intent: SystemUI may launch
+            // RingingActivity immediately, even before startForeground returns.
             Ring.active = true
+            goForeground()
             startSound()
             runCatching { Ring.listener?.invoke() }
                 .onFailure { Log.e("MeowAlarm", "Alarm UI listener failed", it) }
         } catch (ex: Exception) {
             Log.e("MeowAlarm", "Alarm service startup failed", ex)
+            Ring.active = false
             stopSelf()
         }
         return START_NOT_STICKY
@@ -57,14 +61,14 @@ class AlarmService : Service() {
         }
 
         val open = PendingIntent.getActivity(
-            this, 0,
-            Intent(this, MainActivity::class.java).addFlags(
+            this, 911,
+            Intent(this, RingingActivity::class.java).addFlags(
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             ),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val catName = Alarms.prefs(this).getString("cat_name", "گربه")?.take(24) ?: "گربه"
-        val n = Notification.Builder(this, CHANNEL_ID)
+        val builder = Notification.Builder(this, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
             .setContentTitle("میو میو! ⏰ $catName")
             .setContentText("$catName رو ناز کن تا ساکت بشه")
@@ -73,8 +77,16 @@ class AlarmService : Service() {
             .setOngoing(true)
             .setAutoCancel(false)
             .setContentIntent(open)
+            // When locked and authorized, SystemUI launches RingingActivity;
+            // otherwise the notification tap opens the same petting screen.
             .setFullScreenIntent(open, true)
-            .build()
+            .setVisibility(Notification.VISIBILITY_PUBLIC)
+        // Alarm notifications must appear immediately even when Android normally
+        // delays displaying foreground-service notifications.
+        if (Build.VERSION.SDK_INT >= 31) {
+            builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE)
+        }
+        val n = builder.build()
 
         if (Build.VERSION.SDK_INT >= 34) {
             startForeground(NOTIFICATION_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED)

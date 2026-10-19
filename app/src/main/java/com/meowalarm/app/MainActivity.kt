@@ -22,7 +22,7 @@ import android.view.WindowManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
-class MainActivity : Activity() {
+open class MainActivity : Activity() {
     private lateinit var web: WebView
     private var previewPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
@@ -38,7 +38,18 @@ class MainActivity : Activity() {
         web = WebView(this)
         setContentView(web)
         web.setBackgroundColor(0xFF342B40.toInt())
-        web.webViewClient = WebViewClient()
+        web.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                // A new WebView is still loading when Android launches the full-screen
+                // notification. Re-send the ringing state *after* JS has initialized.
+                web.evaluateJavascript("window.refreshAlarmPermissionUI&&window.refreshAlarmPermissionUI()", null)
+                if (Ring.active) {
+                    updateAlarmWindow(true)
+                    syncRingJs()
+                }
+            }
+        }
         web.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
@@ -48,7 +59,8 @@ class MainActivity : Activity() {
         }
         web.addJavascriptInterface(Bridge(this), "Android")
         web.loadUrl("file:///android_asset/index.html")
-        askPermissions()
+        // Never launch a permissions screen on top of a real alarm.
+        if (this !is RingingActivity) askPermissions()
     }
 
     /** The ONLY editable clock: invoked from the alarm editor. */
@@ -219,13 +231,8 @@ class MainActivity : Activity() {
         if (Build.VERSION.SDK_INT >= 33 &&
             checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED
         ) requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 10)
-        if (Build.VERSION.SDK_INT >= 34) {
-            val nm = getSystemService(NotificationManager::class.java)
-            if (!nm.canUseFullScreenIntent()) {
-                runCatching { startActivity(Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT,
-                    Uri.parse("package:$packageName"))) }
-            }
-        }
+        // The in-app permission helper explains this permission when needed;
+        // do not automatically leave the app for Settings at every launch.
     }
 
     private fun syncRingJs() {
@@ -249,13 +256,18 @@ class MainActivity : Activity() {
             runCatching { updateAlarmWindow(Ring.active); syncRingJs() }
                 .onFailure { Log.e("MeowAlarm", "Ring listener failed", it) }
         } }
-        runCatching { updateAlarmWindow(Ring.active); if (Ring.active) syncRingJs() }
+        runCatching {
+            updateAlarmWindow(Ring.active)
+            if (Ring.active) syncRingJs()
+            if (::web.isInitialized) web.evaluateJavascript(
+                "window.refreshAlarmPermissionUI&&window.refreshAlarmPermissionUI()", null)
+        }
     }
 
     override fun onPause() {
         stopPurr()
         Ring.listener = null
-        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        if (!Ring.active) window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onPause()
     }
 

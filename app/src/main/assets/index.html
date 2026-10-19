@@ -169,9 +169,9 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,s
 .scene-status{display:flex;align-items:center;gap:8px;margin:0;padding:11px 13px;background:#fff1d7;border-top:3px solid #73536c}
 .scene-status p{margin:0;min-width:0;font-size:.84rem;color:#554358;text-align:right;text-shadow:none;font-weight:700;line-height:1.7;min-height:1.4em;flex:1}
 .scene-face{font-size:1.4rem}
-.scene-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:0 12px 13px;background:#fff1d7}
-.scene-controls button{font-size:.75rem;padding:8px 3px;min-height:45px;line-height:1.35}
-.scene-controls #test{background:#a9c8a5;color:#304032}
+.scene-controls{display:flex;gap:7px;padding:0 12px 13px;background:#fff1d7}
+.scene-controls button{font-size:.75rem;padding:8px 3px;min-height:45px;line-height:1.35;flex:1}
+#stopAlarm[hidden]{display:none!important}
 .scene-controls #stopAlarm{background:#f4c4ba;color:#633d49}
 .scene-controls #snd{background:#f9e5c7;color:#514151}
 .meter{max-width:none;width:auto;height:11px;margin:1px 12px 8px;background:#d6c1c0;border:2px solid #6d5267;border-radius:3px;box-shadow:inset 1px 1px 0 #a9919d}
@@ -210,13 +210,12 @@ body.ring{animation:none}
 .alarm-ops button{grid-row:2}
 .alarm-card .alarm-ops button{min-width:0}
 .alarm-card .alarm-ops{justify-content:initial}
-.alarm-card{grid-template-columns:minmax(0,1fr) repeat(3,minmax(58px,auto))}
-.alarm-card .alarm-info{grid-column:1 / 4;grid-row:1}
-.alarm-card .alarm-toggle{grid-column:4;grid-row:1;justify-self:end}
+.alarm-card{grid-template-columns:minmax(0,1fr) minmax(88px,auto)}
+.alarm-card .alarm-info{grid-column:1;grid-row:1}
+.alarm-card .alarm-toggle{grid-column:2;grid-row:1;justify-self:end}
 .alarm-card .alarm-ops button{grid-row:2}
-.alarm-card .alarm-ops button[data-action="edit"]{grid-column:1 / 3}
-.alarm-card .alarm-ops button[data-action="test"]{grid-column:3}
-.alarm-card .alarm-ops button[data-action="delete"]{grid-column:4}
+.alarm-card .alarm-ops button[data-action="edit"]{grid-column:1}
+.alarm-card .alarm-ops button[data-action="delete"]{grid-column:2}
 .editor{background:#fae9d6;border:2px dashed #bb94a5;padding:14px;border-radius:10px;margin-top:17px}
 .editor h3{font-size:1rem;color:#593a57}
 .field{font-weight:800;margin:12px 0;color:#554153}
@@ -271,7 +270,7 @@ body.ring{animation:none}
  body{padding-inline:10px}.card{padding:13px}
  .scene-card{padding:0}.scene-head{padding:11px}.masthead h1{font-size:1.4rem}.brand-avatar{width:49px;height:49px;font-size:1.75rem}
  .now-card{padding:14px}.clock{font-size:2.7rem}
- .alarm-card{grid-template-columns:minmax(0,1fr) repeat(3,minmax(44px,auto));padding:10px 8px}.alarm-time{font-size:1.9rem}
+ .alarm-card{grid-template-columns:minmax(0,1fr) minmax(76px,auto);padding:10px 8px}.alarm-time{font-size:1.9rem}
  .alarm-card .alarm-ops button{font-size:.7rem;padding:7px 2px}.scene-controls button{font-size:.7rem}
  .sound-option{gap:5px}.sound-option button{padding:6px}
  .timing{grid-template-columns:1fr 1fr}
@@ -399,7 +398,7 @@ body.ring{animation:none}
 <p id="sceneTip" class="scene-tip">✧ وقتی گربه میو کرد، با انگشت نوازشش کن ✧</p>
 <div class="meter" aria-hidden="true"><div id="bar"></div></div>
 <div class="scene-status"><span class="scene-face" aria-hidden="true">🐱</span><p id="msg" aria-live="polite"></p></div>
-<div class="scene-controls"><button id="test">🐾 تست ۵ ثانیه‌ای</button><button id="stopAlarm" class="secondary">⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div>
+<div class="scene-controls"><button id="stopAlarm" class="secondary" hidden>⏹ قطع آلارم</button><button id="snd" class="secondary">خرخر: روشن</button></div>
 </section>
 <section class="card now-card" aria-label="ساعت فعلی">
   <div><div class="eyebrow">✦ GOOD MORNING, HUMAN</div><h2 class="now-title">امروز هم میو میو! 🐾</h2><span class="now-chip">☕ یه روز آروم شروع می‌شه</span><p class="clockHint" id="clockHint">ساعت فعلی · برای تنظیم آلارم از بخش پایین استفاده کن</p></div>
@@ -422,7 +421,7 @@ body.ring{animation:none}
     </label>
     <div id="alarmPersonalControls" hidden>
       <button type="button" id="importAlarmSound" class="secondary">＋ انتخاب فایل مخصوص همین آلارم</button>
-      <button type="button" id="previewAlarmSound" class="secondary">▶ تست فایل همین آلارم</button>
+      <button type="button" id="previewAlarmSound" class="secondary">▶ شنیدن فایل همین آلارم</button>
       <span id="alarmCustomStatus" role="status" class="status-text"></span>
       <p class="hintText">برای فایل اختصاصی، ابتدا آلارم را یک‌بار ذخیره کن و بعد ویرایشش کن.</p>
     </div>
@@ -480,9 +479,14 @@ body.ring{animation:none}
   </div>
   <button id="saveTimings" type="button">ذخیره تنظیمات</button><span id="timingStatus"></span>
 </details>
+<div id="lockScreenHelp" class="card permission" hidden>
+  <b>📱 نمایش آلارم روی صفحهٔ قفل</b>
+  <p>برای باز شدن خودکار صفحهٔ نوازش گربه، مجوز «اعلان تمام‌صفحه» و اعلان‌های آلارم را فعال کن. اگر گوشی محدود کند، روی اعلان زنگ بزن تا همین صفحه باز شود.</p>
+  <button id="requestLockScreenPermission" type="button">تنظیمات نمایش آلارم</button>
+</div>
 <div id="permissionHelp" class="card permission" hidden><b>🔔 مجوز آلارم دقیق لازم است</b><p>برای اجرای آلارم در ساعت مقرر، مجوز «Alarms & reminders» را فعال کن.</p><button id="requestAlarmPermission">باز کردن تنظیمات</button></div>
 
-<p class="note">🔔 آلارم مهمه: یک‌بار با صفحهٔ قفل‌شده هم امتحانش کن. در بعضی گوشی‌ها اجازهٔ آلارم دقیق و تنظیمات باتری لازمه.</p>
+<p class="note">🔔 برای اجرای مطمئن آلارم با صفحهٔ قفل‌شده، مجوز آلارم دقیق و تنظیمات باتری گوشی را بررسی کن.</p>
 <nav class="quick-nav" aria-label="دسترسی سریع">
   <button type="button" data-jump="alarmsSection" aria-current="page"><span class="nav-icon" aria-hidden="true">⏰</span>آلارم‌ها</button>
   <button type="button" data-jump="roomSection"><span class="nav-icon" aria-hidden="true">🐱</span>اتاق میو</button>
@@ -503,7 +507,7 @@ const nameOfSound=key=>{
 };
 const nameOfPurr=key=>key==='custom'?'خرخر شخصی':'خرخر '+String(key).split('_')[1];
 
-let P=null,hand={x:150,y:190},lvl=100,sleep=true,state=-1,lastPet=-9,lastHeart=0,last=null,dip=0,muted=false,aud=null,ph=null,mb=0,lastPuff=0,nextMeow=1,meowEnd=0,mode='idle',snoozeEnd=0,ringStart=0,testAt=0,fired='',alarmOn=false,lastMsg='',curPt=-1,done=false,food=0,fill=0,fedAt=0,sleepAt=0,bagRot=0,lastKib=0,smoked=false;
+let P=null,hand={x:150,y:190},lvl=100,sleep=true,state=-1,lastPet=-9,lastHeart=0,last=null,dip=0,muted=false,aud=null,ph=null,mb=0,lastPuff=0,nextMeow=1,meowEnd=0,mode='idle',snoozeEnd=0,ringStart=0,fired='',alarmOn=false,lastMsg='',curPt=-1,done=false,food=0,fill=0,fedAt=0,sleepAt=0,bagRot=0,lastKib=0,smoked=false;
 const pt0=e=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())};
 const inCat=p=>((p.x-292)/90)**2+((p.y-232)/52)**2<1;
 function initAudio(){if(aud||muted)return;try{
@@ -625,6 +629,7 @@ function frame(ts){const t=ts/1000,dt=Math.min(.05,t-(last??t));last=t;
 const two=n=>String(n).padStart(2,'0'),fmt=ms=>{const q=Math.ceil(ms/1000);return Math.floor(q/60)+':'+two(q%60)};
 function updUI(pt){
   document.body.classList.toggle('ring',mode==='ringing');
+  $('stopAlarm').hidden=mode!=='ringing'&&mode!=='snooze';
   const rem=Math.max(0,snoozeEnd-Date.now());let m;
   if(mode==='ringing')m=state===1?'خرررر… '+catName+' داره آروم میشه 😌 ادامه بده!':'آلارم! '+catName+' میو میو می‌کنه 😾 نازش کن تا بخوابه';
   else if(mode==='snooze')m=food===1?'پاکت غذا اومد! 🐟 دستت رو روی کاسه نگه دار تا غذا بریزی. وگرنه '+fmt(rem)+' دیگه '+catName+' دوباره میو می‌کنه':ph?'اسنوز فعاله 💤 مرد داره سیگار می‌کشه…':catName+' خوابیده 💤 اسنوز: '+fmt(rem)+' دیگه دوباره میو می‌کنه';
@@ -707,11 +712,7 @@ function renderAlarms(){const root=$('alarmList');root.replaceChildren();
     toggle.onchange=()=>{a.on=toggle.checked;persistAlarm(a);checkPermission()};
     const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='✎ ویرایش';edit.dataset.action='edit';edit.onclick=()=>openEditor(a.id);
     const remove=document.createElement('button');remove.type='button';remove.className='danger';remove.textContent='🗑 حذف';remove.dataset.action='delete';remove.setAttribute('aria-label','حذف آلارم '+(a.label||clockValue(a)));remove.onclick=()=>askDelete(a.id);
-    const test=document.createElement('button');test.type='button';test.className='secondary';test.textContent='▶ تست';test.dataset.action='test';
-    test.onclick=()=>{focusId=a.id;renderSoundSelection();if(NATIVE){
-      if(!Android.canSetExactAlarms()){checkPermission();return}Android.testAlarm(a.id)
-    }else{testAt=Date.now()+5000}};
-    ops.append(toggle,edit,remove,test);item.append(info,ops);root.appendChild(item)
+    ops.append(toggle,edit,remove);item.append(info,ops);root.appendChild(item)
   }
   updateNextAlarm();
 }
@@ -885,17 +886,27 @@ $('saveCatProfile').onclick=()=>{
   lastMsg='';
 };
 applyCatColor();
-function checkPermission(){if(NATIVE)$('permissionHelp').hidden=Android.canSetExactAlarms();else $('permissionHelp').hidden=true}
+function checkPermission(){
+  if(!NATIVE){$('permissionHelp').hidden=true;$('lockScreenHelp').hidden=true;return;}
+  $('permissionHelp').hidden=Android.canSetExactAlarms();
+  $('lockScreenHelp').hidden=Android.canShowFullScreenAlarm()&&Android.areAlarmNotificationsEnabled();
+}
 $('requestAlarmPermission').onclick=()=>{if(NATIVE)Android.requestExactAlarmPermission()};
+$('requestLockScreenPermission').onclick=()=>{if(NATIVE)Android.openAlarmDisplaySettings()};
+window.refreshAlarmPermissionUI=checkPermission;
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkPermission()});
 $('stopAlarm').onclick=()=>{if(NATIVE)Android.dismiss();mode='idle';sleep=true;lvl=100;food=0;ph=null};
 async function lock(){try{if(NATIVE&&navigator.wakeLock&&Android.isRinging())await navigator.wakeLock.request('screen')}catch(e){}}
-$('test').onclick=()=>{initAudio();done=false;if(NATIVE){if(!Android.canSetExactAlarms()){checkPermission();return}if(!alarmList.some(a=>a.id===focusId)&&alarmList.length)focusId=alarmList[0].id;Android.testAlarm(focusId);return}testAt=Date.now()+5000};
 document.addEventListener('pointerdown',initAudio);
 function fire(){if(mode==='ringing')return;mode='ringing';sleep=false;lvl=0;ph=null;food=0;fill=0;done=false;ringStart=performance.now()/1000;nextMeow=0}
 setInterval(()=>{const n=new Date(),hm=two(n.getHours())+':'+two(n.getMinutes());$('clock').textContent=hm;
-  if(testAt&&Date.now()>=testAt){testAt=0;fire()}
-  else if(!NATIVE&&alarmList.some(a=>a.on&&clockValue(a)===hm)&&fired!==hm+n.getDate()){fired=hm+n.getDate();fire()}},500);
-window.nativeRing=()=>{if(mode==='ringing')return;mode='idle';fire()};
+  if(!NATIVE&&alarmList.some(a=>a.on&&clockValue(a)===hm)&&fired!==hm+n.getDate()){fired=hm+n.getDate();fire()}},500);
+window.nativeRing=()=>{
+  if(mode!=='ringing'){mode='idle';fire();}
+  // Newly launched over the lock screen: open the actual interactive cat
+  // scene instead of leaving the user at the alarm list/settings.
+  $('roomSection').scrollIntoView({behavior:'auto',block:'start'});
+};
 window.nativeStopped=()=>{if(mode==='ringing'){mode='idle';sleep=true;lvl=100}};
 document.querySelectorAll('[data-jump]').forEach(button=>{
   button.addEventListener('click',()=>{
