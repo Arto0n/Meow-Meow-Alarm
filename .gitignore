@@ -1,9 +1,26 @@
+# Android / Gradle build products
 .gradle/
-.idea/
-*.iml
+**/build/
 local.properties
-/build/
-/app/build/
-/dist/
 *.apk
+*.aab
+/dist/
+
+# IDEs and operating system files
+.idea/
+.vscode/
+*.iml
 .DS_Store
+Thumbs.db
+
+# Python / JS tooling caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+
+# Local signing credentials (never commit)
+*.keystore
+*.jks
+*.p12
+key.properties
